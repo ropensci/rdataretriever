@@ -16,8 +16,10 @@
 #' the progress is not printed to the console
 #' @export
 #' @examples
-#' install_data('MCDB', 'csv')
-install_data = function(dataset, connection, db_file=NULL, conn_file=NULL,
+#' ecoretriever::install('MCDB', 'csv')
+#' ## list the files that were downloaded
+#' dir(pattern='MCDB')
+install = function(dataset, connection, db_file=NULL, conn_file=NULL,
                         log_dir=NULL){
   if (missing(connection)) {
     stop("The argument 'connection' must be set to one of the following options: 'mysql', 'postgres', 'sqlite', 'msaccess', or 'csv'")
@@ -56,7 +58,7 @@ install_data = function(dataset, connection, db_file=NULL, conn_file=NULL,
 #' @export
 #' @examples
 #' ## fetch the Mammal Community Database (MCDB)
-#' MCDB = fetch('MCDB')
+#' MCDB = ecoretriever::fetch('MCDB')
 #' class(MCDB)
 #' names(MCDB)
 #' ## preview the data in the MCDB communities datafile
@@ -91,8 +93,10 @@ fetch = function(dataset, quiet=TRUE){
 #' the progress is not printed to the console
 #' @export
 #' @examples
-#' download_data('MCDB', './data')
-download_data = function(dataset, path='.', log_dir=NULL) {
+#' ecoretriever::download('MCDB', './data')
+#' ## list files downloaded
+#' dir('./data', pattern='MCDB')
+download = function(dataset, path='.', log_dir=NULL) {
     cmd = paste('retriever download', dataset, '-p', path)
     if (!is.null(log_dir)) {
         log_file = file.path(log_dir, paste(dataset, '_download.log', sep=''))
@@ -107,16 +111,16 @@ download_data = function(dataset, path='.', log_dir=NULL) {
 #' @return returns the log of the Retriever's update
 #' @references http://ecodataretriever.org/cli.html
 #' @export
-#' @examples update_scripts()
-update_scripts = function() {
+#' @examples ecoretriever::update()
+update = function() {
   system('retriever update') 
 }
 
 #' Display a list all available dataset scripts
 #' @return returns the log of the available datasets for download
 #' @export
-#' @examples data_ls()
-data_ls = function(){
+#' @examples ecoretriever::ls()
+ls = function(){
   system('retriever ls') 
 }
 
@@ -124,8 +128,8 @@ data_ls = function(){
 #' 
 #' @param filename the name of the script to generate
 #' @export
-#' @examples new_script('newscript.script')
-new_script = function(filename){
+#' @examples ecoretriever::new('newscript.script')
+new = function(filename){
   system(paste('retriever new', filename)) 
 }
 
