@@ -16,11 +16,11 @@
 #' the progress is not printed to the console
 #' @export
 #' @examples
+#' ## Use an explicit namespace call when using install() to avoid conflicts
 #' ecoretriever::install('MCDB', 'csv')
 #' ## list the files that were downloaded
 #' dir(pattern='MCDB')
-install = function(dataset, connection, db_file=NULL, conn_file=NULL,
-                        log_dir=NULL){
+install = function(dataset, connection, db_file=NULL, conn_file=NULL, log_dir=NULL){
   if (missing(connection)) {
     stop("The argument 'connection' must be set to one of the following options: 'mysql', 'postgres', 'sqlite', 'msaccess', or 'csv'")
   }
@@ -57,6 +57,7 @@ install = function(dataset, connection, db_file=NULL, conn_file=NULL,
 #' @param dataset the name of the dataset that you wish to download
 #' @export
 #' @examples
+#' ## Use an explicit namespace call when using fetch() to avoid conflicts
 #' ## fetch the Mammal Community Database (MCDB)
 #' MCDB = ecoretriever::fetch('MCDB')
 #' class(MCDB)
@@ -93,6 +94,7 @@ fetch = function(dataset, quiet=TRUE){
 #' the progress is not printed to the console
 #' @export
 #' @examples
+#' ## Use an explicit namespace call when using fetch() to avoid conflicts
 #' ecoretriever::download('MCDB', './data')
 #' ## list files downloaded
 #' dir('./data', pattern='MCDB')
