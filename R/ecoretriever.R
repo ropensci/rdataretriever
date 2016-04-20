@@ -6,7 +6,7 @@
 #' @param dataset the name of the dataset that you wish to download
 #' @param connection what type of database connection should be used. 
 #' The options include: mysql, postgres, sqlite, msaccess, or csv'
-#' @param db_file the name of the datbase file the dataset should be loaded 
+#' @param db_file the name of the database file the dataset should be loaded 
 #' into
 #' @param conn_file the path to the .conn file that contains the connection
 #' configuration options for mysql and postgres databases. This defaults to 
@@ -31,12 +31,12 @@ install = function(dataset, connection, db_file=NULL, conn_file=NULL,
       conn_file = paste('./', connection, '.conn', sep='')
     }
     if (!file.exists(conn_file)) {
-      format = '\n    host my_server@myhost.com\n    port 1111\n    user my_user_name\n    password my_pass_word'
+      format = '\n    host, port, user, password \n    my_server@myhost.com, my_port_number, my_user_name, my_pass_word'
       stop(paste("conn_file:", conn_file, "does not exist. To use a",
-                  connection, "server create a 'conn_file' with the format:", 
-                 format, "\nwhere order of arguments does not matter"))
+                  connection, "server create a comma seperated 'conn_file' with two rows will the following format:", 
+                 format, "\nwhere the order of arguments does not matter and you substitute your values for each field."))
     }
-    conn = data.frame(t(utils::read.table(conn_file, row.names=1)))
+    conn = utils::read.csv(conn_file)
     writeLines(strwrap(paste('Using conn_file:', conn_file,
                              'to connect to a', connection,
                              'server on host:', conn$host)))
