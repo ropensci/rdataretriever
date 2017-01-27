@@ -1,4 +1,4 @@
-#' ecoretriever: R interface to the EcoData Retriever.
+#' dataretriever: R interface to the Data Retriever.
 #'
 #' @section About:
 #' 
@@ -10,6 +10,6 @@
 #' This package lets you access the Retriever using R, so that the Retriever's
 #' data handling can easily be integrated into R workflows.
 #' 
-#' @name ecoretriever
+#' @name dataretriever
 #' @docType package
 NULL
