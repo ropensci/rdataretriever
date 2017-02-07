@@ -24,3 +24,4 @@ Imports:
 SystemRequirements: EcoData Retriever (>= 1.8)
 License: MIT + file LICENSE
 LazyData: true
+RoxygenNote: 5.0.1
