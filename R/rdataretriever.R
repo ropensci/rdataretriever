@@ -74,8 +74,9 @@ install = function(dataset, connection, db_file=NULL, conn_file=NULL,
 #' Each datafile in a given dataset is downloaded to a temporary directory and
 #' then imported as a data.frame as a member of a named list.
 #'
-#' @param dataset the name of the dataset that you wish to download
+#' @param dataset the names of the dataset that you wish to download
 #' @param quiet logical, if true retriever runs in quiet mode
+#' @param dnames the names you wish to assign to the dataframes if downloading more than one dataset 
 #' @export
 #' @examples
 #' \donttest{
@@ -86,11 +87,22 @@ install = function(dataset, connection, db_file=NULL, conn_file=NULL,
 #' ## preview the data in the portal species datafile
 #' head(portal$species)
 #' }
-fetch = function(dataset, quiet=TRUE){
+fetch = function(dataset, quiet=TRUE, dnames=NULL){
   temp_path = tempdir()
   master = vector("list", length(dataset))
+  if (is.null(dnames)){
   names(master) = dataset
   names(master) = gsub("-","_",names(master))
+  }
+  else{
+    if (length(dnames)!=length(dataset)){
+      stop("Number of names must match number of datasets")
+    }
+    if ((length(dnames)==1)&(length(dataset)==1)){
+      stop("Assign name through the output instead. Example: yourname<-fetch('dataset')")
+    }
+    names(master) = dnames
+  }
   z = 1
   for (d in dataset) {
   if (quiet){
