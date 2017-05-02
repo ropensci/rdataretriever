@@ -88,22 +88,39 @@ install = function(dataset, connection, db_file=NULL, conn_file=NULL,
 #' }
 fetch = function(dataset, quiet=TRUE){
   temp_path = tempdir()
-  if (quiet)
+  master = vector("list", length(dataset))
+  names(master) = dataset
+  z = 1
+  for (d in dataset) {
+  if (quiet){
     run_cli(paste('retriever -q install csv --table_name',
                  file.path(temp_path, '{db}_{table}.csv'),
-                 dataset))
-  else
-    install(dataset, connection='csv', data_dir=temp_path)
-  files = dir(temp_path)
-  dataset_underscores = gsub("-", "_", dataset) #retriever converts - in dataset name to _ in filename
-  files = files[grep(dataset_underscores, files)]
-  out = vector('list', length(files))
-  list_names = sub('.csv', '', files)
-  list_names = sub(paste(dataset, '_', sep=''), '', list_names)
-  names(out) = list_names
-  for (i in seq_along(files))
-    out[[i]] = utils::read.csv(file.path(temp_path, files[i]))
-  return(out)
+                 d))
+            }
+  else{
+    install(d, connection='csv', data_dir=temp_path)
+      }
+    files = dir(temp_path)
+    dataset_underscores = gsub("-", "_", d)
+    files = files[grep(dataset_underscores, files)]
+    out = vector("list", length(files))
+    list_names = sub(".csv", "", files)
+    list_names = sub(paste(dataset_underscores, "_", sep = ""), 
+                     "", list_names)
+    names(out) = list_names
+    for (i in seq_along(files)) {
+      out[[i]] = utils::read.csv(file.path(temp_path, 
+                                           files[i]))
+    }
+    master[[z]] <- out
+    z = z + 1
+  }
+  if (length(dataset) == 1) {
+    return(out) 
+  }
+  else {
+    return(master)
+  }
 }
 
 #' Download datasets via the Data Retriever.
