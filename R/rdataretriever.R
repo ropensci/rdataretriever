@@ -90,6 +90,7 @@ fetch = function(dataset, quiet=TRUE){
   temp_path = tempdir()
   master = vector("list", length(dataset))
   names(master) = dataset
+  names(master) = gsub("-","_",names(master))
   z = 1
   for (d in dataset) {
   if (quiet){
