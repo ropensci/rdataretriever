@@ -22,8 +22,9 @@ non-tabular data.
 }
 \examples{
 \donttest{
-rdataretriever::download('portal')
-## list files downloaded
-dir('.', pattern='portal')
+rdataretriever::download('McGlinn2010')
+# downloaded files will be copied to your working directory
+# when no path is specified
+dir()
 }
 }
