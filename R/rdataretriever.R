@@ -144,9 +144,10 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
 #' @export
 #' @examples 
 #' \donttest{
-#' rdataretriever::download('portal')
-#' ## list files downloaded
-#' dir('.', pattern='portal')
+#' rdataretriever::download('McGlinn2010')
+#' # downloaded files will be copied to your working directory
+#' # when no path is specified
+#' dir()
 #' }
 download = function(dataset, path='.', sub_dir=FALSE, log_dir=NULL) {
     if (sub_dir)
@@ -172,6 +173,17 @@ download = function(dataset, path='.', sub_dir=FALSE, log_dir=NULL) {
 #' }
 datasets = function(){
   run_cli('retriever ls', intern = TRUE)
+}
+
+#' Get dataset citation information and a description
+#' @return returns a character vector with the available datasets for download
+#' @export
+#' @examples 
+#' \donttest{
+#' rdataretriever::get_citation('McGlinn2010')
+#' }
+get_citation = function(dataset) {
+    run_cli(paste('retriever citation', dataset))
 }
 
 #' Reset rdataretriever.
