@@ -27,4 +27,3 @@ rdataretriever::download('portal')
 dir('.', pattern='portal')
 }
 }
-

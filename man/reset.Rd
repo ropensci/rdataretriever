@@ -19,4 +19,3 @@ Reset the components of rdataretriever using scope [ all, scripts, data, connect
 rdataretriever::reset()
 }
 }
-

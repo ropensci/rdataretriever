@@ -10,4 +10,3 @@ check_for_retriever(...)
 Check if retriever is on the user's path
 }
 \keyword{internal}
-
