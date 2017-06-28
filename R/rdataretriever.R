@@ -76,7 +76,9 @@ install = function(dataset, connection, db_file=NULL, conn_file=NULL,
 #'
 #' @param dataset the names of the dataset that you wish to download
 #' @param quiet logical, if true retriever runs in quiet mode
-#' @param dnames the names you wish to assign to the dataframes if downloading more than one dataset 
+#' @param data_names the names you wish to assign to cells of the list which
+#' stores the fetched dataframes. This is only relevant if you are 
+#' downloading more than one dataset. 
 #' @export
 #' @examples
 #' \donttest{
@@ -86,54 +88,47 @@ install = function(dataset, connection, db_file=NULL, conn_file=NULL,
 #' names(portal)
 #' ## preview the data in the portal species datafile
 #' head(portal$species)
+#' vegdata = rdataretreiver::fetch(c('McGlinn2010', 'Palmer2007'))
+#' names(vegdata)
+#' names(vegdata$McGlinn2010)
 #' }
-fetch = function(dataset, quiet=TRUE, dnames=NULL){
-  temp_path = tempdir()
-  master = vector("list", length(dataset))
-  if (is.null(dnames)){
-  names(master) = dataset
-  names(master) = gsub("-","_",names(master))
-  }
-  else{
-    if (length(dnames)!=length(dataset)){
-      stop("Number of names must match number of datasets")
+fetch = function(dataset, quiet=TRUE, data_names=NULL){
+    temp_path = tempdir()
+    bone = vector('list', length(dataset))
+    if (is.null(data_names)) {
+        names(bone) = dataset
+        names(bone) = gsub('-', '_', names(bone))
+    } 
+    else {
+        if (length(data_names) != length(dataset))
+            stop('Number of names must match number of datasets')
+        else ((length(data_names) == 1) & (length(dataset) == 1))
+            stop("Assign name through the output instead (e.g., yourname = fetch('dataset')")
+        names(bone) = data_names
     }
-    if ((length(dnames)==1)&(length(dataset)==1)){
-      stop("Assign name through the output instead. Example: yourname<-fetch('dataset')")
+    for (i in seq_along(dataset)) {
+        if (quiet)
+            run_cli(paste('retriever -q install csv --table_name',
+                          file.path(temp_path, '{db}_{table}.csv'),
+                          dataset[i]))
+        else 
+            install(dataset[i], connection='csv', data_dir=temp_path)
+        files = dir(temp_path)
+        dataset_underscores = gsub('-', '_', dataset[i])
+        files = files[grep(dataset_underscores, files)]
+        tempdata = vector('list', length(files))
+        list_names = sub('.csv', '', files)
+        list_names = sub(paste(dataset_underscores, '_', sep = ''), 
+                         '', list_names)
+        names(tempdata) = list_names
+        for (j in seq_along(files)) {
+            tempdata[[j]] = utils::read.csv(file.path(temp_path, files[j]))
+        }
+        bone[[i]] = tempdata
     }
-    names(master) = dnames
-  }
-  z = 1
-  for (d in dataset) {
-  if (quiet){
-    run_cli(paste('retriever -q install csv --table_name',
-                 file.path(temp_path, '{db}_{table}.csv'),
-                 d))
-            }
-  else{
-    install(d, connection='csv', data_dir=temp_path)
-      }
-    files = dir(temp_path)
-    dataset_underscores = gsub("-", "_", d)
-    files = files[grep(dataset_underscores, files)]
-    out = vector("list", length(files))
-    list_names = sub(".csv", "", files)
-    list_names = sub(paste(dataset_underscores, "_", sep = ""), 
-                     "", list_names)
-    names(out) = list_names
-    for (i in seq_along(files)) {
-      out[[i]] = utils::read.csv(file.path(temp_path, 
-                                           files[i]))
-    }
-    master[[z]] <- out
-    z = z + 1
-  }
-  if (length(dataset) == 1) {
-    return(out) 
-  }
-  else {
-    return(master)
-  }
+    if (length(bone) == 1)
+        bone = bone[[1]]
+    return(bone)
 }
 
 #' Download datasets via the Data Retriever.
@@ -149,9 +144,10 @@ fetch = function(dataset, quiet=TRUE, dnames=NULL){
 #' @export
 #' @examples 
 #' \donttest{
-#' rdataretriever::download('portal')
-#' ## list files downloaded
-#' dir('.', pattern='portal')
+#' rdataretriever::download('McGlinn2010')
+#' # downloaded files will be copied to your working directory
+#' # when no path is specified
+#' dir()
 #' }
 download = function(dataset, path='.', sub_dir=FALSE, log_dir=NULL) {
     if (sub_dir)
@@ -177,6 +173,17 @@ download = function(dataset, path='.', sub_dir=FALSE, log_dir=NULL) {
 #' }
 datasets = function(){
   run_cli('retriever ls', intern = TRUE)
+}
+
+#' Get dataset citation information and a description
+#' @return returns a character vector with the available datasets for download
+#' @export
+#' @examples 
+#' \donttest{
+#' rdataretriever::get_citation('McGlinn2010')
+#' }
+get_citation = function(dataset) {
+    run_cli(paste('retriever citation', dataset))
 }
 
 #' Reset rdataretriever.

@@ -4,12 +4,16 @@
 \alias{fetch}
 \title{Fetch a dataset via the Data Retriever}
 \usage{
-fetch(dataset, quiet = TRUE)
+fetch(dataset, quiet = TRUE, data_names = NULL)
 }
 \arguments{
-\item{dataset}{the name of the dataset that you wish to download}
+\item{dataset}{the names of the dataset that you wish to download}
 
 \item{quiet}{logical, if true retriever runs in quiet mode}
+
+\item{data_names}{the names you wish to assign to cells of the list which
+stores the fetched dataframes. This is only relevant if you are 
+downloading more than one dataset.}
 }
 \description{
 Each datafile in a given dataset is downloaded to a temporary directory and
@@ -23,6 +27,8 @@ class(portal)
 names(portal)
 ## preview the data in the portal species datafile
 head(portal$species)
+vegdata = rdataretreiver::fetch(c('McGlinn2010', 'Palmer2007'))
+names(vegdata)
+names(vegdata$McGlinn2010)
 }
 }
-
