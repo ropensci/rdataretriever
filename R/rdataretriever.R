@@ -144,7 +144,7 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
 #' @export
 #' @examples 
 #' \donttest{
-#' rdataretriever::download('McGlinn2010')
+#' rdataretriever::download('plant-comp-ok')
 #' # downloaded files will be copied to your working directory
 #' # when no path is specified
 #' dir()
@@ -180,7 +180,7 @@ datasets = function(){
 #' @export
 #' @examples 
 #' \donttest{
-#' rdataretriever::get_citation('McGlinn2010')
+#' rdataretriever::get_citation('plant-comp-us')
 #' }
 get_citation = function(dataset) {
     run_cli(paste('retriever citation', dataset))
