@@ -27,8 +27,8 @@ class(portal)
 names(portal)
 ## preview the data in the portal species datafile
 head(portal$species)
-vegdata = rdataretreiver::fetch(c('McGlinn2010', 'Palmer2007'))
+vegdata = rdataretriever::fetch(c('plant-comp-ok', 'plant-occur-oosting'))
 names(vegdata)
-names(vegdata$McGlinn2010)
+names(vegdata$plant_comp_ok)
 }
 }

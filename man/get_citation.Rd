@@ -14,6 +14,6 @@ Get dataset citation information and a description
 }
 \examples{
 \donttest{
-rdataretriever::get_citation('McGlinn2010')
+rdataretriever::get_citation('plant-comp-us')
 }
 }
