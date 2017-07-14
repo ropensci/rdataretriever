@@ -176,7 +176,8 @@ datasets = function(){
 }
 
 #' Get dataset citation information and a description
-#' @return returns a character vector with the available datasets for download
+#' @param dataset name of the dataset
+#' @return returns a string with the citation information
 #' @export
 #' @examples 
 #' \donttest{

@@ -6,8 +6,11 @@
 \usage{
 get_citation(dataset)
 }
+\arguments{
+\item{dataset}{name of the dataset}
+}
 \value{
-returns a character vector with the available datasets for download
+returns a string with the citation information
 }
 \description{
 Get dataset citation information and a description
