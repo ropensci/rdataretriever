@@ -1,0 +1,8 @@
+language: r
+cache: packages
+sudo: false
+dist: trusty
+
+before_install:
+  - pip install --user retriever
+  - retriever update
