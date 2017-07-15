@@ -1,4 +1,5 @@
 rdataretriever [![Build Status](https://cranlogs.r-pkg.org/badges/grand-total/rdataretriever)](https://CRAN.R-project.org/package=rdataretriever)
+[![Build Status](https://travis-ci.org/ropensci/rdataretriever.png)](https://travis-ci.org/ropensci/rdataretriever)
 ============
 
 R interface to the [Data Retriever](http://data-retriever.org).
