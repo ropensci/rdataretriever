@@ -309,7 +309,15 @@ check_for_retriever = function(...) {
                             '/miniconda3/bin',
                             '/miniconda2/bin')
         for (i in possible_pathes) {
-            Sys.setenv(PATH = paste(Sys.getenv('PATH'), ':', home_dir, i, sep = ''))
+            Sys.setenv(PATH = paste(Sys.getenv('PATH'), ';', home_dir, i, sep = ''))
+        }
+
+        ## Other very likely pathes for Windows users:
+        more_possible_pathes = c('C:\\',
+                                 'C:\\Program files\\',
+                                 'C:\\Program files (x86)\\')
+        for (i in more_possible_pathes) {
+          Sys.setenv(PATH = paste(Sys.getenv('PATH'), ';', i, 'DataRetriever', sep = ''))
         }
     }
 
