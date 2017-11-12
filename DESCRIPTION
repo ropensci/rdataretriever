@@ -13,6 +13,8 @@ Authors@R: c(person("Daniel", "McGlinn", role = c("aut", "cre"),
     email = "henrykironde@gmail.com"),
     person("Shawn", "Taylor", role = "aut",
     email = "shawntaylor@weecology.org"),
+    person("Max", "Pohlman", role = "aut",
+    email = "maxpohlman@gmail.com"),
     person("Ethan", "White", role = "aut",
     email = "ethan@weecology.org"))
 BugReports: https://github.com/ropensci/rdataretriever/issues
