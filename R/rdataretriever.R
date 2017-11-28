@@ -311,6 +311,17 @@ check_for_retriever = function(...) {
         for (i in possible_pathes) {
             Sys.setenv(PATH = paste(Sys.getenv('PATH'), ':', home_dir, i, sep = ''))
         }
+
+        # paths on Windows if installed using executable:
+        if (Sys.info()[['sysname']] == "Windows") {
+          more_win_paths = c('C:\\',
+                             'C:\\Program files\\',
+                             'C:\\Program files (x86)\\')
+          for (i in more_win_paths) {
+            Sys.setenv(PATH = paste(Sys.getenv('PATH'), ';', i, 'DataRetriever', sep = ''))
+          }
+        }
+
     }
 
     retriever_path = Sys.which('retriever')
