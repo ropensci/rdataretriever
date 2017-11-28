@@ -285,6 +285,7 @@ print.update_log = function(x, ...) {
 #' to the home path and sets the environmental variable correctly.
 #' @keywords internal
 set_home = function(...) {
+    current_home = normalizePath(Sys.getenv('HOME'), winslash = "/")
     Sys.setenv(HOME = gsub("/Documents", "", Sys.getenv('HOME')))
 }
 
@@ -314,9 +315,9 @@ check_for_retriever = function(...) {
 
         # paths on Windows if installed using executable:
         if (Sys.info()[['sysname']] == "Windows") {
-          more_win_paths = c('C:\\',
-                             'C:\\Program files\\',
-                             'C:\\Program files (x86)\\')
+          more_win_paths = c('C:/',
+                             'C:/Program files/',
+                             'C:/Program files (x86)/')
           for (i in more_win_paths) {
             Sys.setenv(PATH = paste(Sys.getenv('PATH'), ';', i, 'DataRetriever', sep = ''))
           }
