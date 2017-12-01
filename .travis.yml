@@ -3,6 +3,15 @@ cache: packages
 sudo: false
 dist: trusty
 
+addons:
+  apt:
+    packages:
+      python3-pip
+
 before_install:
-  - pip install --user retriever
+  - pip3 install --user retriever
+  - echo y | retriever reset all
+  - retriever --version
   - retriever update
+  - retriever ls
+  - retriever ls
