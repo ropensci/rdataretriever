@@ -53,7 +53,7 @@ install = function(dataset, connection, db_file=NULL, conn_file=NULL,
     for(opt in possible_opts )
     {
       if (opt %in% names(conn) == TRUE){
-        cmd <- c(cmd, paste("--", opt, sep=""), conn$opt )
+        cmd <- c(cmd, paste("--", opt, sep=""), levels(conn[[opt]]) )
       }
     }
 
