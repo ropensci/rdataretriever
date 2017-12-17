@@ -46,9 +46,19 @@ install = function(dataset, connection, db_file=NULL, conn_file=NULL,
     writeLines(strwrap(paste('Using conn_file:', conn_file,
                              'to connect to a', connection,
                              'server on host:', conn$host)))
-    cmd = paste('retriever install', connection, dataset, '--user', conn$user,
-                '--password', conn$password, '--host', conn$host, '--port',
-                conn$port)
+
+    cmd <- c('retriever install', connection, dataset)
+    possible_opts <- list('user', 'password', 'host', 'port', 'database', 'database_name', 'table_name')
+
+    for(opt in possible_opts )
+    {
+      if (opt %in% names(conn) == TRUE){
+        cmd <- c(cmd, paste("--", opt, sep=""), conn$opt )
+      }
+    }
+
+    cmd <- paste(cmd, collapse = " ")
+
   }
   else if (connection == 'sqlite' | connection == 'msaccess') {
     if (is.null(db_file))
@@ -58,7 +68,7 @@ install = function(dataset, connection, db_file=NULL, conn_file=NULL,
   }
   else if (connection %in% c('csv', 'json', 'xml')) {
     cmd = paste('retriever install', connection, '--table_name',
-                  file.path(data_dir, '{db}_{table}.csv'), dataset)
+                  file.path(data_dir, paste('{db}_{table}', connection, sep = ".")), dataset)
   }
   else
     stop("The argument 'connection' must be set to one of the following options: 'mysql', 'postgres', 'sqlite', 'msaccess', 'csv', 'json' or 'xml'")
