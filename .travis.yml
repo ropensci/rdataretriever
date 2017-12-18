@@ -1,8 +1,62 @@
-language: r
+sudo:  false
 cache: packages
-sudo: false
 dist: trusty
+language: python
+os:
+    - linux
+python:
+  - "3.5"
+addons:
+  postgresql: "9.4"
+  apt:
+    packages:
+      - sqlite3
+services:
+  - postgresql
+install:
+  - export PATH=$(which python):$PATH
+  - export PYTHON=$(which python)
+  - export PYTHONPATH=$(which python):$PYTHONPATH
 
-before_install:
-  - pip install --user retriever
-  - retriever update
+  # install Retriever python library
+  - git clone https://github.com/weecology/retriever.git retriever
+  - cd retriever
+  - pip install -r requirements.txt
+  - pip install pytest-cov -U
+  - pip install pytest-xdist -U
+  - pip install  . -U
+  - cd ..
+  - rm -rf retriever/
+
+  # Installing R
+  - sudo apt-get install r-base
+  - sudo apt-get install r-base-dev
+
+
+  # permission settings
+  - sudo adduser travis staff
+  - sudo chmod 2777 /usr/local/lib/R /usr/local/lib/R/site-library
+
+  # set > .Rprofile and cran mirror to use
+  - echo '.libPaths("~/Rpackages")' > .Rprofile
+  - echo 'options(repos=structure(c(CRAN="http://cloud.r-project.org/")))' > .Rprofile
+  - sudo Rscript -e 'install.packages("devtools", quiet = TRUE)'
+
+  # install testthat using terminal
+  - sudo apt-get install r-cran-testthat
+  - sudo Rscript -e 'library(testthat)'
+
+  # R session information
+  - sudo Rscript -e 'sessionInfo()'
+
+script:
+  - source ~/virtualenv/python3.5/bin/activate
+  - which python
+  - sudo make install
+  - sudo make check
+  - sudo make test
+
+# database setup
+before_script:
+  - sqlite3 --version
+  - psql -c 'create database testdb;' -U postgres
