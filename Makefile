@@ -13,7 +13,7 @@ install:
 	R CMD INSTALL $(PKGSRC)
 
 check:
-	Rscript -e "install.packages("testthat")"
+	Rscript -e 'library(testthat)'
 	Rscript -e "devtools::check(document = FALSE, args = '--as-cran')"
 
 test:
