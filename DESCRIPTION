@@ -20,11 +20,12 @@ Authors@R: c(person("Daniel", "McGlinn", role = c("aut", "cre"),
 BugReports: https://github.com/ropensci/rdataretriever/issues
 URL: https://github.com/ropensci/rdataretriever/
 Depends:
-    R (>= 3.0.0)
+    R (>= 3.3.0)
 Imports:
     utils
-Suggests: testthat
-SystemRequirements: Data Retriever (>= 1.8)
+Suggests:
+    testthat (>= 1.0.0)
+SystemRequirements: Python (>= 2.7) and Python headers and libraries
 License: MIT + file LICENSE
 LazyData: true
 RoxygenNote: 6.0.1
