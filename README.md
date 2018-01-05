@@ -1,4 +1,7 @@
-rdataretriever [![Build Status](https://cranlogs.r-pkg.org/badges/grand-total/rdataretriever)](https://CRAN.R-project.org/package=rdataretriever)
+# rdataretriever
+
+[![cran version](https://www.r-pkg.org/badges/version/rdataretriever)](https://www.r-pkg.org/badges/version/rdataretriever)
+[![Build Status](https://cranlogs.r-pkg.org/badges/grand-total/rdataretriever)](https://CRAN.R-project.org/package=rdataretriever)
 [![Build Status](https://travis-ci.org/ropensci/rdataretriever.png)](https://travis-ci.org/ropensci/rdataretriever)
 ============
 

@@ -1,8 +1,8 @@
 ^\.travis\.yml$
-Makefile
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^README\.Rmd$
 ^NEWS\.md$
 cran-comments.md
 ^LICENSE\.md$
+^CODE_OF_CONDUCT\.md$
