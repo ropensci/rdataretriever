@@ -3,6 +3,7 @@ context("regression tests")
 library(DBI)
 library(RPostgreSQL)
 library(RMySQL)
+library(RSQLite)
 
 
 test_that("datasets returns some known values", {
