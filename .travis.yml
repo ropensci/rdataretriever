@@ -22,6 +22,9 @@ addons:
       - python3
       - sqlite3
       - r-cran-testthat
+      - r-cran-dbi
+      - r-cran-rpostgresql
+      - r-cran-rmysql
 env:
   - R_PYTHON_VERSION=3
 before_install:
