@@ -28,10 +28,10 @@ test_that("Download the raw portal dataset into './data/'", {
 })
 
 
-test_that("Install the portal into csv", {
+test_that("Install portal into csv", {
   # Install portal into csv files in your working directory
   portal <- list("portal_main", "portal_plots", "portal_species")
-  # rdataretriever::install('portal', 'csv')
+  rdataretriever::install('portal', 'csv')
   for (file in portal)
   {
     file_path <-
@@ -40,13 +40,12 @@ test_that("Install the portal into csv", {
         winslash = "//",
         mustWork = FALSE
       )
-
     expect_identical(identical(file.info(file_path)$size, integer(0)), FALSE)
   }
 })
 
 
-test_that("Install the portal into json", {
+test_that("Install portal into json", {
   # Install portal into json
   portal <- list("portal_main", "portal_plots", "portal_species")
   rdataretriever::install('portal', 'json')
@@ -63,7 +62,7 @@ test_that("Install the portal into json", {
 })
 
 
-test_that("Install the portal into xml", {
+test_that("Install portal into xml", {
   # Install portal into xml
   portal <- list("portal_main", "portal_plots", "portal_species")
   rdataretriever::install('portal', 'xml')
@@ -80,7 +79,7 @@ test_that("Install the portal into xml", {
 })
 
 
-test_that("Install the portal into sqlite", {
+test_that("Install portal into sqlite", {
   # Install the portal into Sqlite
   portal <- c("portal_main", "portal_plots", "portal_species")
   rdataretriever::install('portal', 'sqlite', db_file = "test.sqlite")
@@ -92,7 +91,7 @@ test_that("Install the portal into sqlite", {
 
 
 test_that("Install dataset into Postgres", {
-  # Install the portal into Postgres
+  # Install portal into Postgres
   try(system(
     "psql -U postgres -d testdb -h localhost -c \"DROP SCHEMA IF EXISTS testschema CASCADE\"",
     intern = TRUE,
