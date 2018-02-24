@@ -1,9 +1,10 @@
 # rdataretriever
 
-[![cran version](https://www.r-pkg.org/badges/version/rdataretriever)](https://www.r-pkg.org/badges/version/rdataretriever)
-[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/rdataretriever)](https://CRAN.R-project.org/package=rdataretriever)
 [![Build Status](https://travis-ci.org/ropensci/rdataretriever.png)](https://travis-ci.org/ropensci/rdataretriever)
-============
+[![cran version](https://www.r-pkg.org/badges/version/rdataretriever)](https://www.r-pkg.org/badges/version/rdataretriever)
+[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/rdataretriever)](https://CRAN.R-project.org/package=rdataretriever) +
+[![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ecoretriever)](https://CRAN.R-project.org/package=ecoretriever)
+(old package name)
 
 R interface to the [Data Retriever](http://data-retriever.org).
 
