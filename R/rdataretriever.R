@@ -103,7 +103,8 @@ install = function(dataset, connection, db_file=NULL, conn_file=NULL,
 #' names(vegdata$plant_comp_ok)
 #' }
 fetch = function(dataset, quiet=TRUE, data_names=NULL){
-    temp_path = tempdir()
+    temp_path = tolower(tempdir())
+    dir.create(temp_path) 
     bone = vector('list', length(dataset))
     if (is.null(data_names)) {
         names(bone) = dataset
