@@ -119,7 +119,7 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
     }
     for (i in seq_along(dataset)) {
         if (quiet)
-            run_cli(paste('retriever -q install csv --table_name',
+            run_cli(paste('retriever install csv --table_name',
                           file.path(temp_path, '{db}_{table}.csv'),
                           dataset[i]))
         else 
@@ -137,9 +137,11 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
         }
         bone[[i]] = tempdata
     }
+    if(length(bone)>0){
     if (length(bone) == 1)
         bone = bone[[1]]
     return(bone)
+    }
 }
 
 #' Download datasets via the Data Retriever.
