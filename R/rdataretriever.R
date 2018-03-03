@@ -138,7 +138,7 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
         bone[[i]] = tempdata
     }
     if(length(bone)>0){
-    if (length(bone) == 1)
+      if (length(bone) == 1)
         bone = bone[[1]]
     return(bone)
     }
