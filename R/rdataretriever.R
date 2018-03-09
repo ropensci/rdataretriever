@@ -103,45 +103,39 @@ install = function(dataset, connection, db_file=NULL, conn_file=NULL,
 #' names(vegdata$plant_comp_ok)
 #' }
 fetch = function(dataset, quiet=TRUE, data_names=NULL){
+    if(!dataset %in% rdataretriever::datasets())
+      stop("The dataset requested isn't currently available in the rdataretriever. Please execute rdataretriever::datasets() for
+                 available datasets or rdataretriver::get_updates() to get newest available datasets.")
+  
     temp_path = tolower(tempdir())
-    dir.create(temp_path) 
-    bone = vector('list', length(dataset))
+    suppressWarnings(dir.create(temp_path)) 
+    datasets = vector('list', length(dataset))
     if (is.null(data_names)) {
-        names(bone) = dataset
-        names(bone) = gsub('-', '_', names(bone))
+        names(datasets) = dataset
+        names(datasets) = gsub('-', '_', names(datasets))
     } 
     else {
-        if (length(data_names) != length(dataset))
+        if (length(data_names) != length(datasets))
             stop('Number of names must match number of datasets')
-        else ((length(data_names) == 1) & (length(dataset) == 1))
+        else ((length(data_names) == 1) & (length(datasets) == 1))
             stop("Assign name through the output instead (e.g., yourname = fetch('dataset')")
         names(bone) = data_names
     }
     for (i in seq_along(dataset)) {
         if (quiet)
-            run_cli(paste('retriever install csv --table_name',
-                          file.path(temp_path, '{db}_{table}.csv'),
-                          dataset[i]))
+            run_cli(paste('retriever install csv --table_name',file.path(temp_path, '{db}_{table}.csv'),dataset[i]))
         else 
             install(dataset[i], connection='csv', data_dir=temp_path)
         files = dir(temp_path)
+        tempdata <- lapply(file.path(temp_path,files),read.csv)
         dataset_underscores = gsub('-', '_', dataset[i])
         files = files[grep(dataset_underscores, files)]
-        tempdata = vector('list', length(files))
-        list_names = sub('.csv', '', files)
-        list_names = sub(paste(dataset_underscores, '_', sep = ''), 
-                         '', list_names)
-        names(tempdata) = list_names
-        for (j in seq_along(files)) {
-            tempdata[[j]] = utils::read.csv(file.path(temp_path, files[j]))
-        }
-        bone[[i]] = tempdata
+        names(tempdata) <- gsub(".csv","",files,fixed = TRUE)
+        datasets[[i]] = tempdata
     }
-    if(length(bone)>0){
-      if (length(bone) == 1)
-        bone = bone[[1]]
-    return(bone)
-    }
+    if (length(datasets) == 1)
+        datasets = datasets[[1]]
+    return(datasets)
 }
 
 #' Download datasets via the Data Retriever.
