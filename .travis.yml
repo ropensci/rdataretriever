@@ -23,7 +23,7 @@ addons:
       - sqlite3
       - r-cran-testthat
       - r-cran-dbi
-      - r-cran-rpostgresql
+      #- r-cran-rpostgresql
       - r-cran-rmysql
       - r-cran-rsqlite
 env:

@@ -1,7 +1,7 @@
 context("regression tests")
 
 library(DBI)
-library(RPostgreSQL)
+# library(RPostgreSQL)
 library(RMySQL)
 library(RSQLite)
 
@@ -90,31 +90,31 @@ test_that("Install portal into sqlite", {
 })
 
 
-test_that("Install dataset into Postgres", {
-  # Install portal into Postgres
-  try(system(
-    "psql -U postgres -d testdb -h localhost -c \"DROP SCHEMA IF EXISTS testschema CASCADE\"",
-    intern = TRUE,
-    ignore.stderr = TRUE
-  ))
-  portal <- c("main", "plots", "species")
-  rdataretriever::install('portal', "postgres")
-  con <- dbConnect(
-    dbDriver("PostgreSQL"),
-    user = 'postgres',
-    host = 'localhost',
-    password = "",
-    port = 5432,
-    dbname = 'testdb'
-  )
-  result <-
-    dbGetQuery(
-      con,
-      "SELECT table_name FROM information_schema.tables WHERE table_schema='testschema'"
-    )
-  dbDisconnect(con)
-  expect_identical(all(result$table_name %in%  portal), TRUE)
-})
+# test_that("Install dataset into Postgres", {
+#   # Install portal into Postgres
+#   try(system(
+#     "psql -U postgres -d testdb -h localhost -c \"DROP SCHEMA IF EXISTS testschema CASCADE\"",
+#     intern = TRUE,
+#     ignore.stderr = TRUE
+#   ))
+#   portal <- c("main", "plots", "species")
+#   rdataretriever::install('portal', "postgres")
+#   con <- dbConnect(
+#     dbDriver("PostgreSQL"),
+#     user = 'postgres',
+#     host = 'localhost',
+#     password = "",
+#     port = 5432,
+#     dbname = 'testdb'
+#   )
+#   result <-
+#     dbGetQuery(
+#       con,
+#       "SELECT table_name FROM information_schema.tables WHERE table_schema='testschema'"
+#     )
+#   dbDisconnect(con)
+#   expect_identical(all(result$table_name %in%  portal), TRUE)
+# })
 
 
 test_that("Install the dataset into Mysql", {
