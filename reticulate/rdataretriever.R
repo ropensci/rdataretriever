@@ -34,7 +34,6 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
     if (quiet)
       #Accessing install() function from Python API
       r_data_retriever$install_csv(dataset = dataset[i],table_name = file.path(temp_path, '{db}_{table}.csv'))
-      
     else 
       install(dataset[i], connection='csv', data_dir=temp_path)
     files = dir(temp_path)
@@ -61,11 +60,10 @@ download = function(dataset, path='.', sub_dir=FALSE, log_dir=NULL) {
   library(reticulate)
   r_data_retriever = import('retriever')
   if (sub_dir)
-    #cmd = paste('retriever download', dataset, '-p', path, '--subdir')
     r_data_retriever$download(dataset = dataset,path = path)
   else 
     r_data_retriever$download(dataset = dataset)
-}
+  }
 
 #datasets function
 
@@ -78,11 +76,9 @@ datasets = function(){
     data_sets = c(data_sets,x$name)
   }
   print(data_sets)
-}
+  }
 
-#get citation function
-
-#Python function not available
+#get citation function -> Python function not available
 
 #get updates function 
 
@@ -90,10 +86,4 @@ get_updates = function() {
   library(reticulate)
   r_data_retriever = import('retriever')
   r_data_retriever$check_for_updates()
-}
-
-
-
-
-
-  
+  }
