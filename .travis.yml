@@ -26,10 +26,9 @@ env:
   - R_PYTHON_VERSION=3
 before_install:
   - sudo apt-get -qq update
-  - sudo cat /etc/apt/sources.list
-  - sudo echo"deb https://cran.cnr.berkeley.edu/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list
-  - sudo echo"deb http://cran.cnr.berkeley.edu/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list
-  - sudo echo"deb http://archive.linux.duke.edu/cran/bin/linux/ubuntu trusty/" >> /etc/apt/sources.list
+  - echo "deb https://cran.cnr.berkeley.edu/bin/linux/ubuntu trusty/" | sudo tee -a /etc/apt/sources.list
+  - echo "deb http://cran.cnr.berkeley.edu/bin/linux/ubuntu trusty/" | sudo tee -a /etc/apt/sources.list
+  - echo "deb http://archive.linux.duke.edu/cran/bin/linux/ubuntu trusty/" | sudo tee -a /etc/apt/sources.list
   - sudo cat /etc/apt/sources.list
   - sudo apt-get install -y libxml2-dev libmagick++-dev
   - sudo apt-get install -y r-cran-testthat
