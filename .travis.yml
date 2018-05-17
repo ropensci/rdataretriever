@@ -21,10 +21,30 @@ addons:
       - python3-dev
       - python3
       - sqlite3
-      - r-cran-testthat
-      - r-cran-dbi
-      - r-cran-rpostgresql
-      - r-cran-rmysql
-      - r-cran-rsqlite
+
 env:
   - R_PYTHON_VERSION=3
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y libxml2-dev libmagick++-dev
+  - sudo apt-get install -y r-cran-testthat
+  - sudo apt-get install -y r-cran-dbi
+  - sudo apt-get install -y r-cran-rpostgresql
+  - sudo apt-get install -y r-cran-rmysql
+  - sudo apt-get install -y r-cran-rsqlite
+  - export PATH=$(which python$R_PYTHON_VERSION):$PATH
+  - export PYTHON=$(which python$R_PYTHON_VERSION)
+  - export PYTHONPATH=$(which python$R_PYTHON_VERSION):$PYTHONPATH
+install:
+  - R -e 'install.packages(c("devtools"));if (!all(c("devtools") %in% installed.packages())) { q(status = 1, save = "no")}'
+  - R -e 'library(devtools);devtools::install_github("klutometis/roxygen")'
+  # install Retriever python library
+  - git clone https://github.com/weecology/retriever.git retriever
+  - cd retriever
+  - wget https://bootstrap.pypa.io/get-pip.py
+  - sudo $PYTHON get-pip.py
+  - rm -rf get-pip.py
+  - sudo $PYTHON -m pip install -r requirements.txt
+  - sudo $PYTHON -m pip install pytest-cov -U
+  - sudo $PYTHON -m pip install pytest-xdist -U
+  - sudo $PYTHON -m pip install  . -U
