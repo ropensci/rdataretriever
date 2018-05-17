@@ -26,6 +26,7 @@ env:
   - R_PYTHON_VERSION=3
 before_install:
   - sudo apt-get -qq update
+  - sudo cat /etc/apt/sources.list
   - sudo apt-get install -y libxml2-dev libmagick++-dev
   - sudo apt-get install -y r-cran-testthat
   - sudo apt-get install -y r-cran-dbi
