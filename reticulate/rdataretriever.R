@@ -87,3 +87,11 @@ get_updates = function() {
   r_data_retriever = import('retriever')
   r_data_retriever$check_for_updates()
   }
+
+#install functions 
+
+get_updates = function() {
+  library(reticulate)
+  r_data_retriever = import('retriever')
+  r_data_retriever$check_for_updates()
+}
