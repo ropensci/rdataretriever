@@ -2,11 +2,6 @@ language: r
 cache: packages
 sudo: required
 warnings_are_errors: false
-r_packages:
-  - covr
-  - RPostgreSQL
-  - DBI
-  - testthat
 os:
   - linux
 brew_packages: python3
@@ -40,6 +35,12 @@ before_install:
 install:
   - R -e 'install.packages(c("devtools"));if (!all(c("devtools") %in% installed.packages())) { q(status = 1, save = "no")}'
   - R -e 'library(devtools);devtools::install_github("klutometis/roxygen")'
+  - R -e "devtools::install_github('covr')"
+  - R -e "devtools::install_github('RPostgreSQL')"
+  - R -e "devtools::install_github('DBI')"
+  - R -e "devtools::install_github('testthat')"
+  
+  
   # install Retriever python library
   - git clone https://github.com/weecology/retriever.git retriever
   - cd retriever
@@ -49,4 +50,5 @@ install:
   - sudo $PYTHON -m pip install -r requirements.txt
   - sudo $PYTHON -m pip install pytest-cov -U
   - sudo $PYTHON -m pip install pytest-xdist -U
-  - sudo $PYTHON -m pip install  . -U
+  - sudo $PYTHON -m pip install -e .
+
