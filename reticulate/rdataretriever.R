@@ -78,20 +78,52 @@ datasets = function(){
   print(data_sets)
   }
 
-#get citation function -> Python function not available
-
-#get updates function 
-
-get_updates = function() {
-  library(reticulate)
-  r_data_retriever = import('retriever')
-  r_data_retriever$check_for_updates()
-  }
-
 #install functions 
 
-get_updates = function() {
+install_csv = function(dataset,table_name ="./{db}_{table}.csv",debug=FALSE,use_cache=TRUE){
   library(reticulate)
   r_data_retriever = import('retriever')
-  r_data_retriever$check_for_updates()
-}
+  r_data_retriever$install_csv(dataset, db_file,debug,use_cache)
+  }
+
+install_json = function(dataset,table_name ="./{db}_{table}.csv",debug=FALSE,use_cache=TRUE){
+  library(reticulate)
+  r_data_retriever = import('retriever')
+  r_data_retriever$install_json(dataset, db_file,debug,use_cache)
+  }
+
+install_xml = function(dataset,table_name ="./{db}_{table}.csv",debug=FALSE,use_cache=TRUE){
+  library(reticulate)
+  r_data_retriever = import('retriever')
+  r_data_retriever$install_xml(dataset, db_file,debug,use_cache)
+  }
+
+install_mysql = function(dataset, user, password, host, port, database_name, 
+                         table_name, debug, use_cache){
+  library(reticulate)
+  r_data_retriever = import('retriever')
+  r_data_retriever$install_mysql(dataset, user, password, host,
+                                 port, database_name, table_name,
+                                 debug, use_cache)
+  }
+
+install_postgres = function(dataset, user, password, host, port, database, 
+                database_name, table_name, debug, use_cache){
+  library(reticulate)
+  r_data_retriever = import('retriever')
+  r_data_retriever$install_postgres(dataset, user, password, host,
+                                    port, database, database_name, 
+                                    table_name, debug, use_cache)
+  }
+
+install_sqlite = function(dataset, file, table_name, debug, use_cache){
+  library(reticulate)
+  r_data_retriever = import('retriever')
+  r_data_retriever$install_sqlite(dataset, file, table_name, debug, use_cache)
+  }
+
+install_msaccess(dataset, file, table_name, debug, use_cache){
+  library(reticulate)
+  r_data_retriever = import('retriever')
+  r_data_retriever$install_msaccess(dataset,file,table_name,debug,use_cache)
+  }
