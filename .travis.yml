@@ -16,7 +16,8 @@ addons:
       - python3-dev
       - python3
       - sqlite3
-
+r_packages:
+  - covr
 env:
   - R_PYTHON_VERSION=3
 before_install:
@@ -35,7 +36,7 @@ before_install:
 install:
   - R -e 'install.packages(c("devtools"));if (!all(c("devtools") %in% installed.packages())) { q(status = 1, save = "no")}'
   - R -e 'library(devtools);devtools::install_github("klutometis/roxygen")'
-  - R -e "devtools::install_github('covr')"
+  #- R -e "devtools::install_github('covr')"
   - R -e "devtools::install_github('RPostgreSQL')"
   - R -e "devtools::install_github('DBI')"
   - R -e "devtools::install_github('testthat')"
