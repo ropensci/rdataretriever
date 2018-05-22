@@ -36,11 +36,6 @@ before_install:
 install:
   - R -e 'install.packages(c("devtools"));if (!all(c("devtools") %in% installed.packages())) { q(status = 1, save = "no")}'
   - R -e 'library(devtools);devtools::install_github("klutometis/roxygen")'
-  #- R -e "devtools::install_github('covr')"
-  - R -e "devtools::install_github('RPostgreSQL')"
-  - R -e "devtools::install_github('DBI')"
-  - R -e "devtools::install_github('testthat')"
-  
   
   # install Retriever python library
   - git clone https://github.com/weecology/retriever.git retriever
