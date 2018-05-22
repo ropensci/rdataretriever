@@ -2,7 +2,7 @@
 
 #fetch function
 
-fetch = function(dataset, quiet=TRUE, data_names=NULL){
+fetch = function(dataset, quiet, data_names){
   library(reticulate)
   r_data_retriever = import('retriever')
   data_sets = list()
@@ -56,7 +56,7 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
 
 #download function
 
-download = function(dataset, path='.', sub_dir=FALSE, log_dir=NULL) {
+download = function(dataset, path, sub_dir, log_dir) {
   library(reticulate)
   r_data_retriever = import('retriever')
   if (sub_dir)
@@ -80,19 +80,18 @@ datasets = function(){
 
 #install functions 
 
-install_csv = function(dataset,table_name ="./{db}_{table}.csv",debug=FALSE,use_cache=TRUE){
+install_csv = function(dataset, table_name, debug, use_cache){
   library(reticulate)
   r_data_retriever = import('retriever')
   r_data_retriever$install_csv(dataset, db_file,debug,use_cache)
   }
 
-install_json = function(dataset,table_name ="./{db}_{table}.csv",debug=FALSE,use_cache=TRUE){
-  library(reticulate)
+install_json = function(dataset, table_name, debug, use_cache){
   r_data_retriever = import('retriever')
   r_data_retriever$install_json(dataset, db_file,debug,use_cache)
   }
 
-install_xml = function(dataset,table_name ="./{db}_{table}.csv",debug=FALSE,use_cache=TRUE){
+install_xml = function(dataset, table_name, debug, use_cache){
   library(reticulate)
   r_data_retriever = import('retriever')
   r_data_retriever$install_xml(dataset, db_file,debug,use_cache)
@@ -122,7 +121,7 @@ install_sqlite = function(dataset, file, table_name, debug, use_cache){
   r_data_retriever$install_sqlite(dataset, file, table_name, debug, use_cache)
   }
 
-install_msaccess(dataset, file, table_name, debug, use_cache){
+install_msaccess = function(dataset, file, table_name, debug, use_cache){
   library(reticulate)
   r_data_retriever = import('retriever')
   r_data_retriever$install_msaccess(dataset,file,table_name,debug,use_cache)
