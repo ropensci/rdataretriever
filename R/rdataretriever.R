@@ -2,7 +2,7 @@
 
 #fetch function
 
-fetch = function(dataset, quiet, data_names){
+fetch = function(dataset, quiet=TRUE, data_names=NULL){
   library(reticulate)
   r_data_retriever = import('retriever')
   data_sets = list()
@@ -56,7 +56,7 @@ fetch = function(dataset, quiet, data_names){
 
 #download function
 
-download = function(dataset, path, sub_dir, log_dir) {
+download = function(dataset, path='./', quiet=FALSE, sub_dir=FALSE, debug=FALSE) {
   library(reticulate)
   r_data_retriever = import('retriever')
   if (sub_dir)
@@ -80,25 +80,26 @@ datasets = function(){
 
 #install functions 
 
-install_csv = function(dataset, table_name, debug, use_cache){
+install_csv = function(dataset,table_name='{db}_{table}.csv',debug=FALSE, use_cache=TRUE){
   library(reticulate)
   r_data_retriever = import('retriever')
-  r_data_retriever$install_csv(dataset, db_file,debug,use_cache)
+  r_data_retriever$install_csv(dataset, table_name ,debug,use_cache)
   }
 
-install_json = function(dataset, table_name, debug, use_cache){
+install_json = function(dataset,table_name='{db}_{table}.json',debug=FALSE, use_cache=TRUE){
   r_data_retriever = import('retriever')
-  r_data_retriever$install_json(dataset, db_file,debug,use_cache)
+  r_data_retriever$install_json(dataset, table_name ,debug,use_cache)
   }
 
-install_xml = function(dataset, table_name, debug, use_cache){
+install_xml = function(dataset,table_name='{db}_{table}.xml',debug=FALSE, use_cache=TRUE){
   library(reticulate)
   r_data_retriever = import('retriever')
-  r_data_retriever$install_xml(dataset, db_file,debug,use_cache)
+  r_data_retriever$install_xml(dataset, table_name ,debug,use_cache)
   }
 
-install_mysql = function(dataset, user, password, host, port, database_name, 
-                         table_name, debug, use_cache){
+install_mysql = function(dataset, user='root', password='', host='localhost',
+                          port=3306, database_name='{db}', table_name='{db}.{table}',
+                          debug=FALSE, use_cache=TRUE){
   library(reticulate)
   r_data_retriever = import('retriever')
   r_data_retriever$install_mysql(dataset, user, password, host,
@@ -106,8 +107,10 @@ install_mysql = function(dataset, user, password, host, port, database_name,
                                  debug, use_cache)
   }
 
-install_postgres = function(dataset, user, password, host, port, database, 
-                database_name, table_name, debug, use_cache){
+install_postgres = function(dataset, user='postgres', password='',
+                            host='localhost', port=5432, database='postgres',
+                            database_name='{db}', table_name='{db}.{table}',
+                            debug=FALSE, use_cache=TRUE){
   library(reticulate)
   r_data_retriever = import('retriever')
   r_data_retriever$install_postgres(dataset, user, password, host,
@@ -115,13 +118,17 @@ install_postgres = function(dataset, user, password, host, port, database,
                                     table_name, debug, use_cache)
   }
 
-install_sqlite = function(dataset, file, table_name, debug, use_cache){
+install_sqlite = function(dataset, file = 'sqlite.db'),
+                          table_name='{db}_{table}',
+                          debug=FALSE, use_cache=TRUE){
   library(reticulate)
   r_data_retriever = import('retriever')
   r_data_retriever$install_sqlite(dataset, file, table_name, debug, use_cache)
   }
 
-install_msaccess = function(dataset, file, table_name, debug, use_cache){
+install_msaccess = function(dataset, file='access.mdb',
+                            table_name='[{db} {table}]',
+                            debug=FALSE, use_cache=TRUE){
   library(reticulate)
   r_data_retriever = import('retriever')
   r_data_retriever$install_msaccess(dataset,file,table_name,debug,use_cache)
@@ -159,20 +166,6 @@ reset = function(scope='all') {
   }
   }
 
-#' Update the retriever's dataset scripts to the most recent versions.
-#' 
-#' This function will check if the version of the retriever's scripts in your local
-#' directory \file{~/.retriever/scripts/} is up-to-date with the most recent official
-#' retriever release. Note it is possible that even more updated scripts exist
-#' at the retriever repository \url{https://github.com/weecology/retriever/tree/master/scripts}
-#' that have not yet been incorperated into an official release, and you should
-#' consider checking that page if you have any concerns. 
-#' @keywords utilities
-#' @export
-#' @examples
-#' \donttest{
-#' rdataretriever::get_updates()
-#' }
 get_updates = function() {
     writeLines(strwrap('Please wait while the retriever updates its scripts, ...'))
     update_log = run_cli('retriever update', intern=TRUE, ignore.stdout=FALSE,
@@ -180,9 +173,6 @@ get_updates = function() {
     writeLines(strwrap(update_log[3]))
   }
 
-#' print the output from get_updates
-#' @keywords internal
-#' @export
 print.update_log = function(x, ...) {
     if (length(x) == 0) {
         cat('No scripts downloaded')
@@ -211,20 +201,11 @@ print.update_log = function(x, ...) {
     check_for_retriever()
   }
 
-#' Determine and set a consistent HOME across systems
-#'
-#' On Windows RStudio produces different results for Sys.getenv('HOME') than
-#' running R in other ways. This also influences CLIs for other programs wrapped
-#' in R.  This function checks to see if an extra "Documents" has been appended
-#' to the home path and sets the environmental variable correctly.
-#' @keywords internal
 set_home = function(...) {
     current_home = normalizePath(Sys.getenv('HOME'), winslash = "/")
     Sys.setenv(HOME = gsub("/Documents", "", Sys.getenv('HOME')))
   }
 
-#' Check if retriever is on the user's path
-#' @keywords internal
 check_for_retriever = function(...) {
     retriever_path = Sys.which('retriever')
     set_home()
@@ -258,9 +239,7 @@ check_for_retriever = function(...) {
         }
 
     }
-
     retriever_path = Sys.which('retriever')
-    
     if (retriever_path == '') {
         path_warn = 'The retriever is not on your path and may not be installed.'
         mac_instr = 'Follow the instructions for installing and manually adding the Data Retriever to your path at http://www.data-retriever.org/#install'
@@ -273,13 +252,6 @@ check_for_retriever = function(...) {
     }    
   }
 
-#' Run command using command line interface
-#'
-#' system() calls to the retriever execute inconsistently on Windows so this
-#' function uses shell() on Windows and system() on other operating systems
-#'
-#' @param command string containing a command line call to the retriever
-#' @keywords internal
 run_cli = function(...) {
     os = Sys.info()[['sysname']]
     if (os == "Windows") {
