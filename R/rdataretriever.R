@@ -118,7 +118,7 @@ install_postgres = function(dataset, user='postgres', password='',
                                     table_name, debug, use_cache)
   }
 
-install_sqlite = function(dataset, file = 'sqlite.db'),
+install_sqlite = function(dataset, file = 'sqlite.db',
                           table_name='{db}_{table}',
                           debug=FALSE, use_cache=TRUE){
   library(reticulate)
