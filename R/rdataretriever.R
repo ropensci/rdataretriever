@@ -208,36 +208,16 @@ set_home = function(...) {
 
 check_for_retriever = function(...) {
     retriever_path = Sys.which('retriever')
-    set_home()
-    home_dir = Sys.getenv('HOME')
-    #Rstudio will not import any paths configured for anaconda python installs, so add default anaconda paths
-    #manually. See http://stackoverflow.com/questions/31121645/rstudio-shows-a-different-path-variable
-    if (retriever_path == '') {
-        os = Sys.info()[['sysname']]
-        possible_pathes = c('/Anaconda3/Scripts',
-                            '/Anaconda2/Scripts',
-                            '/Anaconda/Scripts',
-                            '/Miniconda3/Scripts',
-                            '/Miniconda2/Scripts',
-                            '/anaconda3/bin',
-                            '/anaconda2/bin',
-                            '/anaconda/bin',
-                            '/miniconda3/bin',
-                            '/miniconda2/bin')
-        for (i in possible_pathes) {
-            Sys.setenv(PATH = paste(Sys.getenv('PATH'), ':', home_dir, i, sep = ''))
+    if(retriever_path == ''){
+      os = Sys.info[['sysname']]
+      if(os == 'Windows'){
+        command = 'where retriever'
+        retriever_location = suppressWarnings(system(command,intern = T,ignore.stderr = T))
+        if(length(retriever_location) != 0){
+          retriever_path = gsub('retriever.exe', '', retriever_location)
+          Sys.setenv(PATH = paste(Sys.getenv('PATH'), ';', retriever_path, sep = ''))
         }
-
-        # paths on Windows if installed using executable:
-        if (Sys.info()[['sysname']] == "Windows") {
-          more_win_paths = c('C:/',
-                             'C:/Program files/',
-                             'C:/Program files (x86)/')
-          for (i in more_win_paths) {
-            Sys.setenv(PATH = paste(Sys.getenv('PATH'), ';', i, 'DataRetriever', sep = ''))
-          }
-        }
-
+      }
     }
     retriever_path = Sys.which('retriever')
     if (retriever_path == '') {
