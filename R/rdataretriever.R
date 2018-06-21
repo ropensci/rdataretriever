@@ -2,6 +2,16 @@
 
 #fetch function
 
+#' Title
+#'
+#' @param dataset 
+#' @param quiet 
+#' @param data_names 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 fetch = function(dataset, quiet=TRUE, data_names=NULL){
   library(reticulate)
   r_data_retriever = import('retriever')
@@ -56,6 +66,18 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
 
 #download function
 
+#' Title
+#'
+#' @param dataset 
+#' @param path 
+#' @param quiet 
+#' @param sub_dir 
+#' @param debug 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 download = function(dataset, path='./', quiet=FALSE, sub_dir=FALSE, debug=FALSE) {
   library(reticulate)
   r_data_retriever = import('retriever')
@@ -67,6 +89,12 @@ download = function(dataset, path='./', quiet=FALSE, sub_dir=FALSE, debug=FALSE)
 
 #datasets function
 
+#' Title
+#'
+#' @return
+#' @export
+#'
+#' @examples
 datasets = function(){
   library(reticulate)
   r_data_retriever = import('retriever')
@@ -80,23 +108,72 @@ datasets = function(){
 
 #install functions 
 
+#' Title
+#'
+#' @param dataset 
+#' @param table_name 
+#' @param debug 
+#' @param use_cache 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 install_csv = function(dataset,table_name='{db}_{table}.csv',debug=FALSE, use_cache=TRUE){
   library(reticulate)
   r_data_retriever = import('retriever')
   r_data_retriever$install_csv(dataset, table_name ,debug,use_cache)
   }
 
+#' Title
+#'
+#' @param dataset 
+#' @param table_name 
+#' @param debug 
+#' @param use_cache 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 install_json = function(dataset,table_name='{db}_{table}.json',debug=FALSE, use_cache=TRUE){
   r_data_retriever = import('retriever')
   r_data_retriever$install_json(dataset, table_name ,debug,use_cache)
   }
 
+#' Title
+#'
+#' @param dataset 
+#' @param table_name 
+#' @param debug 
+#' @param use_cache 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 install_xml = function(dataset,table_name='{db}_{table}.xml',debug=FALSE, use_cache=TRUE){
   library(reticulate)
   r_data_retriever = import('retriever')
   r_data_retriever$install_xml(dataset, table_name ,debug,use_cache)
   }
 
+#' Title
+#'
+#' @param dataset 
+#' @param user 
+#' @param password 
+#' @param host 
+#' @param port 
+#' @param database_name 
+#' @param table_name 
+#' @param debug 
+#' @param use_cache 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 install_mysql = function(dataset, user='root', password='', host='localhost',
                           port=3306, database_name='{db}', table_name='{db}.{table}',
                           debug=FALSE, use_cache=TRUE){
@@ -107,6 +184,23 @@ install_mysql = function(dataset, user='root', password='', host='localhost',
                                  debug, use_cache)
   }
 
+#' Title
+#'
+#' @param dataset 
+#' @param user 
+#' @param password 
+#' @param host 
+#' @param port 
+#' @param database 
+#' @param database_name 
+#' @param table_name 
+#' @param debug 
+#' @param use_cache 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 install_postgres = function(dataset, user='postgres', password='',
                             host='localhost', port=5432, database='postgres',
                             database_name='{db}', table_name='{db}.{table}',
@@ -118,6 +212,18 @@ install_postgres = function(dataset, user='postgres', password='',
                                     table_name, debug, use_cache)
   }
 
+#' Title
+#'
+#' @param dataset 
+#' @param file 
+#' @param table_name 
+#' @param debug 
+#' @param use_cache 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 install_sqlite = function(dataset, file = 'sqlite.db',
                           table_name='{db}_{table}',
                           debug=FALSE, use_cache=TRUE){
@@ -126,6 +232,18 @@ install_sqlite = function(dataset, file = 'sqlite.db',
   r_data_retriever$install_sqlite(dataset, file, table_name, debug, use_cache)
   }
 
+#' Title
+#'
+#' @param dataset 
+#' @param file 
+#' @param table_name 
+#' @param debug 
+#' @param use_cache 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 install_msaccess = function(dataset, file='access.mdb',
                             table_name='[{db} {table}]',
                             debug=FALSE, use_cache=TRUE){
@@ -136,6 +254,14 @@ install_msaccess = function(dataset, file='access.mdb',
 
 #get_citation
 
+#' Title
+#'
+#' @param dataset 
+#'
+#' @return
+#' @export
+#'
+#' @examples
 get_citation = function(dataset) {
     run_cli(paste('retriever citation', dataset))
   }
@@ -166,6 +292,12 @@ reset = function(scope='all') {
   }
   }
 
+#' Title
+#'
+#' @return
+#' @export
+#'
+#' @examples
 get_updates = function() {
     writeLines(strwrap('Please wait while the retriever updates its scripts, ...'))
     update_log = run_cli('retriever update', intern=TRUE, ignore.stdout=FALSE,
@@ -239,4 +371,20 @@ run_cli = function(...) {
     } else {
         system(...)
     }
+}
+
+get_os <- function(){
+  sysinf <- Sys.info()
+  if (!is.null(sysinf)){
+    os <- sysinf['sysname']
+    if (os == 'Darwin')
+      os <- "osx"
+  } else { ## mystery machine
+    os <- .Platform$OS.type
+    if (grepl("^darwin", R.version$os))
+      os <- "osx"
+    if (grepl("linux-gnu", R.version$os))
+      os <- "linux"
   }
+  tolower(os)
+}
