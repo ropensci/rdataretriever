@@ -2,7 +2,7 @@ context("regression tests")
 
 library(DBI)
 library(RPostgreSQL)
-library(RMySQL)
+#library(RMySQL)
 library(RSQLite)
 library(reticulate)
 
@@ -106,26 +106,26 @@ test_that("Install dataset into Postgres", {
 })
 
 
-test_that("Install the dataset into Mysql", {
-  try(system(
-    "mysql -u travis -Bse 'DROP DATABASE IF EXISTS testdb'",
-    intern = TRUE,
-    ignore.stderr = TRUE
-  ))
-  portal <- c("main", "plots", "species")
-  rdataretriever::install_mysql('portal',database_name = 'testdb')
-  con <- dbConnect(
-    RMySQL::MySQL(),
-    user = 'travis',
-    host = 'localhost',
-    password = '',
-    port = 3306,
-    dbname = 'testdb'
-  )
-  result <- dbListTables(con)
-  dbDisconnect(con)
-  expect_setequal(result, portal)
-})
+# test_that("Install the dataset into Mysql", {
+#   try(system(
+#     "mysql -u travis -Bse 'DROP DATABASE IF EXISTS testdb'",
+#     intern = TRUE,
+#     ignore.stderr = TRUE
+#   ))
+#   portal <- c("main", "plots", "species")
+#   rdataretriever::install_mysql('portal',database_name = 'testdb')
+#   con <- dbConnect(
+#     RMySQL::MySQL(),
+#     user = 'travis',
+#     host = 'localhost',
+#     password = '',
+#     port = 3306,
+#     dbname = 'testdb'
+#   )
+#   result <- dbListTables(con)
+#   dbDisconnect(con)
+#   expect_setequal(result, portal)
+# })
 
 test_that("Install portal into sqlite", {
   # Install the portal into Sqlite
