@@ -300,10 +300,21 @@ reset = function(scope='all') {
 #' @examples
 get_updates = function() {
     writeLines(strwrap('Please wait while the retriever updates its scripts, ...'))
-    update_log = run_cli('retriever update', intern=TRUE, ignore.stdout=FALSE,
-                         ignore.stderr=TRUE)
+    update_log = run_cli('retriever update')
     writeLines(strwrap(update_log[3]))
   }
+
+#' Title
+#'
+#' @param path 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+use_RetrieverPath = function(path){
+  Sys.setenv(PATH = paste(path,':',Sys.getenv('PATH'),sep = ''))
+}
 
 print.update_log = function(x, ...) {
     if (length(x) == 0) {
@@ -339,28 +350,21 @@ set_home = function(...) {
   }
 
 check_for_retriever = function(...) {
-    retriever_path = Sys.which('retriever')
-    if(retriever_path == ''){
-      os = Sys.info[['sysname']]
-      if(os == 'Windows'){
-        command = 'where retriever'
-        retriever_location = suppressWarnings(system(command,intern = T,ignore.stderr = T))
-        if(length(retriever_location) != 0){
-          retriever_path = gsub('retriever.exe', '', retriever_location)
-          Sys.setenv(PATH = paste(Sys.getenv('PATH'), ';', retriever_path, sep = ''))
-        }
-      }
-    }
-    retriever_path = Sys.which('retriever')
-    if (retriever_path == '') {
-        path_warn = 'The retriever is not on your path and may not be installed.'
-        mac_instr = 'Follow the instructions for installing and manually adding the Data Retriever to your path at http://www.data-retriever.org/#install'
-        download_instr = 'Please upgrade to the most recent version of the Data Retriever, which will automatically add itself to the path http://www.data-retriever.org/#install'
-        os = Sys.info()[['sysname']]
-        if (os == 'Darwin')
-            packageStartupMessage(paste(path_warn, mac_instr))
-        else 
-            packageStartupMessage(paste(path_warn, download_instr))
+  library(reticulate)
+  python_paths = py_config()[13][[1]]
+  python_paths = unique(unlist(lapply(python_paths,dirname)))
+  python_paths = paste(python_paths,collapse = ':')
+  Sys.setenv(PATH = paste(python_paths,':',Sys.getenv('PATH'),sep=''))
+  retriever_path = Sys.which('retriever')  
+  if (retriever_path == '') {
+    path_warn = 'The retriever is not on your path and may not be installed.'
+    mac_instr = 'Follow the instructions for installing and manually adding the Data Retriever to your path at http://www.data-retriever.org/#install'
+    download_instr = 'Please upgrade to the most recent version of the Data Retriever, which will automatically add itself to the path http://www.data-retriever.org/#install'
+    os = Sys.info()[['sysname']]
+    if (os == 'Darwin')
+      packageStartupMessage(paste(path_warn, mac_instr))
+    else 
+      packageStartupMessage(paste(path_warn, download_instr))
     }    
   }
 
@@ -371,7 +375,7 @@ run_cli = function(...) {
     } else {
         system(...)
     }
-}
+  }
 
 get_os <- function(){
   sysinf <- Sys.info()
@@ -387,4 +391,4 @@ get_os <- function(){
       os <- "linux"
   }
   tolower(os)
-}
+  }
