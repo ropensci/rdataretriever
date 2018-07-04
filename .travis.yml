@@ -35,7 +35,7 @@ before_install:
 install:
   - R -e 'install.packages(c("devtools"));if (!all(c("devtools") %in% installed.packages())) { q(status = 1, save = "no")}'
   - R -e 'library(devtools);devtools::install_github("klutometis/roxygen")'
-  - R -e 'install.packages(c("reticulate"), dependencies=TRUE)
+  - R -e 'install.packages(c("reticulate"), dependencies=TRUE)'
   # install Retriever python library
   - git clone https://github.com/weecology/retriever.git retriever
   - cd retriever
