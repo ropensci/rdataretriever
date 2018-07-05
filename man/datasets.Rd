@@ -2,19 +2,10 @@
 % Please edit documentation in R/rdataretriever.R
 \name{datasets}
 \alias{datasets}
-\title{Name all available dataset scripts.}
+\title{Title}
 \usage{
 datasets()
 }
-\value{
-returns a character vector with the available datasets for download
-}
 \description{
-Additional information on the available datasets can be found at \url{https://retriever.readthedocs.io/en/latest/datasets.html}
+Title
 }
-\examples{
-\donttest{
-rdataretriever::datasets()
-}
-}
-
