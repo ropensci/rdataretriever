@@ -46,6 +46,7 @@ install:
   - sudo $PYTHON -m pip install pytest-cov -U
   - sudo $PYTHON -m pip install pytest-xdist -U
   - sudo $PYTHON -m pip install  . -U
+  - sudo $PYTHON -m pip install retriever
   - cd ..
   - rm -rf retriever/
   - sudo rm -rf ~/.retriever
