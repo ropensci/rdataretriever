@@ -39,8 +39,8 @@ install:
 #  - sudo pip install retriever
 #  - sudo retriever update
   # install Retriever python library
-  - pip install git+https://github.com/weecology/retriever.git@master
-  - retriever update
+  - sudo pip install git+https://github.com/weecology/retriever.git@master
+  - sudo retriever update
  # - git clone https://github.com/weecology/retriever.git retriever
  # - cd retriever
  # - wget https://bootstrap.pypa.io/get-pip.py
