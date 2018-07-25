@@ -36,9 +36,11 @@ before_install:
 install:
   - R -e 'install.packages(c("devtools"));if (!all(c("devtools") %in% installed.packages())) { q(status = 1, save = "no")}'
   - R -e 'library(devtools);devtools::install_github("klutometis/roxygen")'
-  - sudo pip install retriever
-  - sudo retriever update
+#  - sudo pip install retriever
+#  - sudo retriever update
   # install Retriever python library
+  - pip install git+https://github.com/weecology/retriever.git@master
+  - retriever update
  # - git clone https://github.com/weecology/retriever.git retriever
  # - cd retriever
  # - wget https://bootstrap.pypa.io/get-pip.py
