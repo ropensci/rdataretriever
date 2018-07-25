@@ -66,7 +66,7 @@ script:
   - R CMD check *tar.gz --no-install --no-multiarch --no-examples
   - sudo python -c "import retriever"
 #  - R -e 'library(reticulate); import("retriever")'
-  - R -e 'x = system("which retriever",intern=T);x = dirname(x); rdataretriever::use_RetrieverPath(x);rdataretriever::datasets()'
+  - R -e 'x = system("which retriever",intern=T);x = dirname(x); rdataretriever::use_RetrieverPath(x);rdataretriever::get_updates();rdataretriever::datasets()'
 #  - R -e 'system("whereis retriever")'
   - R -e 'library(testthat)'
   - R -e 'library(devtools);devtools::test()'
