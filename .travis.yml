@@ -60,5 +60,6 @@ before_script:
   - psql -c 'create database testdb;' -U postgres
 script:
   - R -e 'library(testthat)'
+  - R -e 'library(rdataretriever)'
   - R -e 'rdataretriever::get_updates()'
-  - R -e 'library(reticulate); rt <- import("retriever"); rdataretriever::datasets()'
+  - R -e 'library(reticulate); rdataretriever::datasets()'
