@@ -224,7 +224,7 @@ install_postgres = function(dataset, user='postgres', password='',
 #' @export
 #'
 #' @examples
-install_sqlite = function(dataset, file = 'sqlite.db',
+install_sqlite = function(dataset, file = './sqlite.db',
                           table_name='{db}_{table}',
                           debug=FALSE, use_cache=TRUE){
   library(reticulate)
@@ -244,7 +244,7 @@ install_sqlite = function(dataset, file = 'sqlite.db',
 #' @export
 #'
 #' @examples
-install_msaccess = function(dataset, file='access.mdb',
+install_msaccess = function(dataset, file='./access.mdb',
                             table_name='[{db} {table}]',
                             debug=FALSE, use_cache=TRUE){
   library(reticulate)
