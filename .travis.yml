@@ -63,7 +63,7 @@ script:
   - R CMD build .
   - R CMD INSTALL *tar.gz
   - R CMD check *tar.gz --no-install --no-multiarch --no-examples
-  - python -e "import retriever"
+  - python -c "import retriever"
   - R -e 'library(reticulate); import("retriever")'
 #  - R -e 'x = system("which retriever",intern=T);x = dirname(x); rdataretriever::use_RetrieverPath(x);rdataretriever::datasets()'
 #  - R -e 'system("whereis retriever")'
