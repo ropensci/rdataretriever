@@ -6,7 +6,6 @@ r_packages:
   - covr
   - RPostgreSQL
   - DBI
-  - reticulate
   - testthat
 os:
   - linux
@@ -59,7 +58,10 @@ before_script:
   - sqlite3 --version
   - psql -c 'create database testdb;' -U postgres
 script:
+  - R CMD build .
+  - R CMD INSTALL *tar.gz
+  - R CMD check *tar.gz --no-install --no-multiarch --no-examples
   - R -e 'library(testthat)'
-  - R -e 'library(rdataretriever)'
-  - R -e 'rdataretriever::get_updates()'
-  - R -e 'library(reticulate); rdataretriever::datasets()'
+  - R -e 'library(devtools);devtools::test()'
+after_success:
+  - sudo R -e 'library("covr");codecov()'
