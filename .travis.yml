@@ -62,7 +62,8 @@ script:
   - R CMD build .
   - R CMD INSTALL *tar.gz
   - R CMD check *tar.gz --no-install --no-multiarch --no-examples
-  - R -e 'system('which retriever')'
+  - R
+  - which('retriever')
   - R -e 'library(testthat)'
 #  - R -e 'library(devtools);devtools::test()'
 after_success:
