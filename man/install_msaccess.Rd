@@ -4,7 +4,7 @@
 \alias{install_msaccess}
 \title{Title}
 \usage{
-install_msaccess(dataset, file = "access.mdb",
+install_msaccess(dataset, file = "./access.mdb",
   table_name = "[{db} {table}]", debug = FALSE, use_cache = TRUE)
 }
 \arguments{

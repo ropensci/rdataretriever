@@ -4,7 +4,7 @@
 \alias{install_sqlite}
 \title{Title}
 \usage{
-install_sqlite(dataset, file = "sqlite.db", table_name = "{db}_{table}",
+install_sqlite(dataset, file = "./sqlite.db", table_name = "{db}_{table}",
   debug = FALSE, use_cache = TRUE)
 }
 \arguments{
