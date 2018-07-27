@@ -41,6 +41,8 @@ install:
   # install Retriever python library
   - sudo pip install git+https://github.com/weecology/retriever.git@master
   - sudo retriever update
+  - sudo pip install pymysql
+  - sudo pip install psycopg2
  # - git clone https://github.com/weecology/retriever.git retriever
  # - cd retriever
  # - wget https://bootstrap.pypa.io/get-pip.py
