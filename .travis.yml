@@ -63,8 +63,8 @@ install:
   - export PKG_CPPFLAGS+=" -D PYTHONLIBFILE=\\\"libpython${R_PYTHON_VERSION}.so\\\""
 # database setup
 before_script:
-  - sqlite3 --version
-  - psql -c 'create database testdb;' -U postgres
+  - sudo sqlite3 --version
+  - sudo psql -c 'create database testdb;' -U postgres
 script:
   - R CMD build .
   - R CMD INSTALL *tar.gz
