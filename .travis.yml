@@ -49,10 +49,10 @@ install:
 #  - sudo $PYTHON get-pip.py
 #  - rm -rf get-pip.py
 #  - sudo $PYTHON -m pip install -r requirements.txt
-  - sudo $PYTHON -m pip install pytest-cov -U
-  - sudo $PYTHON -m pip install pytest-xdist -U
-  - sudo $PYTHON -m pip install  . -U
-  - sudo $PYTHON -m pip install retriever
+  - sudo pip install pytest-cov -U
+  - sudo pip install pytest-xdist -U
+  - sudo pip install  . -U
+  - sudo -m pip install retriever
   - cd ..
   - rm -rf retriever/
   - sudo rm -rf ~/.retriever
