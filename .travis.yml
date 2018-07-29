@@ -49,13 +49,13 @@ install:
 #  - sudo $PYTHON get-pip.py
 #  - rm -rf get-pip.py
 #  - sudo $PYTHON -m pip install -r requirements.txt
-#  - sudo $PYTHON -m pip install pytest-cov -U
-#  - sudo $PYTHON -m pip install pytest-xdist -U
-#  - sudo $PYTHON -m pip install  . -U
-#  - sudo $PYTHON -m pip install retriever
-#  - cd ..
-#  - rm -rf retriever/
-#  - sudo rm -rf ~/.retriever
+  - sudo $PYTHON -m pip install pytest-cov -U
+  - sudo $PYTHON -m pip install pytest-xdist -U
+  - sudo $PYTHON -m pip install  . -U
+  - sudo $PYTHON -m pip install retriever
+  - cd ..
+  - rm -rf retriever/
+  - sudo rm -rf ~/.retriever
   # Exports
   - export PYTHON_CONFIG=python${R_PYTHON_VERSION}-config
   - export PKG_LIBS=`$PYTHON_CONFIG --ldflags`
