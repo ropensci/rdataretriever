@@ -57,6 +57,7 @@ install:
   - cd ..
   - rm -rf retriever/
   - sudo rm -rf ~/.retriever
+  - sudo retriever update
   - sudo retriever install csv portal
   - sudo ls -l
   # Exports
