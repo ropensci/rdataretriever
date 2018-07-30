@@ -41,7 +41,7 @@ install:
   # install Retriever python library
   - sudo pip install git+https://github.com/weecology/retriever.git@master
   - sudo retriever update
-  - sudo python -c "import retriever"
+  - sudo python -c "import retriever;retriever.check_for_updates();retriever.dataset_names()"
 #  - sudo pip install pymysql
 #  - sudo pip install psycopg2
 #  - retriever install csv portal
