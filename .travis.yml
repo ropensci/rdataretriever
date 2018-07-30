@@ -40,8 +40,8 @@ install:
 #  - sudo chmod -R 777 /usr/local/lib/python2.7/dist-packages .
   - pip install --user -U git+https://github.com/weecology/retriever.git@master
   - retriever update
-  - python -c "import retriever;retriever.check_for_updates();retriever.dataset_names()"
-  - python -c "import retriever;retriever.install_csv('portal')"
+#  - python -c "import retriever;retriever.check_for_updates();retriever.dataset_names()"
+#  - python -c "import retriever;retriever.install_csv('portal')"
   - pip install --user  psycopg2
   - pip install --user  pymysql
 #  - sudo ls -l
