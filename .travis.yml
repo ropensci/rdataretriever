@@ -37,6 +37,7 @@ install:
   - R -e 'install.packages(c("devtools"));if (!all(c("devtools") %in% installed.packages())) { q(status = 1, save = "no")}'
   - R -e 'library(devtools);devtools::install_github("klutometis/roxygen")'
   # install Retriever python library
+  - sudo chmod -R 777 /usr/local/lib/python2.7/dist-packages .
   - pip install git+https://github.com/weecology/retriever.git@master
   - retriever update
   - python -c "import retriever;retriever.check_for_updates();retriever.dataset_names()"
