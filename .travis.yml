@@ -59,6 +59,7 @@ install:
    - rm -rf retriever/
    - sudo rm -rf ~/.retriever
    - sudo retriever install csv portal
+   - sudo ls -l
   # Exports
   - export PYTHON_CONFIG=python${R_PYTHON_VERSION}-config
   - export PKG_LIBS=`$PYTHON_CONFIG --ldflags`
