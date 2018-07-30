@@ -60,10 +60,10 @@ install:
   - cd ..
   - rm -rf retriever/
   - sudo rm -rf ~/.retriever
-  - sudo retriever update
-  - sudo retriever install csv portal
-  - sudo ls -l
-  - sudo pip install retriever
+#  - sudo retriever update
+#  - sudo retriever install csv portal
+#  - sudo ls -l
+#  - sudo pip install retriever
   - sudo python -c "import retriever as rt;rt.check_for_updates();rt.dataset_names()"
   # Exports
   - export PYTHON_CONFIG=python${R_PYTHON_VERSION}-config
