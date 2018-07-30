@@ -43,6 +43,7 @@ install:
   - sudo retriever update
   - sudo pip install pymysql
   - sudo pip install psycopg2
+  - sudo retriever download portal
  # - git clone https://github.com/weecology/retriever.git retriever
 #  - cd retriever
 #  - wget https://bootstrap.pypa.io/get-pip.py
@@ -69,9 +70,9 @@ script:
   - R CMD build .
   - R CMD INSTALL *tar.gz
   - R CMD check *tar.gz --no-install --no-multiarch --no-examples
-  - sudo python -c "import retriever"
+#  - sudo python -c "import retriever"
 #  - R -e 'library(reticulate); import("retriever")'
-  - R -e 'x = system("which retriever",intern=T);x = dirname(x); rdataretriever::use_RetrieverPath(x);rdataretriever::get_updates(); rdataretriever::install_csv('portal')'
+#  - R -e 'x = system("which retriever",intern=T);x = dirname(x); rdataretriever::use_RetrieverPath(x);rdataretriever::get_updates(); rdataretriever::install_csv('portal')'
 #  - R -e 'system("whereis retriever")'
 #  - R -e 'library(testthat)'
 #  - R -e 'library(devtools);devtools::test()'
