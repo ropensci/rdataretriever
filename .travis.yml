@@ -45,21 +45,23 @@ install:
 #  - sudo pip install psycopg2
 #  - retriever install csv portal
 #  - ls -l
-  - git clone https://github.com/weecology/retriever.git retriever
-  - cd retriever
-  - wget https://bootstrap.pypa.io/get-pip.py
-  - sudo $PYTHON get-pip.py
-  - rm -rf get-pip.py
-  - sudo $PYTHON -m pip install -r requirements.txt
-  - sudo pip install pytest-cov -U
-  - sudo pip install pytest-xdist -U
-  - sudo pip install  . -U
-  - cd ..
-  - rm -rf retriever/
-  - sudo rm -rf ~/.retriever
-  - sudo retriever update
-  - sudo retriever install csv portal
-  - sudo ls -l
+#  - git clone https://github.com/weecology/retriever.git retriever
+#  - cd retriever
+#  - wget https://bootstrap.pypa.io/get-pip.py
+#  - sudo $PYTHON get-pip.py
+#  - rm -rf get-pip.py
+#  - sudo $PYTHON -m pip install -r requirements.txt
+#  - sudo pip install pytest-cov -U
+#  - sudo pip install pytest-xdist -U
+#  - sudo pip install  . -U
+#  - cd ..
+#  - rm -rf retriever/
+#  - sudo rm -rf ~/.retriever
+#  - sudo retriever update
+#  - sudo retriever install csv portal
+#  - sudo ls -l
+   - sudo pip install retriever
+   - sudo python -c "import retriever as rt;rt.check_for_updates();rt.dataset_names()"
   # Exports
   - export PYTHON_CONFIG=python${R_PYTHON_VERSION}-config
   - export PKG_LIBS=`$PYTHON_CONFIG --ldflags`
