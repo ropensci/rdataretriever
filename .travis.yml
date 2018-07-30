@@ -44,6 +44,7 @@ install:
   - sudo pip install pymysql
   - sudo pip install psycopg2
   - sudo retriever install csv portal
+  - sudo ls -l
  # - git clone https://github.com/weecology/retriever.git retriever
 #  - cd retriever
 #  - wget https://bootstrap.pypa.io/get-pip.py
