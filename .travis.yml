@@ -42,6 +42,8 @@ install:
   - retriever update
   - python -c "import retriever;retriever.check_for_updates();retriever.dataset_names()"
   - python -c "import retriever;retriever.install_csv('portal')"
+  - pip install --user -U psycopg2
+  - pip install --user -U pymysql
 #  - sudo ls -l
 #  - sudo pip install pymysql
 #  - sudo pip install psycopg2
@@ -79,7 +81,7 @@ script:
   - R CMD check *tar.gz --no-install --no-multiarch --no-examples
   - sudo python -c "import retriever"
   - R -e 'library(reticulate); import("retriever")'
-  - R -e 'x = system("which retriever",intern=T);x = dirname(x); rdataretriever::use_RetrieverPath(x);rdataretriever::get_updates(); rdataretriever::install_csv('portal')'
+#  - R -e 'x = system("which retriever",intern=T);x = dirname(x); rdataretriever::use_RetrieverPath(x);rdataretriever::get_updates(); rdataretriever::install_csv('portal')'
 #  - R -e 'system("whereis retriever")'
   - R -e 'library(testthat)'
   - R -e 'library(devtools);devtools::test()'
