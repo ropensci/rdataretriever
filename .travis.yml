@@ -26,7 +26,7 @@ addons:
       - r-cran-dbi
       - r-cran-rpostgresql
       - r-cran-rmysql
-    #  - r-cran-rsqlite
+      - r-cran-rsqlite
 env:
   - R_PYTHON_VERSION=3
 before_install:
