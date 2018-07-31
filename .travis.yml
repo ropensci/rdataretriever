@@ -33,12 +33,8 @@ before_install:
   - export PYTHON=$(which python$R_PYTHON_VERSION)
   - export PYTHONPATH=$(which python$R_PYTHON_VERSION):$PYTHONPATH
   - export RETICULATE_PYTHON=$PYTHON
-
-
   - R_PATH="PATH=$PATH" | echo $R_PATH >  ~/.Renviron
   - R_RETICULATE_PYTHON="RETICULATE_PYTHON=$PYTHON" | echo $R_RETICULATE_PYTHON >>  ~/.Renviron
-  # we can do 
-  # - echo $env > ~/.Renviron
 
 install:
   - R -e 'install.packages(c("devtools"));if (!all(c("devtools") %in% installed.packages())) { q(status = 1, save = "no")}'
