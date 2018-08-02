@@ -1,21 +1,24 @@
 language: r
 cache: packages
-sudo: false
+sudo: required
 warnings_are_errors: false
 r_packages:
   - covr
   - RPostgreSQL
+  - RMariaDB
   - DBI
   - testthat
-  - reticulate
 os:
   - linux
 brew_packages: python3
 services:
   - postgresql
+  - MySQL
 addons:
   postgresql: "9.4"
   apt:
+    sources:
+      - mysql-5.7-trusty
     packages:
       - python-dev
       - python
@@ -27,60 +30,49 @@ addons:
       - r-cran-rpostgresql
       - r-cran-rmysql
       - r-cran-rsqlite
+      - libmariadbclient-dev
 env:
   - R_PYTHON_VERSION=3
 before_install:
   - export PATH=$(which python$R_PYTHON_VERSION):$PATH
   - export PYTHON=$(which python$R_PYTHON_VERSION)
   - export PYTHONPATH=$(which python$R_PYTHON_VERSION):$PYTHONPATH
+  - export RETICULATE_PYTHON=$PYTHON
+  - R_PATH="PATH=$PATH" | echo $R_PATH >  ~/.Renviron
+  - R_RETICULATE_PYTHON="RETICULATE_PYTHON=$PYTHON" | echo $R_RETICULATE_PYTHON >>  ~/.Renviron
+  - psql -c 'create database testdb;' -U postgres
+before_script:
+  - mysql -e "create database IF NOT EXISTS testdb;" -uroot
 install:
   - R -e 'install.packages(c("devtools"));if (!all(c("devtools") %in% installed.packages())) { q(status = 1, save = "no")}'
   - R -e 'library(devtools);devtools::install_github("klutometis/roxygen")'
-  # install Retriever python library
-  - sudo pip install git+https://github.com/weecology/retriever.git@master
-  - sudo retriever update
-  - sudo python -c "import retriever;retriever.check_for_updates();retriever.dataset_names()"
-  - sudo python -c "import retriever;retriever.install_csv('portal')"
-  - sudo ls -l
-#  - sudo pip install pymysql
-#  - sudo pip install psycopg2
-#  - retriever install csv portal
-#  - ls -l
-#  - git clone https://github.com/weecology/retriever.git retriever
-#  - cd retriever
-#  - wget https://bootstrap.pypa.io/get-pip.py
-#  - sudo $PYTHON get-pip.py
-#  - rm -rf get-pip.py
-#  - sudo $PYTHON -m pip install -r requirements.txt
-#  - sudo pip install pytest-cov -U
-#  - sudo pip install pytest-xdist -U
-#  - sudo pip install  . -U
-#  - cd ..
-#  - rm -rf retriever/
-#  - sudo rm -rf ~/.retriever
-#  - sudo retriever update
-#  - sudo retriever install csv portal
-#  - sudo ls -l
-#  - sudo pip install retriever
-#  - sudo python -c "import retriever as rt;rt.check_for_updates();rt.dataset_names()"
-  # Exports
+  - R -e 'library(devtools);devtools::install_github("rstats-db/DBI")'
+  - R -e 'library(devtools);devtools::install_github("rstats-db/RMariaDB")'
+  - R -e 'devtools::install_github("rstudio/reticulate")'
+
+  - git clone https://github.com/weecology/retriever.git retriever
+  - cd retriever
+  - wget https://bootstrap.pypa.io/get-pip.py
+  - sudo $PYTHON get-pip.py
+  - rm -rf get-pip.py
+  - sudo $PYTHON -m pip install -r requirements.txt
+  - sudo $PYTHON -m pip install pytest-cov -U
+  - sudo $PYTHON -m pip install pytest-xdist -U
+  - sudo $PYTHON -m pip install  . -U
+  - cd ..
+  - rm -rf retriever/
+  - sudo rm -rf ~/.retriever
+
   - export PYTHON_CONFIG=python${R_PYTHON_VERSION}-config
   - export PKG_LIBS=`$PYTHON_CONFIG --ldflags`
   - export PKG_CPPFLAGS=`$PYTHON_CONFIG --includes`
   - export PKG_CPPFLAGS+=" -D PYTHONLIBFILE=\\\"libpython${R_PYTHON_VERSION}.so\\\""
-# database setup
-before_script:
-  - sudo sqlite3 --version
-  - sudo psql -c 'create database testdb;' -U postgres
+
 script:
   - R CMD build .
   - R CMD INSTALL *tar.gz
   - R CMD check *tar.gz --no-install --no-multiarch --no-examples
-  - sudo python -c "import retriever"
-  - R -e 'library(reticulate); import("retriever")'
-#  - R -e 'x = system("which retriever",intern=T);x = dirname(x); rdataretriever::use_RetrieverPath(x);rdataretriever::get_updates(); rdataretriever::install_csv('portal')'
-#  - R -e 'system("whereis retriever")'
-#  - R -e 'library(testthat)'
-#  - R -e 'library(devtools);devtools::test()'
-after_success:
-- sudo R -e 'library("covr");codecov()'
+  - R -e 'rdataretriever::get_updates()'
+  - R -e 'library(reticulate); rt <- import("retriever"); rdataretriever::datasets()'
+  - R -e 'library(testthat)'
+
