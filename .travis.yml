@@ -8,6 +8,12 @@ r_packages:
   - RMariaDB
   - DBI
   - testthat
+r_github_packages:
+  - r-lib/devtools
+  - klutometis/roxygen
+  - rstats-db/DBI
+  - rstats-db/RMariaDB
+  - rstudio/reticulate
 os:
   - linux
 brew_packages: python3
@@ -44,11 +50,11 @@ before_install:
 before_script:
   - mysql -e "create database IF NOT EXISTS testdb;" -uroot
 install:
-  - R -e 'install.packages(c("devtools"));if (!all(c("devtools") %in% installed.packages())) { q(status = 1, save = "no")}'
-  - R -e 'library(devtools);devtools::install_github("klutometis/roxygen")'
-  - R -e 'library(devtools);devtools::install_github("rstats-db/DBI")'
-  - R -e 'library(devtools);devtools::install_github("rstats-db/RMariaDB")'
-  - R -e 'devtools::install_github("rstudio/reticulate")'
+#  - R -e 'install.packages(c("devtools"));if (!all(c("devtools") %in% installed.packages())) { q(status = 1, save = "no")}'
+#  - R -e 'library(devtools);devtools::install_github("klutometis/roxygen")'
+#  - R -e 'library(devtools);devtools::install_github("rstats-db/DBI")'
+#  - R -e 'library(devtools);devtools::install_github("rstats-db/RMariaDB")'
+#  - R -e 'devtools::install_github("rstudio/reticulate")'
 
   - git clone https://github.com/weecology/retriever.git retriever
   - cd retriever
@@ -68,7 +74,7 @@ install:
   - export PKG_CPPFLAGS=`$PYTHON_CONFIG --includes`
   - export PKG_CPPFLAGS+=" -D PYTHONLIBFILE=\\\"libpython${R_PYTHON_VERSION}.so\\\""
 
-script:
+#script:
   - R CMD build .
   - R CMD INSTALL *tar.gz
   - R CMD check *tar.gz --no-install --no-multiarch --no-examples
