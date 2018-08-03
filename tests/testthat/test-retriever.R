@@ -2,7 +2,7 @@ context("regression tests")
 
 library(DBI)
 library(RPostgreSQL)
-library(RMySQL)
+library(RMariaDB)
 library(RSQLite)
 library(reticulate)
 
@@ -114,9 +114,9 @@ test_that("Install the dataset into Mysql", {
     ignore.stderr = TRUE
   ))
   portal <- c("main", "plots", "species")
-  rdataretriever::install_mysql('portal')
+  rdataretriever::install_mysql('portal', database_name='testdb')
   con <- dbConnect(
-    RMySQL::MySQL(),
+    RMariaDB::MariaDB(),
     user = 'travis',
     host = 'localhost',
     password = '',
