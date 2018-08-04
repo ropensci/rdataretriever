@@ -75,10 +75,10 @@ install:
   - export PKG_CPPFLAGS+=" -D PYTHONLIBFILE=\\\"libpython${R_PYTHON_VERSION}.so\\\""
 
 #script:
-  - R CMD build .
-  - R CMD INSTALL *tar.gz
-  - R CMD check *tar.gz --no-install --no-multiarch --no-examples
-  - R -e 'rdataretriever::get_updates()'
-  - R -e 'library(reticulate); rt <- import("retriever"); rdataretriever::datasets()'
-  - R -e 'library(testthat)'
+#  - R CMD build .
+#  - R CMD INSTALL *tar.gz
+#  - R CMD check *tar.gz --no-install --no-multiarch --no-examples
+#  - R -e 'rdataretriever::get_updates()'
+#  - R -e 'library(reticulate); rt <- import("retriever"); rdataretriever::datasets()'
+#  - R -e 'library(testthat)'
 
