@@ -81,4 +81,3 @@ install:
 #  - R -e 'rdataretriever::get_updates()'
 #  - R -e 'library(reticulate); rt <- import("retriever"); rdataretriever::datasets()'
 #  - R -e 'library(testthat)'
-
