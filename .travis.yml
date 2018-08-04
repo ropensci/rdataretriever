@@ -73,6 +73,7 @@ install:
   - export PKG_LIBS=`$PYTHON_CONFIG --ldflags`
   - export PKG_CPPFLAGS=`$PYTHON_CONFIG --includes`
   - export PKG_CPPFLAGS+=" -D PYTHONLIBFILE=\\\"libpython${R_PYTHON_VERSION}.so\\\""
+  - R -e '.libPaths()'
 
 #script:
 #  - R CMD build .
