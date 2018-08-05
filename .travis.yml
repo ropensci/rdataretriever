@@ -44,7 +44,7 @@ before_install:
   - export PYTHON=$(which python$R_PYTHON_VERSION)
   - export PYTHONPATH=$(which python$R_PYTHON_VERSION):$PYTHONPATH
   - export RETICULATE_PYTHON=$PYTHON
-  - export R_LIBS_USER = "/home/travis/R/Library":"/usr/local/lib/R/site-library":"/usr/lib/R/site-library":"/home/travis/R-bin/lib/R/library"
+  - export R_LIBS_USER="/home/travis/R/Library":"/usr/local/lib/R/site-library":"/usr/lib/R/site-library":"/home/travis/R-bin/lib/R/library"
   - echo $R_LIBS_USER >> ~/.Renviron
   - R_PATH="PATH=$PATH" | echo $R_PATH >  ~/.Renviron
   - R_RETICULATE_PYTHON="RETICULATE_PYTHON=$PYTHON" | echo $R_RETICULATE_PYTHON >>  ~/.Renviron
