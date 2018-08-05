@@ -2,22 +2,13 @@
 % Please edit documentation in R/rdataretriever.R
 \name{get_citation}
 \alias{get_citation}
-\title{Get dataset citation information and a description}
+\title{Title}
 \usage{
 get_citation(dataset)
 }
 \arguments{
-\item{dataset}{name of the dataset}
-}
-\value{
-returns a string with the citation information
+\item{dataset}{}
 }
 \description{
-Get dataset citation information and a description
+Title
 }
-\examples{
-\donttest{
-rdataretriever::get_citation('plant-comp-us')
-}
-}
-

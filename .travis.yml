@@ -5,16 +5,26 @@ warnings_are_errors: false
 r_packages:
   - covr
   - RPostgreSQL
+  - RMariaDB
   - DBI
   - testthat
+r_github_packages:
+  - r-lib/devtools
+  - klutometis/roxygen
+  - rstats-db/DBI
+  - rstats-db/RMariaDB
+  - rstudio/reticulate
 os:
   - linux
 brew_packages: python3
 services:
   - postgresql
+  - MySQL
 addons:
   postgresql: "9.4"
   apt:
+    sources:
+      - mysql-5.7-trusty
     packages:
       - python-dev
       - python
@@ -26,16 +36,28 @@ addons:
       - r-cran-rpostgresql
       - r-cran-rmysql
       - r-cran-rsqlite
+      - libmariadbclient-dev
 env:
   - R_PYTHON_VERSION=3
 before_install:
   - export PATH=$(which python$R_PYTHON_VERSION):$PATH
   - export PYTHON=$(which python$R_PYTHON_VERSION)
   - export PYTHONPATH=$(which python$R_PYTHON_VERSION):$PYTHONPATH
+  - export RETICULATE_PYTHON=$PYTHON
+  - export R_LIBS_USER="/home/travis/R/Library":"/usr/local/lib/R/site-library":"/usr/lib/R/site-library":"/home/travis/R-bin/lib/R/library"
+  - echo $R_LIBS_USER >> ~/.Renviron
+  - R_PATH="PATH=$PATH" | echo $R_PATH >  ~/.Renviron
+  - R_RETICULATE_PYTHON="RETICULATE_PYTHON=$PYTHON" | echo $R_RETICULATE_PYTHON >>  ~/.Renviron
+  - psql -c 'create database testdb;' -U postgres
+before_script:
+  - mysql -e "create database IF NOT EXISTS testdb;" -uroot
 install:
-  - R -e 'install.packages(c("devtools"));if (!all(c("devtools") %in% installed.packages())) { q(status = 1, save = "no")}'
-  - R -e 'library(devtools);devtools::install_github("klutometis/roxygen")'
-  # install Retriever python library
+#  - R -e 'install.packages(c("devtools"));if (!all(c("devtools") %in% installed.packages())) { q(status = 1, save = "no")}'
+#  - R -e 'library(devtools);devtools::install_github("klutometis/roxygen")'
+#  - R -e 'library(devtools);devtools::install_github("rstats-db/DBI")'
+#  - R -e 'library(devtools);devtools::install_github("rstats-db/RMariaDB")'
+#  - R -e 'devtools::install_github("rstudio/reticulate")'
+
   - git clone https://github.com/weecology/retriever.git retriever
   - cd retriever
   - wget https://bootstrap.pypa.io/get-pip.py
@@ -48,20 +70,18 @@ install:
   - cd ..
   - rm -rf retriever/
   - sudo rm -rf ~/.retriever
-  # Exports
+#  - sudo R -e '.libPaths()'
+#  - R -e '.libPaths()'
+
   - export PYTHON_CONFIG=python${R_PYTHON_VERSION}-config
   - export PKG_LIBS=`$PYTHON_CONFIG --ldflags`
   - export PKG_CPPFLAGS=`$PYTHON_CONFIG --includes`
   - export PKG_CPPFLAGS+=" -D PYTHONLIBFILE=\\\"libpython${R_PYTHON_VERSION}.so\\\""
-# database setup
-before_script:
-  - sqlite3 --version
-  - psql -c 'create database testdb;' -U postgres
-script:
-  - R CMD build .
-  - R CMD INSTALL *tar.gz
-  - R CMD check *tar.gz --no-install --no-multiarch --no-examples
-  - R -e 'library(testthat)'
-  - R -e 'library(devtools);devtools::test()'
-after_success:
-  - sudo R -e 'library("covr");codecov()'
+
+#script:
+#  - R CMD build .
+#  - R CMD INSTALL *tar.gz
+#  - R CMD check *tar.gz --no-install --no-multiarch --no-examples
+#  - R -e 'rdataretriever::get_updates()'
+#  - R -e 'library(reticulate); rt <- import("retriever"); rdataretriever::datasets()'
+#  - R -e 'library(testthat)'
