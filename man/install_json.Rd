@@ -2,20 +2,26 @@
 % Please edit documentation in R/rdataretriever.R
 \name{install_json}
 \alias{install_json}
-\title{Title}
+\title{Install datasets via the Data Retriever.}
 \usage{
 install_json(dataset, table_name = "{db}_{table}.json", debug = FALSE,
   use_cache = TRUE)
 }
 \arguments{
-\item{dataset}{}
+\item{dataset}{the name of the dataset that you wish to install}
 
-\item{table_name}{}
+\item{table_name}{the name of the datbase file the dataset should be loaded 
+into}
 
-\item{debug}{}
+\item{debug}{Setting TRUE helps in debugging in case of errors}
 
-\item{use_cache}{}
+\item{use_cache}{Setting FALSE reinstalls scripts even if they are already installed}
 }
 \description{
-Title
+Data is stored in JSON files
+}
+\examples{
+\donttest{
+rdataretriever::install_json('iris')
+}
 }

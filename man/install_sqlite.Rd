@@ -2,22 +2,27 @@
 % Please edit documentation in R/rdataretriever.R
 \name{install_sqlite}
 \alias{install_sqlite}
-\title{Title}
+\title{Install datasets via the Data Retriever.}
 \usage{
 install_sqlite(dataset, file = "sqlite.db", table_name = "{db}_{table}",
   debug = FALSE, use_cache = TRUE)
 }
 \arguments{
-\item{dataset}{}
+\item{dataset}{the name of the dataset that you wish to install}
 
-\item{file}{}
+\item{file}{file name for database}
 
-\item{table_name}{}
+\item{table_name}{table name for installing of dataset}
 
-\item{debug}{}
+\item{debug}{Setting TRUE helps in debugging in case of errors}
 
-\item{use_cache}{}
+\item{use_cache}{Setting FALSE reinstalls scripts even if they are already installed}
 }
 \description{
-Title
+Data is stored in SQLite database
+}
+\examples{
+#' \donttest{
+rdataretriever :: install_sqlite(dataset = 'iris', file = 'sqlite.db',debug=FALSE, use_cache=TRUE)
+}
 }

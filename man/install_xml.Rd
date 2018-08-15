@@ -2,20 +2,26 @@
 % Please edit documentation in R/rdataretriever.R
 \name{install_xml}
 \alias{install_xml}
-\title{Title}
+\title{Install datasets via the Data Retriever.}
 \usage{
 install_xml(dataset, table_name = "{db}_{table}.xml", debug = FALSE,
   use_cache = TRUE)
 }
 \arguments{
-\item{dataset}{}
+\item{dataset}{the name of the dataset that you wish to install}
 
-\item{table_name}{}
+\item{table_name}{the name of the datbase file the dataset should be loaded 
+into}
 
-\item{debug}{}
+\item{debug}{Setting TRUE helps in debugging in case of errors}
 
-\item{use_cache}{}
+\item{use_cache}{Setting FALSE reinstalls scripts even if they are already installed}
 }
 \description{
-Title
+Data is stored in XML files
+}
+\examples{
+\donttest{
+rdataretriever::install_xml('iris')
+}
 }

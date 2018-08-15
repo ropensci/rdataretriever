@@ -2,7 +2,7 @@
 % Please edit documentation in R/rdataretriever.R
 \name{install_postgres}
 \alias{install_postgres}
-\title{Title}
+\title{Install datasets via the Data Retriever.}
 \usage{
 install_postgres(dataset, user = "postgres", password = "",
   host = "localhost", port = 5432, database = "postgres",
@@ -10,26 +10,30 @@ install_postgres(dataset, user = "postgres", password = "",
   use_cache = TRUE)
 }
 \arguments{
-\item{dataset}{}
+\item{dataset}{the name of the dataset that you wish to install}
 
-\item{user}{}
+\item{user}{username for database connection}
 
-\item{password}{}
+\item{password}{password for database connection}
 
-\item{host}{}
+\item{host}{hostname for connection}
 
-\item{port}{}
+\item{port}{port number for connection}
 
-\item{database}{}
+\item{database_name}{database name in which dataset will be installed}
 
-\item{database_name}{}
+\item{table_name}{table name specified especially for datasets
+containing one file}
 
-\item{table_name}{}
+\item{debug}{Setting TRUE helps in debugging in case of errors}
 
-\item{debug}{}
-
-\item{use_cache}{}
+\item{use_cache}{Setting FALSE reinstalls scripts even if they are already installed}
 }
 \description{
-Title
+Data is stored in PostgreSQL database
+}
+\examples{
+\donttest{
+rdataretriever :: install_postgres(dataset = 'portal', user='postgres', password='abcdef')
+}
 }

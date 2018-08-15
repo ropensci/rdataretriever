@@ -2,31 +2,37 @@
 % Please edit documentation in R/rdataretriever.R
 \name{install_mysql}
 \alias{install_mysql}
-\title{Title}
+\title{Install datasets via the Data Retriever.}
 \usage{
 install_mysql(dataset, user = "root", password = "", host = "localhost",
   port = 3306, database_name = "{db}", table_name = "{db}.{table}",
   debug = FALSE, use_cache = TRUE)
 }
 \arguments{
-\item{dataset}{}
+\item{dataset}{the name of the dataset that you wish to install}
 
-\item{user}{}
+\item{user}{username for database connection}
 
-\item{password}{}
+\item{password}{password for database connection}
 
-\item{host}{}
+\item{host}{hostname for connection}
 
-\item{port}{}
+\item{port}{port number for connection}
 
-\item{database_name}{}
+\item{database_name}{database name in which dataset will be installed}
 
-\item{table_name}{}
+\item{table_name}{table name specified especially for datasets
+containing one file}
 
-\item{debug}{}
+\item{debug}{Setting TRUE helps in debugging in case of errors}
 
-\item{use_cache}{}
+\item{use_cache}{Setting FALSE reinstalls scripts even if they are already installed}
 }
 \description{
-Title
+Data is stored in MySQL database
+}
+\examples{
+\donttest{
+rdataretriever :: install_mysql(dataset = 'portal', user='postgres', password='abcdef')
+}
 }

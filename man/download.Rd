@@ -2,22 +2,31 @@
 % Please edit documentation in R/rdataretriever.R
 \name{download}
 \alias{download}
-\title{Title}
+\title{Download datasets via the Data Retriever.}
 \usage{
 download(dataset, path = "./", quiet = FALSE, sub_dir = FALSE,
   debug = FALSE)
 }
 \arguments{
-\item{dataset}{}
+\item{dataset}{the name of the dataset that you wish to download}
 
-\item{path}{}
+\item{path}{the path where the data should be downloaded to}
 
-\item{quiet}{}
+\item{quiet}{logical, if true retriever runs in quiet mode}
 
-\item{sub_dir}{}
+\item{sub_dir}{if true and the downloaded dataset is stored in subdirectories those subdirectories will be preserved and placed according the path argument, defaults to false.}
 
-\item{debug}{}
+\item{debug}{Setting TRUE helps in debugging in case of errors}
 }
 \description{
-Title
+Directly downloads data files with no processing, allowing downloading of
+non-tabular data.
+}
+\examples{
+\donttest{
+rdataretriever::download('plant-comp-ok')
+# downloaded files will be copied to your working directory
+# when no path is specified
+dir()
+}
 }

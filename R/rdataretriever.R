@@ -1,17 +1,26 @@
-#Usage of Reticulate instead of command line interface of Data Retriever
-
-#fetch function
-
-#' Title
+#' Fetch a dataset via the Data Retriever
 #'
-#' @param dataset 
-#' @param quiet 
-#' @param data_names 
+#' Each datafile in a given dataset is downloaded to a temporary directory and
+#' then imported as a data.frame as a member of a named list.
 #'
-#' @return
+#' @param dataset the names of the dataset that you wish to download
+#' @param quiet logical, if true retriever runs in quiet mode
+#' @param data_names the names you wish to assign to cells of the list which
+#' stores the fetched dataframes. This is only relevant if you are 
+#' downloading more than one dataset. 
 #' @export
-#'
 #' @examples
+#' \donttest{
+#' ## fetch the portal Database
+#' portal = rdataretriever::fetch('portal')
+#' class(portal)
+#' names(portal)
+#' ## preview the data in the portal species datafile
+#' head(portal$species)
+#' vegdata = rdataretriever::fetch(c('plant-comp-ok', 'plant-occur-oosting'))
+#' names(vegdata)
+#' names(vegdata$plant_comp_ok)
+#' }
 fetch = function(dataset, quiet=TRUE, data_names=NULL){
   library(reticulate)
   r_data_retriever = import('retriever')
@@ -64,20 +73,24 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
   return(datasets)
   }
 
-#download function
-
-#' Title
+#' Download datasets via the Data Retriever.
 #'
-#' @param dataset 
-#' @param path 
-#' @param quiet 
-#' @param sub_dir 
-#' @param debug 
+#' Directly downloads data files with no processing, allowing downloading of
+#' non-tabular data.
 #'
-#' @return
+#' @param dataset the name of the dataset that you wish to download
+#' @param path the path where the data should be downloaded to
+#' @param quiet logical, if true retriever runs in quiet mode
+#' @param sub_dir if true and the downloaded dataset is stored in subdirectories those subdirectories will be preserved and placed according the path argument, defaults to false.
+#' @param debug Setting TRUE helps in debugging in case of errors
 #' @export
-#'
-#' @examples
+#' @examples 
+#' \donttest{
+#' rdataretriever::download('plant-comp-ok')
+#' # downloaded files will be copied to your working directory
+#' # when no path is specified
+#' dir()
+#' }
 download = function(dataset, path='./', quiet=FALSE, sub_dir=FALSE, debug=FALSE) {
   library(reticulate)
   r_data_retriever = import('retriever')
@@ -87,14 +100,16 @@ download = function(dataset, path='./', quiet=FALSE, sub_dir=FALSE, debug=FALSE)
     r_data_retriever$download(dataset = dataset)
   }
 
-#datasets function
-
-#' Title
+#' Name all available dataset scripts.
 #'
-#' @return
+#' Additional information on the available datasets can be found at \url{https://retriever.readthedocs.io/en/latest/datasets.html}
+#' 
+#' @return returns a character vector with the available datasets for download
 #' @export
-#'
-#' @examples
+#' @examples 
+#' \donttest{
+#' rdataretriever::datasets()
+#' }
 datasets = function(){
   library(reticulate)
   r_data_retriever = import('retriever')
@@ -106,74 +121,84 @@ datasets = function(){
   print(data_sets)
   }
 
-#install functions 
-
-#' Title
+#' Install datasets via the Data Retriever.
 #'
-#' @param dataset 
-#' @param table_name 
-#' @param debug 
-#' @param use_cache 
+#' Data is stored in CSV files
 #'
-#' @return
+#' @param dataset the name of the dataset that you wish to install
+#' @param table_name the name of the datbase file the dataset should be loaded 
+#' into
+#' @param debug Setting TRUE helps in debugging in case of errors
+#' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
 #' @export
-#'
 #' @examples
+#' \donttest{
+#' rdataretriever::install_csv('iris')
+#' }
 install_csv = function(dataset,table_name='{db}_{table}.csv',debug=FALSE, use_cache=TRUE){
   library(reticulate)
   r_data_retriever = import('retriever')
   r_data_retriever$install_csv(dataset, table_name ,debug,use_cache)
   }
 
-#' Title
+#' Install datasets via the Data Retriever.
 #'
-#' @param dataset 
-#' @param table_name 
-#' @param debug 
-#' @param use_cache 
+#' Data is stored in JSON files
 #'
-#' @return
+#' @param dataset the name of the dataset that you wish to install
+#' @param table_name the name of the datbase file the dataset should be loaded 
+#' into
+#' @param debug Setting TRUE helps in debugging in case of errors
+#' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
 #' @export
-#'
 #' @examples
+#' \donttest{
+#' rdataretriever::install_json('iris')
+#' }
 install_json = function(dataset,table_name='{db}_{table}.json',debug=FALSE, use_cache=TRUE){
   r_data_retriever = import('retriever')
   r_data_retriever$install_json(dataset, table_name ,debug,use_cache)
   }
 
-#' Title
+#' Install datasets via the Data Retriever.
 #'
-#' @param dataset 
-#' @param table_name 
-#' @param debug 
-#' @param use_cache 
+#' Data is stored in XML files
 #'
-#' @return
+#' @param dataset the name of the dataset that you wish to install
+#' @param table_name the name of the datbase file the dataset should be loaded 
+#' into
+#' @param debug Setting TRUE helps in debugging in case of errors
+#' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
 #' @export
-#'
 #' @examples
+#' \donttest{
+#' rdataretriever::install_xml('iris')
+#' }
 install_xml = function(dataset,table_name='{db}_{table}.xml',debug=FALSE, use_cache=TRUE){
   library(reticulate)
   r_data_retriever = import('retriever')
   r_data_retriever$install_xml(dataset, table_name ,debug,use_cache)
   }
 
-#' Title
+#' Install datasets via the Data Retriever.
 #'
-#' @param dataset 
-#' @param user 
-#' @param password 
-#' @param host 
-#' @param port 
-#' @param database_name 
-#' @param table_name 
-#' @param debug 
-#' @param use_cache 
+#' Data is stored in MySQL database
 #'
-#' @return
+#' @param dataset the name of the dataset that you wish to install
+#' @param user username for database connection
+#' @param password password for database connection
+#' @param host hostname for connection
+#' @param port port number for connection
+#' @param database_name database name in which dataset will be installed
+#' @param table_name table name specified especially for datasets
+#' containing one file
+#' @param debug Setting TRUE helps in debugging in case of errors
+#' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
 #' @export
-#'
 #' @examples
+#' \donttest{
+#' rdataretriever :: install_mysql(dataset = 'portal', user='postgres', password='abcdef')
+#' }
 install_mysql = function(dataset, user='root', password='', host='localhost',
                           port=3306, database_name='{db}', table_name='{db}.{table}',
                           debug=FALSE, use_cache=TRUE){
@@ -184,23 +209,25 @@ install_mysql = function(dataset, user='root', password='', host='localhost',
                                  debug, use_cache)
   }
 
-#' Title
+#' Install datasets via the Data Retriever.
 #'
-#' @param dataset 
-#' @param user 
-#' @param password 
-#' @param host 
-#' @param port 
-#' @param database 
-#' @param database_name 
-#' @param table_name 
-#' @param debug 
-#' @param use_cache 
+#' Data is stored in PostgreSQL database
 #'
-#' @return
+#' @param dataset the name of the dataset that you wish to install
+#' @param user username for database connection
+#' @param password password for database connection
+#' @param host hostname for connection
+#' @param port port number for connection
+#' @param database_name database name in which dataset will be installed
+#' @param table_name table name specified especially for datasets
+#' containing one file
+#' @param debug Setting TRUE helps in debugging in case of errors
+#' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
 #' @export
-#'
 #' @examples
+#' \donttest{
+#' rdataretriever :: install_postgres(dataset = 'portal', user='postgres', password='abcdef')
+#' }
 install_postgres = function(dataset, user='postgres', password='',
                             host='localhost', port=5432, database='postgres',
                             database_name='{db}', table_name='{db}.{table}',
@@ -212,18 +239,20 @@ install_postgres = function(dataset, user='postgres', password='',
                                     table_name, debug, use_cache)
   }
 
-#' Title
+#' Install datasets via the Data Retriever.
 #'
-#' @param dataset 
-#' @param file 
-#' @param table_name 
-#' @param debug 
-#' @param use_cache 
+#' Data is stored in SQLite database
 #'
-#' @return
+#' @param dataset the name of the dataset that you wish to install
+#' @param file file name for database
+#' @param table_name table name for installing of dataset
+#' @param debug Setting TRUE helps in debugging in case of errors
+#' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
 #' @export
-#'
 #' @examples
+#' #' \donttest{
+#' rdataretriever :: install_sqlite(dataset = 'iris', file = 'sqlite.db',debug=FALSE, use_cache=TRUE)
+#' }
 install_sqlite = function(dataset, file = 'sqlite.db',
                           table_name='{db}_{table}',
                           debug=FALSE, use_cache=TRUE){
@@ -232,18 +261,20 @@ install_sqlite = function(dataset, file = 'sqlite.db',
   r_data_retriever$install_sqlite(dataset, file, table_name, debug, use_cache)
   }
 
-#' Title
+#' Install datasets via the Data Retriever.
 #'
-#' @param dataset 
-#' @param file 
-#' @param table_name 
-#' @param debug 
-#' @param use_cache 
+#' Data is stored in MSAccess database
 #'
-#' @return
+#' @param dataset the name of the dataset that you wish to install
+#' @param file file name for database
+#' @param table_name table name for installing of dataset
+#' @param debug Setting TRUE helps in debugging in case of errors
+#' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
 #' @export
-#'
 #' @examples
+#' #' \donttest{
+#' rdataretriever :: install_msaccess(dataset = 'iris', file = 'sqlite.db',debug=FALSE, use_cache=TRUE)
+#' }
 install_msaccess = function(dataset, file='access.mdb',
                             table_name='[{db} {table}]',
                             debug=FALSE, use_cache=TRUE){
@@ -252,16 +283,14 @@ install_msaccess = function(dataset, file='access.mdb',
   r_data_retriever$install_msaccess(dataset,file,table_name,debug,use_cache)
   }
 
-#get_citation
-
-#' Title
-#'
-#' @param dataset 
-#'
-#' @return
+#' Get dataset citation information and a description
+#' @param dataset name of the dataset
+#' @return returns a string with the citation information
 #' @export
-#'
-#' @examples
+#' @examples 
+#' \donttest{
+#' rdataretriever::get_citation('plant-comp-us')
+#' }
 get_citation = function(dataset) {
     run_cli(paste('retriever citation', dataset))
   }
@@ -292,26 +321,34 @@ reset = function(scope='all') {
   }
   }
 
-#' Title
-#'
-#' @return
+#' Update the retriever's dataset scripts to the most recent versions.
+#' 
+#' This function will check if the version of the retriever's scripts in your local
+#' directory \file{~/.retriever/scripts/} is up-to-date with the most recent official
+#' retriever release. Note it is possible that even more updated scripts exist
+#' at the retriever repository \url{https://github.com/weecology/retriever/tree/master/scripts}
+#' that have not yet been incorperated into an official release, and you should
+#' consider checking that page if you have any concerns. 
+#' @keywords utilities
 #' @export
-#'
 #' @examples
+#' \donttest{
+#' rdataretriever::get_updates()
+#' }
 get_updates = function() {
     writeLines(strwrap('Please wait while the retriever updates its scripts, ...'))
     update_log = run_cli('retriever update')
     writeLines(strwrap(update_log[3]))
   }
 
-#' Title
+#' Setting path of retriever 
 #'
-#' @param path 
-#'
-#' @return
+#' @param path location of retriever in the system
 #' @export
-#'
 #' @examples
+#' #' \donttest{
+#' rdataretriever::use_RetrieverPath("/home/<system_name>/anaconda2/envs/py27/bin/")
+#' }
 use_RetrieverPath = function(path){
   Sys.setenv(PATH = paste(path,':',Sys.getenv('PATH'),sep = ''))
 }
