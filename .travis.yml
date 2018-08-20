@@ -32,9 +32,21 @@ before_install:
   - export PATH=$(which python$R_PYTHON_VERSION):$PATH
   - export PYTHON=$(which python$R_PYTHON_VERSION)
   - export PYTHONPATH=$(which python$R_PYTHON_VERSION):$PYTHONPATH
+  - export RETICULATE_PYTHON=$PYTHON
+  - R_PATH="PATH=$PATH" | echo $R_PATH >  ~/.Renviron
+  - R_RETICULATE_PYTHON="RETICULATE_PYTHON=$PYTHON" | echo $R_RETICULATE_PYTHON >>  ~/.Renviron
+
 install:
   - R -e 'install.packages(c("devtools"));if (!all(c("devtools") %in% installed.packages())) { q(status = 1, save = "no")}'
   - R -e 'library(devtools);devtools::install_github("klutometis/roxygen")'
+  # - R -e 'install.packages(c("reticulate"), dependencies=TRUE)'
+  - R -e 'devtools::install_github("rstudio/reticulate")'
+  - R -e 'library(reticulate)'
+  - echo $PATH
+  - R -e 'Sys.getenv()'
+  - R -e 'system("echo $PATH")'
+  - R -e 'system("echo $PYTHON")'
+
   # install Retriever python library
   - git clone https://github.com/weecology/retriever.git retriever
   - cd retriever
@@ -53,15 +65,9 @@ install:
   - export PKG_LIBS=`$PYTHON_CONFIG --ldflags`
   - export PKG_CPPFLAGS=`$PYTHON_CONFIG --includes`
   - export PKG_CPPFLAGS+=" -D PYTHONLIBFILE=\\\"libpython${R_PYTHON_VERSION}.so\\\""
-# database setup
-before_script:
-  - sqlite3 --version
-  - psql -c 'create database testdb;' -U postgres
+
 script:
-  - R CMD build .
-  - R CMD INSTALL *tar.gz
-  - R CMD check *tar.gz --no-install --no-multiarch --no-examples
   - R -e 'library(testthat)'
+  - R -e 'rdataretriever::get_updates()'
+  - R -e 'library(reticulate); rt <- import("retriever"); rdataretriever::datasets()'
   - R -e 'library(devtools);devtools::test()'
-after_success:
-  - sudo R -e 'library("covr");codecov()'
