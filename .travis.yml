@@ -35,6 +35,7 @@ before_install:
   - export RETICULATE_PYTHON=$PYTHON
   - R_PATH="PATH=$PATH" | echo $R_PATH >  ~/.Renviron
   - R_RETICULATE_PYTHON="RETICULATE_PYTHON=$PYTHON" | echo $R_RETICULATE_PYTHON >>  ~/.Renviron
+  - psql -c 'create database testdb;' -U postgres
 
 install:
   - R -e 'install.packages(c("devtools"));if (!all(c("devtools") %in% installed.packages())) { q(status = 1, save = "no")}'
@@ -65,10 +66,7 @@ install:
   - export PKG_LIBS=`$PYTHON_CONFIG --ldflags`
   - export PKG_CPPFLAGS=`$PYTHON_CONFIG --includes`
   - export PKG_CPPFLAGS+=" -D PYTHONLIBFILE=\\\"libpython${R_PYTHON_VERSION}.so\\\""
-# database setup
-before_script:
-  - sqlite3 --version
-  - psql -c 'create database testdb;' -U postgres
+
 script:
   - R -e 'library(testthat)'
   - R -e 'rdataretriever::get_updates()'
