@@ -10,11 +10,10 @@ datasets()
 returns a character vector with the available datasets for download
 }
 \description{
-Additional information on the available datasets can be found at \url{https://retriever.readthedocs.io/en/latest/datasets.html}
+Additional information on the available datasets can be found at url https://retriever.readthedocs.io/en/latest/datasets.html
 }
 \examples{
 \donttest{
 rdataretriever::datasets()
 }
 }
-
