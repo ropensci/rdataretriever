@@ -48,7 +48,7 @@ library(rdataretriever)
 rdataretriever::datasets()
 
 # Install the portal into csv files in your working directory
-rdataretriever::install('portal', 'csv')
+rdataretriever::install_csv('portal')
 
 # Download the raw portal dataset files without any processing to the
 # subdirectory named data

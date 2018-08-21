@@ -35,6 +35,7 @@ before_install:
   - export RETICULATE_PYTHON=$PYTHON
   - R_PATH="PATH=$PATH" | echo $R_PATH >  ~/.Renviron
   - R_RETICULATE_PYTHON="RETICULATE_PYTHON=$PYTHON" | echo $R_RETICULATE_PYTHON >>  ~/.Renviron
+  - psql -c 'create database testdb;' -U postgres
 
 install:
   - R -e 'install.packages(c("devtools"));if (!all(c("devtools") %in% installed.packages())) { q(status = 1, save = "no")}'

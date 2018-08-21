@@ -2,21 +2,13 @@
 % Please edit documentation in R/rdataretriever.R
 \name{reset}
 \alias{reset}
-\title{Reset rdataretriever.}
+\title{Reset the scripts or data(raw_data) directory or both}
 \usage{
 reset(scope = "all")
 }
 \arguments{
-\item{scope}{what components to reset. Options include: 'scripts', 'data', 
-'connection' and 'all', where 'all' is the default setting that 
- resets all components.}
+\item{scope}{All resets both  scripst and data directory}
 }
 \description{
-Reset the components of rdataretriever using scope [ all, scripts, data, connection]
+Reset the scripts or data(raw_data) directory or both
 }
-\examples{
-\donttest{
-rdataretriever::reset()
-}
-}
-
