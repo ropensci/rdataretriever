@@ -7,27 +7,21 @@ r_packages:
   - RPostgreSQL
   - DBI
   - testthat
-os:
-  - linux
-brew_packages: python3
+
 services:
   - postgresql
 addons:
   postgresql: "9.4"
   apt:
     packages:
-      - python-dev
-      - python
-      - python3-dev
-      - python3
       - sqlite3
       - r-cran-testthat
       - r-cran-dbi
       - r-cran-rpostgresql
       - r-cran-rmysql
       - r-cran-rsqlite
-env:
-  - R_PYTHON_VERSION=3
+      - r-cran-devtools
+
 before_install:
   - export PATH=$(which python$R_PYTHON_VERSION):$PATH
   - export PYTHON=$(which python$R_PYTHON_VERSION)
@@ -37,38 +31,37 @@ before_install:
   - R_RETICULATE_PYTHON="RETICULATE_PYTHON=$PYTHON" | echo $R_RETICULATE_PYTHON >>  ~/.Renviron
   - psql -c 'create database testdb;' -U postgres
 
+before_script:
+  - psql -c 'create database testdb;' -U postgres
+
 install:
-  - R -e 'install.packages(c("devtools"));if (!all(c("devtools") %in% installed.packages())) { q(status = 1, save = "no")}'
-  - R -e 'library(devtools);devtools::install_github("klutometis/roxygen")'
+  - R -e 'devtools::install_deps(dep = T)'
+  - R -e 'devtools::install_github("klutometis/roxygen")'
   # - R -e 'install.packages(c("reticulate"), dependencies=TRUE)'
   - R -e 'devtools::install_github("rstudio/reticulate")'
   - R -e 'library(reticulate)'
-  - echo $PATH
-  - R -e 'Sys.getenv()'
-  - R -e 'system("echo $PATH")'
-  - R -e 'system("echo $PYTHON")'
 
-  # install Retriever python library
-  - git clone https://github.com/weecology/retriever.git retriever
-  - cd retriever
-  - wget https://bootstrap.pypa.io/get-pip.py
-  - sudo $PYTHON get-pip.py
-  - rm -rf get-pip.py
-  - sudo $PYTHON -m pip install -r requirements.txt
-  - sudo $PYTHON -m pip install pytest-cov -U
-  - sudo $PYTHON -m pip install pytest-xdist -U
-  - sudo $PYTHON -m pip install  . -U
-  - cd ..
-  - rm -rf retriever/
-  - sudo rm -rf ~/.retriever
-  # Exports
-  - export PYTHON_CONFIG=python${R_PYTHON_VERSION}-config
-  - export PKG_LIBS=`$PYTHON_CONFIG --ldflags`
-  - export PKG_CPPFLAGS=`$PYTHON_CONFIG --includes`
-  - export PKG_CPPFLAGS+=" -D PYTHONLIBFILE=\\\"libpython${R_PYTHON_VERSION}.so\\\""
+  # Install Python using conda
+  - sudo apt-get update
+  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - conda info -a
+  - conda create -q -n test-environment python=3 xlrd future argcomplete tqdm requests pandas pymysql psycopg2
+  - source activate test-environment
+
+  # Install the current master of retriever
+  - pip install git+https://git@github.com/weecology/retriever.git
+  
+  # Install devtools
+  - R -e 'devtools::install_deps(dep = T)'
 
 script:
+  - R CMD build .
+  - R CMD check *tar.gz
   - R -e 'library(testthat)'
-  - R -e 'rdataretriever::get_updates()'
-  - R -e 'library(reticulate); rt <- import("retriever"); rdataretriever::datasets()'
+  #- R -e 'library(reticulate); rt <- import("retriever"); rdataretriever::datasets()'
   - R -e 'library(devtools);devtools::test()'
