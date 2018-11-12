@@ -4,8 +4,8 @@
 \alias{install_sqlite}
 \title{Install datasets via the Data Retriever.}
 \usage{
-install_sqlite(dataset, file = "sqlite.db", table_name = "{db}_{table}",
-  debug = FALSE, use_cache = TRUE)
+install_sqlite(dataset, file = "sqlite.db",
+  table_name = "{db}_{table}", debug = FALSE, use_cache = TRUE)
 }
 \arguments{
 \item{dataset}{the name of the dataset that you wish to install}

@@ -1,5 +1,6 @@
 library(testthat)
+library(devtools)
 library(rdataretriever)
 
 
-test_check("rdataretriever", reporter = c("check"))
+testthat::test_check("rdataretriever", reporter = c("check"))

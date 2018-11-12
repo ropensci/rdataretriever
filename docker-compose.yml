@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+  mysqldb:
+    image: mysql:5.7
+    environment:
+      MYSQL_USER: travis
+      MYSQL_PASSWORD: Password12!
+      MYSQL_ROOT_PASSWORD: Password12!
+      MYSQL_DATABASE: testdb
+
+  pgdb:
+    image: postgres
+    environment:
+      # Lets use docker-entrypoint-initdb.d/init-user-db.sh
+      # To set up user and Privileges
+      # POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Password12!
+      POSTGRES_DB: testdb
+
+  rdata:
+    container_name: rdata_container
+    image: rdata_image
+    command: bash -c "python --version"
+    environment:
+      # If on_travis is set, use service names as hosts(travis)
+      # Otherwise use localhost (local tests)
+      "TRAVIS_OR_DOCKER" : "doker_or_travis"
+    build: .
+    depends_on:
+      - mysqldb
+      - pgdb
+    ports:
+      - 5001:80

@@ -3,14 +3,25 @@ context("regression tests")
 if (!requireNamespace("reticulate", quietly = TRUE)) {
   return()
 }
+
 suppressPackageStartupMessages(require(reticulate))
 suppressPackageStartupMessages(require(DBI))
 # suppressPackageStartupMessages(require(RMariaDB))
 suppressPackageStartupMessages(require(RPostgreSQL))
 suppressPackageStartupMessages(require(RSQLite))
 
-
-test_that("datasets returns some known values", {
+# Set passwords and host names deppending on test environment
+os_password = ""
+pgdb = "localhost"
+mysqldb = "localhost"
+doker_or_travis = Sys.getenv("TRAVIS_OR_DOCKER")
+# Check if the environment variable "TRAVIS_OR_DOCKER" is set to "true"
+if (doker_or_travis %in% "doker_or_travis") {
+  os_password = 'Password12!'
+  pgdb = "pgdb"
+  mysqldb = "mysqldb"
+}
+testthat::test_that("datasets returns some known values", {
   skip_on_cran()
   expect_identical("car-eval" %in% rdataretriever::datasets(), TRUE)
 })
@@ -83,19 +94,21 @@ test_that("Install portal into xml", {
 })
 
 test_that("Install dataset into Postgres", {
-  # Install portal into Postgres
+  # Install portal into Postgres at host
   try(system(
-    "psql -U postgres -d testdb -h localhost -c \"DROP SCHEMA IF EXISTS testschema CASCADE\"",
+    paste("psql -U postgres -d testdb -p 5432 -h" , pgdb,
+          " -w -c \"DROP SCHEMA IF EXISTS testschema CASCADE\""),
     intern = TRUE,
     ignore.stderr = TRUE
   ))
   portal <- c("main", "plots", "species")
-  rdataretriever::install_postgres('portal')
+  rdataretriever::install_postgres('portal', host= pgdb,
+    password = os_password, database_name = 'testdb')
   con <- dbConnect(
     dbDriver("PostgreSQL"),
     user = 'postgres',
-    host = 'localhost',
-    password = "",
+    host = pgdb,
+    password = os_password,
     port = 5432,
     dbname = 'testdb'
   )
@@ -109,26 +122,28 @@ test_that("Install dataset into Postgres", {
 })
 
 
-# test_that("Install the dataset into Mysql", {
-#   try(system(
-#     "mysql -u travis -Bse 'DROP DATABASE IF EXISTS testdb'",
-#     intern = TRUE,
-#     ignore.stderr = TRUE
-#   ))
-#   portal <- c("main", "plots", "species")
-#   rdataretriever::install_mysql('portal', database_name = 'testdb')
-#   con <- dbConnect(
-#     RMariaDB::MariaDB(),
-#     user = 'travis',
-#     host = 'localhost',
-#     password = '',
-#     port = 3306,
-#     dbname = 'testdb'
-#   )
-#   result <- dbListTables(con)
-#   dbDisconnect(con)
-#   expect_setequal(result, portal)
-# })
+test_that("Install the dataset into Mysql", {
+  try(err<-system(
+    paste("mysql -u travis --host" , mysqldb,
+          "--port 3306 - Bse 'DROP DATABASE IF EXISTS testdb'"),
+    intern = TRUE,
+    ignore.stderr = TRUE
+  ))
+  portal <- c("main", "plots", "species")
+  rdataretriever::install_mysql('portal', database_name = 'testdb',
+    host = mysqldb, password = os_password)
+  con <- dbConnect(
+    RMariaDB::MariaDB(),
+    user = 'travis',
+    host = mysqldb,
+    password = os_password,
+    port = 3306,
+    dbname = 'testdb'
+  )
+  result <- dbListTables(con)
+  dbDisconnect(con)
+  expect_setequal(result, portal)
+})
 
 
 test_that("Install portal into sqlite", {

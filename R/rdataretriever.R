@@ -12,8 +12,8 @@ if (!requireNamespace("reticulate", quietly = TRUE)){
 #' @param dataset the names of the dataset that you wish to download
 #' @param quiet logical, if true retriever runs in quiet mode
 #' @param data_names the names you wish to assign to cells of the list which
-#' stores the fetched dataframes. This is only relevant if you are 
-#' downloading more than one dataset. 
+#' stores the fetched dataframes. This is only relevant if you are
+#' downloading more than one dataset.
 #' @export
 #' @import reticulate
 #' @examples
@@ -42,13 +42,13 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
   }
   temp_path = tolower(tempdir())
   if(!dir.exists(temp_path)){
-    dir.create(temp_path) 
+    dir.create(temp_path)
   }
   datasets = vector('list', length(dataset))
   if (is.null(data_names)) {
     names(datasets) = dataset
     names(datasets) = gsub('-', '_', names(datasets))
-  } 
+  }
   else {
     if (length(data_names) != length(dataset))
       stop('Number of names must match number of datasets')
@@ -60,7 +60,7 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
     if (quiet)
       #Accessing install() function from Python API
       r_data_retriever$install_csv(dataset = dataset[i],table_name = file.path(temp_path, '{db}_{table}.csv'))
-    else 
+    else
       #Am not sure of this if statemement
       r_data_retriever$install(dataset[i], connection='csv', data_dir=temp_path)
     files = dir(temp_path)
@@ -68,7 +68,7 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
     files = files[grep(dataset_underscores, files)]
     tempdata = vector('list', length(files))
     list_names = sub('.csv', '', files)
-    list_names = sub(paste(dataset_underscores, '_', sep = ''), 
+    list_names = sub(paste(dataset_underscores, '_', sep = ''),
                      '', list_names)
     names(tempdata) = list_names
     for (j in seq_along(files)) {
@@ -93,7 +93,7 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @export
 #' @import reticulate
-#' @examples 
+#' @examples
 #' \donttest{
 #' rdataretriever::download('plant-comp-ok')
 #' # downloaded files will be copied to your working directory
@@ -104,18 +104,18 @@ download = function(dataset, path='./', quiet=FALSE, sub_dir=FALSE, debug=FALSE)
   r_data_retriever = reticulate::import('retriever')
   if (sub_dir)
     r_data_retriever$download(dataset = dataset,path = path)
-  else 
+  else
     r_data_retriever$download(dataset = dataset)
 }
 
 #' Name all available dataset scripts.
 #'
 #' Additional information on the available datasets can be found at url https://retriever.readthedocs.io/en/latest/datasets.html
-#' 
+#'
 #' @return returns a character vector with the available datasets for download
 #' @export
 #' @import reticulate
-#' @examples 
+#' @examples
 #' \donttest{
 #' rdataretriever::datasets()
 #' }
@@ -137,7 +137,7 @@ datasets = function(){
 #' Data is stored in CSV files
 #'
 #' @param dataset the name of the dataset that you wish to install
-#' @param table_name the name of the datbase file the dataset should be loaded 
+#' @param table_name the name of the datbase file the dataset should be loaded
 #' into
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
@@ -157,7 +157,7 @@ install_csv = function(dataset,table_name='{db}_{table}.csv',debug=FALSE, use_ca
 #' Data is stored in JSON files
 #'
 #' @param dataset the name of the dataset that you wish to install
-#' @param table_name the name of the datbase file the dataset should be loaded 
+#' @param table_name the name of the datbase file the dataset should be loaded
 #' into
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
@@ -178,7 +178,7 @@ install_json = function(dataset,table_name='{db}_{table}.json',debug=FALSE, use_
 #' Data is stored in XML files
 #'
 #' @param dataset the name of the dataset that you wish to install
-#' @param table_name the name of the datbase file the dataset should be loaded 
+#' @param table_name the name of the datbase file the dataset should be loaded
 #' into
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
@@ -243,14 +243,14 @@ install_mysql = function(dataset, user='root', password='', host='localhost',
 #' \donttest{
 #' rdataretriever::install_postgres(dataset='portal', user='postgres', password='abcdef')
 #' }
-install_postgres = function(dataset, user='postgres', password='', host='localhost', 
+install_postgres = function(dataset, user='postgres', password='', host='localhost',
                             port=5432, database='postgres',
                             database_name='{db}', table_name='{db}.{table}',
                             debug=FALSE, use_cache=TRUE){
   r_data_retriever = reticulate::import('retriever')
   r_data_retriever$install_postgres(dataset, user, password, host,
-                                    port, database, database_name, 
-                                    table_name, debug, use_cache)  
+                                    port, database, database_name,
+                                    table_name, debug, use_cache)
 }
 
 #' Install datasets via the Data Retriever.
@@ -301,7 +301,7 @@ install_msaccess = function(dataset, file='access.mdb', table_name='[{db} {table
 #' @return returns a string with the citation information
 #' @export
 #' @import reticulate
-#' @examples 
+#' @examples
 #' \donttest{
 #' rdataretriever::get_citation('plant-comp-us')
 #' }
@@ -339,13 +339,13 @@ reset = function(scope='all') {
 }
 
 #' Update the retriever's dataset scripts to the most recent versions.
-#' 
+#'
 #' This function will check if the version of the retriever's scripts in your local
 #' directory \file{~/.retriever/scripts/} is up-to-date with the most recent official
 #' retriever release. Note it is possible that even more updated scripts exist
 #' at the retriever repository \url{https://github.com/weecology/retriever/tree/master/scripts}
 #' that have not yet been incorperated into an official release, and you should
-#' consider checking that page if you have any concerns. 
+#' consider checking that page if you have any concerns.
 #' @keywords utilities
 #' @export
 #' @examples
@@ -358,7 +358,7 @@ get_updates = function() {
   writeLines(strwrap(update_log[3]))
 }
 
-#' Setting path of retriever 
+#' Setting path of retriever
 #'
 #' @param path location of retriever in the system
 #' @export
@@ -374,11 +374,11 @@ use_RetrieverPath = function(path){
 print.update_log = function(x, ...) {
     if (length(x) == 0) {
         cat('No scripts downloaded')
-    } 
+    }
     else {
         # clean up and print the update log output
         object = strsplit(paste(x, collapse = ' ; '), 'Downloading script: ')
-        object = sort(sapply(strsplit(object[[1]][-1], ' ; '), 
+        object = sort(sapply(strsplit(object[[1]][-1], ' ; '),
                        function(x) x[[1]][1]))
         object[1] = paste('Downloaded scripts:', object[1])
         cat(object, fill=TRUE, sep=', ')
@@ -388,7 +388,7 @@ print.update_log = function(x, ...) {
 .onAttach = function(...) {
     packageStartupMessage(
         "\n  Use get_updates() to download the most recent release of download scripts
-     
+
     New to rdataretriever? Examples at
       https://github.com/ropensci/rdataretriever/
       Use citation(package='rdataretriever') for the package citation
@@ -409,7 +409,7 @@ check_for_retriever = function(...) {
   python_paths = unique(unlist(lapply(python_paths,dirname)))
   python_paths = paste(python_paths,collapse = ':')
   Sys.setenv(PATH = paste(python_paths,':',Sys.getenv('PATH'),sep=''))
-  retriever_path = Sys.which('retriever')  
+  retriever_path = Sys.which('retriever')
   if (retriever_path == '') {
     path_warn = 'The retriever is not on your path and may not be installed.'
     mac_instr = 'Follow the instructions for installing and manually adding the Data Retriever to your path at http://www.data-retriever.org/#install'
@@ -417,9 +417,9 @@ check_for_retriever = function(...) {
     os = Sys.info()[['sysname']]
     if (os == 'Darwin')
       packageStartupMessage(paste(path_warn, mac_instr))
-    else 
+    else
       packageStartupMessage(paste(path_warn, download_instr))
-    }    
+    }
 }
 
 run_cli = function(...) {

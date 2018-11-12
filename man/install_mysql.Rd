@@ -4,9 +4,9 @@
 \alias{install_mysql}
 \title{Install datasets via the Data Retriever.}
 \usage{
-install_mysql(dataset, user = "root", password = "", host = "localhost",
-  port = 3306, database_name = "{db}", table_name = "{db}.{table}",
-  debug = FALSE, use_cache = TRUE)
+install_mysql(dataset, user = "root", password = "",
+  host = "localhost", port = 3306, database_name = "{db}",
+  table_name = "{db}.{table}", debug = FALSE, use_cache = TRUE)
 }
 \arguments{
 \item{dataset}{the name of the dataset that you wish to install}
