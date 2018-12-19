@@ -1,66 +1,12 @@
-language: r
 cache: packages
 sudo: required
 warnings_are_errors: false
-r_packages:
-  - covr
-  - RPostgreSQL
-  - DBI
-  - testthat
-
 services:
-  - postgresql
-addons:
-  postgresql: "9.4"
-  apt:
-    packages:
-      - sqlite3
-      - r-cran-testthat
-      - r-cran-dbi
-      - r-cran-rpostgresql
-      - r-cran-rmysql
-      - r-cran-rsqlite
-      - r-cran-devtools
-
+  - docker
 before_install:
-  - export PATH=$(which python$R_PYTHON_VERSION):$PATH
-  - export PYTHON=$(which python$R_PYTHON_VERSION)
-  - export PYTHONPATH=$(which python$R_PYTHON_VERSION):$PYTHONPATH
-  - export RETICULATE_PYTHON=$PYTHON
-  - R_PATH="PATH=$PATH" | echo $R_PATH >  ~/.Renviron
-  - R_RETICULATE_PYTHON="RETICULATE_PYTHON=$PYTHON" | echo $R_RETICULATE_PYTHON >>  ~/.Renviron
-
-before_script:
-  - psql -c 'create database testdb;' -U postgres
-
-install:
-  - R -e 'devtools::install_deps(dep = T)'
-  - R -e 'devtools::install_github("klutometis/roxygen")'
-  # - R -e 'install.packages(c("reticulate"), dependencies=TRUE)'
-  - R -e 'devtools::install_github("rstudio/reticulate")'
-  - R -e 'library(reticulate)'
-
-  # Install Python using conda
-  - sudo apt-get update
-  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
-  - bash miniconda.sh -b -p $HOME/miniconda
-  - export PATH="$HOME/miniconda/bin:$PATH"
-  - hash -r
-  - conda config --set always_yes yes --set changeps1 no
-  - conda update -q conda
-  - conda info -a
-  - conda create -q -n test-environment python=3 xlrd future argcomplete tqdm requests pandas pymysql psycopg2
-  - source activate test-environment
-
-  # Install the current master of retriever
-  - pip install git+https://git@github.com/weecology/retriever.git
-  
-  # Install devtools
-  - R -e 'devtools::install_deps(dep = T)'
-
+# Set up environment and create required images
+-  docker-compose run rdata
 script:
-  - R CMD build .
-  - R CMD check *tar.gz
-  - R -e 'library(testthat)'
-  #- R -e 'library(reticulate); rt <- import("retriever"); rdataretriever::datasets()'
-  - R -e 'library(devtools);devtools::test()'
+# Load packages and install the required packages
+# Install retriever from source and run tests 
+-  docker-compose  run rdata Rscript load_and_test.R || exit 1
