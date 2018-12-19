@@ -12,7 +12,7 @@ fetch(dataset, quiet = TRUE, data_names = NULL)
 \item{quiet}{logical, if true retriever runs in quiet mode}
 
 \item{data_names}{the names you wish to assign to cells of the list which
-stores the fetched dataframes. This is only relevant if you are 
+stores the fetched dataframes. This is only relevant if you are
 downloading more than one dataset.}
 }
 \description{

@@ -3,7 +3,7 @@ rdataretriever 1.0.0
 
 NEW PACKAGE NAME
 
-* The `EcoData Retriever` has been renamed to `Data Retriever` to reflect its 
+* The `EcoData Retriever` has been renamed to `Data Retriever` to reflect its
 utility outside of ecological data and consequently we have renamed the R package
 from `ecoretriever` to `rdataretriever`
 
@@ -48,8 +48,8 @@ ecoretriever 0.2
 ================
 
 NEW FEATURES
-* We added a new function `get_updates` which can be used to update the `retriever` scripts. This is a big improvement for users because it avoids automatically updating the scripts every time the package is imported. The log of the scripts update can be printed in a cleaner format as well. 
-* Added support for maintaining subdirectory structure when using the function `download`. 
+* We added a new function `get_updates` which can be used to update the `retriever` scripts. This is a big improvement for users because it avoids automatically updating the scripts every time the package is imported. The log of the scripts update can be printed in a cleaner format as well.
+* Added support for maintaining subdirectory structure when using the function `download`.
 
 MINOR IMPROVEMENTS
 

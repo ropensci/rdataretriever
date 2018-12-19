@@ -1,7 +1,8 @@
 # rdataretriever
 
 [![Build Status](https://travis-ci.org/ropensci/rdataretriever.png)](https://travis-ci.org/ropensci/rdataretriever)
-[![cran version](https://www.r-pkg.org/badges/version/rdataretriever)](https://www.r-pkg.org/badges/version/rdataretriever)
+[![cran version](https://www.r-pkg.org/badges/version/rdataretriever)](https://cran.r-project.org/web/packages/rdataretriever/index.html)
+[![Documentation Status](https://readthedocs.org/projects/retriever/badge/?version=latest)](https://retriever.readthedocs.io/en/latest/rdataretriever.html#)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/rdataretriever)](https://CRAN.R-project.org/package=rdataretriever) +
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ecoretriever)](https://CRAN.R-project.org/package=ecoretriever)
 (old package name)

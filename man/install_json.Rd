@@ -10,7 +10,7 @@ install_json(dataset, table_name = "{db}_{table}.json", debug = FALSE,
 \arguments{
 \item{dataset}{the name of the dataset that you wish to install}
 
-\item{table_name}{the name of the datbase file the dataset should be loaded 
+\item{table_name}{the name of the datbase file the dataset should be loaded
 into}
 
 \item{debug}{Setting TRUE helps in debugging in case of errors}
