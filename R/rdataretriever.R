@@ -271,7 +271,15 @@ install_postgres = function(dataset, user='postgres', password='', host='localho
 install_sqlite = function(dataset, file='sqlite.db', table_name='{db}_{table}',
                           debug=FALSE, use_cache=TRUE){
   r_data_retriever = reticulate::import('retriever')
-  r_data_retriever$install_sqlite(dataset, file, table_name, debug, use_cache)
+  tryCatch(withCallingHandlers(
+    {r_data_retriever$install_sqlite(dataset, file, table_name, debug, use_cache)},
+    error=function(error_message) {
+      message("Full error trace:")
+      message(error_message)
+      return(NA)
+    }
+    )
+    )
 }
 
 #' Install datasets via the Data Retriever.
@@ -397,11 +405,26 @@ print.update_log = function(x, ...) {
 
 .onLoad = function(...) {
     check_for_retriever()
+    # Check if retriever can be imported
+    check_retriever_import()
 }
 
 set_home = function(...) {
     current_home = normalizePath(Sys.getenv('HOME'), winslash = "/")
     Sys.setenv(HOME = gsub("/Documents", "", Sys.getenv('HOME')))
+}
+
+check_retriever_import = function(){
+  # Check if reticulate can import retriever
+  tryCatch(
+    {imported_retriever = reticulate::import('retriever')},
+    error=function(error_message) {
+      message("The python module retriever was not found")
+      message("Full error trace:")
+      message(error_message)
+      return(NA)
+    }
+  )
 }
 
 check_for_retriever = function(...) {
