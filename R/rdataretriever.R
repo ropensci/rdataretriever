@@ -235,6 +235,7 @@ install_mysql = function(dataset, user='root', password='', host='localhost',
 #' @param database_name database schema name in which dataset will be installed
 #' @param table_name table name specified especially for datasets
 #' containing one file
+#' @param bbox Optional extent values used to fetch data from the spatial dataset
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
 #' @export
@@ -245,12 +246,14 @@ install_mysql = function(dataset, user='root', password='', host='localhost',
 #' }
 install_postgres = function(dataset, user='postgres', password='', host='localhost',
                             port=5432, database='postgres',
-                            database_name='{db}', table_name='{db}.{table}',
+                            database_name='{db}', table_name='{db}.{table}', bbox=list(),
                             debug=FALSE, use_cache=TRUE){
   r_data_retriever = reticulate::import('retriever')
+  # Use the R list function explicitly
+  bbox = reticulate::r_to_py(bbox)
   r_data_retriever$install_postgres(dataset, user, password, host,
                                     port, database, database_name,
-                                    table_name, debug, use_cache)
+                                    table_name, bbox, debug, use_cache)
 }
 
 #' Install datasets via the Data Retriever.

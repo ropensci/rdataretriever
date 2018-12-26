@@ -6,8 +6,8 @@
 \usage{
 install_postgres(dataset, user = "postgres", password = "",
   host = "localhost", port = 5432, database = "postgres",
-  database_name = "{db}", table_name = "{db}.{table}", debug = FALSE,
-  use_cache = TRUE)
+  database_name = "{db}", table_name = "{db}.{table}", bbox = list(),
+  debug = FALSE, use_cache = TRUE)
 }
 \arguments{
 \item{dataset}{the name of the dataset that you wish to install}
@@ -26,6 +26,8 @@ install_postgres(dataset, user = "postgres", password = "",
 
 \item{table_name}{table name specified especially for datasets
 containing one file}
+
+\item{bbox}{Optional extent values used to fetch data from the spatial dataset}
 
 \item{debug}{Setting TRUE helps in debugging in case of errors}
 
