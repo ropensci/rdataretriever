@@ -298,6 +298,98 @@ install_msaccess = function(dataset, file='access.mdb', table_name='[{db} {table
   r_data_retriever$install_msaccess(dataset,file,table_name,debug,use_cache)
 }
 
+#' Install datasets via the Data Retriever (Duplicated).
+#'
+#' Data is stored in either CSV files or one of the following database management
+#' systems: MySQL, PostgreSQL, SQLite, or Microsoft Access.
+#'
+#' @param dataset the name of the dataset that you wish to download
+#' @param connection what type of database connection should be used.
+#' The options include: mysql, postgres, sqlite, msaccess, or csv'
+#' @param db_file the name of the datbase file the dataset should be loaded
+#' into
+#' @param conn_file the path to the .conn file that contains the connection
+#' configuration options for mysql and postgres databases. This defaults to
+#' mysql.conn or postgres.conn respectively. The connection file is a file that
+#' is formated in the following way:
+#' \tabular{ll}{
+#'   host     \tab my_server@my_host.com\cr
+#'   port     \tab my_port_number       \cr
+#'   user     \tab my_user_name         \cr
+#'   password \tab my_password
+#' }
+#' @param data_dir the location where the dataset should be installed.
+#' Only relevant for csv connection types. Defaults to current working directory
+#' @param log_dir the location where the retriever log should be stored if
+#' the progress is not printed to the console
+#' @export
+#' @examples
+#' \donttest{
+#' rdataretriever::install('iris', 'csv')
+#' }
+install = function(dataset, connection, db_file = NULL, conn_file = NULL,
+                   data_dir = '.', log_dir = NULL) {
+  #This function is duplicated
+  paste("This function it dulicated use, install_",
+    connection, "()", sep = "")
+  if (connection == 'mysql' | connection == 'postgres') {
+    if (is.null(conn_file)) {
+      conn_file = paste('./', connection, '.conn', sep = '')
+    }
+    if (!file.exists(conn_file)) {
+      format = '\nhost my_server@myhost.com\nport my_port_number\n
+                user my_user_name\npassword my_pass_word'
+      stop(
+        paste(
+          "conn_file:",
+          conn_file,
+          "does not exist. To use a",
+          connection,
+          "server create a 'conn_file' with the format:",
+          format,
+          "\nwhere order of arguments does not matter"
+        )
+      )
+    }
+    conn = data.frame(t(utils::read.table(conn_file, row.names = 1)))
+    writeLines(strwrap(paste('Using conn_file:', conn_file, 'to connect to a',
+        connection, 'server on host:', conn$host)))
+    if (connection == 'mysql') {
+      install_mysql(dataset, user = conn$user, host = conn$host,
+        port = conn$port, password = conn$password)
+    }
+    if (connection == 'postgres') {
+      install_postgres(dataset, user = conn$user, host = conn$host,
+        port = conn$port, password = conn$password)
+    }
+  } else if (connection == 'msaccess') {
+    if (is.null(db_file)) {
+      install_msaccess(dataset)
+    } else{
+      install_msaccess( dataset, file = 'access.mdb',
+        table_name = '[{db} {table}]', debug = FALSE, use_cache = TRUE)
+    }
+  } else if (connection == 'sqlite') {
+    if (is.null(db_file)) {
+      install_sqlite(dataset)
+    }
+    else {
+      install_sqlite( dataset, file = db_file, table_name = '{db}_{table}',
+        debug = FALSE, use_cache = TRUE)
+    }
+  } else if (connection %in% c('csv', 'json', 'xml')) {
+    table_name = file.path(data_dir, paste('{db}_{table}', connection, sep = "."))
+    if (connection == 'csv') {
+      install_csv(dataset, table_name = table_name, debug = FALSE, use_cache = TRUE)
+    }
+    else if (connection == 'json') {
+      install_json(dataset, table_name = table_name, debug = FALSE, use_cache = TRUE)
+    }
+    else if (connection == 'xml') {
+      install_xml(dataset, table_name = table_name, debug = FALSE, use_cache = TRUE)
+    }
+  }
+}
 
 #' Get dataset citation information and a description
 #' @param dataset name of the dataset
