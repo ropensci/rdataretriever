@@ -131,7 +131,7 @@ Using Dockers
 
 To run the image interactively
 
-`docker-compose run --service-ports rdata /bin/bash rdata`
+`docker-compose run --service-ports rdata /bin/bash`
 
 To run tests
 
