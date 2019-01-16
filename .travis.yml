@@ -6,7 +6,7 @@ services:
 before_install:
 # Set up environment and create required images
 # If no error don't print output
--  docker-compose run rdata /dev/null
+-  docker-compose run rdata > /dev/null
 script:
 # Load packages and install the required packages
 # Install retriever from source and run tests 

@@ -5,9 +5,12 @@
 
 # Install pacman if it isn't already installed
 if ("pacman" %in% rownames(installed.packages()) == FALSE) install.packages("pacman")
-
-pacman::p_load(devtools, RCurl, readr, rmarkdown, testthat, tidyverse, DBI, RPostgreSQL,
-               RSQLite, reticulate, devtools, RMariaDB)
+suppressMessages(
+	pacman::p_load(devtools, RCurl, readr, rmarkdown,
+	testthat, tidyverse, DBI, RPostgreSQL,
+	RSQLite, reticulate, devtools, RMariaDB)
+)
 
 install.packages(".", repos = NULL, type="source")
+# Test package
 test_dir("tests/testthat", reporter = c("check", "progress"))
