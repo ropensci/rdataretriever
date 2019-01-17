@@ -59,7 +59,84 @@ rdataretriever::download('portal', './data/')
 portal = rdataretriever::fetch('portal')
 names(portal)
 head(portal$species)
+
 ```
+
+New Spatial data Installation
+-----------------------------
+
+**Set-up and Requirements**
+
+**Tools**
+
+-  PostgreSQL with PostGis, psql(client), raster2pgsql, shp2pgsql, gdal,
+
+The `rdataretriever` supports installation of spatial data into `Postgres DBMS`.
+
+1. **Install PostgreSQL and PostGis**
+
+	To install `PostgreSQL with PostGis` for use with spatial data please refer to the
+	[OSGeo Postgres installation instructions](https://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS21UbuntuPGSQL93Apt).
+
+	We recommend storing your PostgreSQL login information in a `.pgpass` file to
+	avoid supplying the password every time.
+	See the [`.pgpass` documentation](https://wiki.postgresql.org/wiki/Pgpass) for more details.
+
+	After installation, Make sure you have the paths to these tools added to your system's `PATHS`.
+	Please consult an operating system expert for help on how to change or add the `PATH` variables.
+
+	**For example, this could be a sample of paths exported on Mac:**
+
+	```shell
+	#~/.bash_profile file, Postgres PATHS and tools .
+	export PATH="/Applications/Postgres.app/Contents/MacOS/bin:${PATH}"
+	export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/10/bin"
+
+	```
+
+2. **Enable PostGIS extensions**
+
+	If you have Postgres set up, enable `PostGIS extensions`.
+	This is done by using either `Postgres CLI` or `GUI(PgAdmin)` and run
+
+	**For psql CLI**
+	```shell
+	psql -d yourdatabase -c "CREATE EXTENSION postgis;"
+	psql -d yourdatabase -c "CREATE EXTENSION postgis_topology;"
+	```
+
+	**For GUI(PgAdmin)**
+
+	```sql
+	CREATE EXTENSION postgis;
+	CREATE EXTENSION postgis_topology
+	```
+	For more details refer to the
+	[PostGIS docs](https://postgis.net/docs/postgis_installation.html#install_short_version).
+
+**Sample commands**
+
+```R
+rdataretriever::install_postgres('harvard-forest') # Vector data
+rdataretriever::install_postgres('bioclim') # Raster data
+
+# Install only the data of USGS elevation in the given extent
+rdataretriever::install_postgres('usgs-elevation', list(-94.98704597353938, 39.027001800158615, -94.3599408119917, 40.69577051867074))
+
+```
+
+
+Using Dockers
+-------------
+
+To run the image interactively
+
+`docker-compose run --service-ports rdata /bin/bash`
+
+To run tests
+
+`docker-compose  run rdata Rscript load_and_test.R`
+
 
 To get citation information for the `rdataretriever` in R use `citation(package = 'rdataretriever')`
 

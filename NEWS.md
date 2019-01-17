@@ -1,3 +1,25 @@
+rdataretriever 1.1.0
+====================
+
+NEW COAUTHORS
+
+* We welcome Pranita Sharma and David J. Harris as coauthors on the package. Thanks
+for the great help Pranita and David!
+
+NEW FEATURES
+
+* Use reticulate to integrate with retriever Python
+* Spatial dataset processing Beta version using PostGis
+
+MINOR IMPROVEMENTS
+
+* Use Docker compose for testing
+* Switch to Python 3 for testing
+* Enhance path search on Windows
+* Add a debug script for reporting the environment variables
+* Update documentation to match latest version
+* Add license file
+
 rdataretriever 1.0.0
 ====================
 

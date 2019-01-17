@@ -1,0 +1,5 @@
+host mysqldb
+port 3306
+user travis
+database_name testdb
+password Password12!

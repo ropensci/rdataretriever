@@ -2,5 +2,5 @@ library(testthat)
 library(devtools)
 library(rdataretriever)
 
-
-testthat::test_check("rdataretriever", reporter = c("check"))
+# This is used for local testing.
+test_dir(".", reporter = c("check", "progress"))

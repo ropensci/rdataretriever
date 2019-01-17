@@ -1,14 +1,11 @@
-context("regression tests")
-
-if (!requireNamespace("reticulate", quietly = TRUE)) {
-  return()
-}
+context("regression tests version 1.0.0")
 
 suppressPackageStartupMessages(require(reticulate))
 suppressPackageStartupMessages(require(DBI))
 # suppressPackageStartupMessages(require(RMariaDB))
 suppressPackageStartupMessages(require(RPostgreSQL))
 suppressPackageStartupMessages(require(RSQLite))
+
 
 # Set passwords and host names depending on test environment
 os_password = ""
@@ -22,6 +19,8 @@ if (docker_or_travis == "true") {
   pgdb = "pgdb"
   mysqldb = "mysqldb"
 }
+
+
 testthat::test_that("datasets returns some known values", {
   skip_on_cran()
   expect_identical("car-eval" %in% rdataretriever::datasets(), TRUE)
@@ -44,10 +43,10 @@ test_that("Download the raw portal dataset into './data/'", {
 })
 
 
-test_that("Install portal into csv", {
+test_that("Install the portal into csv", {
   # Install portal into csv files in your working directory
   portal <- list("portal_main", "portal_plots", "portal_species")
-  rdataretriever::install_csv('portal')
+  rdataretriever::install('portal', 'csv')
   for (file in portal)
   {
     file_path <-
@@ -61,10 +60,10 @@ test_that("Install portal into csv", {
 })
 
 
-test_that("Install portal into json", {
+test_that("Install the portal into json", {
   # Install portal into json
   portal <- list("portal_main", "portal_plots", "portal_species")
-  rdataretriever::install_json('portal')
+  rdataretriever::install('portal', 'json')
   for (file in portal)
   {
     file_path <-
@@ -78,10 +77,10 @@ test_that("Install portal into json", {
 })
 
 
-test_that("Install portal into xml", {
+test_that("Install the portal into xml", {
   # Install portal into xml
   portal <- list("portal_main", "portal_plots", "portal_species")
-  rdataretriever::install_xml('portal')
+  rdataretriever::install('portal', 'xml')
   for (file in portal)
   {
     file_path <-
@@ -94,8 +93,9 @@ test_that("Install portal into xml", {
   }
 })
 
+
 test_that("Install dataset into Postgres", {
-  # Install portal into Postgres at host
+  # Install the portal into Postgres
   try(system(
     paste("psql -U postgres -d testdb -p 5432 -h" , pgdb,
           " -w -c \"DROP SCHEMA IF EXISTS testschema CASCADE\""),
@@ -103,8 +103,7 @@ test_that("Install dataset into Postgres", {
     ignore.stderr = TRUE
   ))
   portal <- c("main", "plots", "species")
-  rdataretriever::install_postgres('portal', host= pgdb,
-    password = os_password, database_name = 'testdb')
+  rdataretriever::install('portal', "postgres")
   con <- dbConnect(
     dbDriver("PostgreSQL"),
     user = 'postgres',
@@ -113,9 +112,7 @@ test_that("Install dataset into Postgres", {
     port = 5432,
     dbname = 'testdb'
   )
-  result <-
-    dbGetQuery(
-      con,
+  result <- dbGetQuery(con,
       "SELECT table_name FROM information_schema.tables WHERE table_schema='testschema'"
     )
   dbDisconnect(con)
@@ -124,6 +121,7 @@ test_that("Install dataset into Postgres", {
 
 
 test_that("Install the dataset into Mysql", {
+  #Use msql client to drop the database
   try(err<-system(
     paste("mysql -u travis --host" , mysqldb,
           "--port 3306 - Bse 'DROP DATABASE IF EXISTS testdb'"),
@@ -131,37 +129,29 @@ test_that("Install the dataset into Mysql", {
     ignore.stderr = TRUE
   ))
   portal <- c("main", "plots", "species")
-  rdataretriever::install_mysql('portal', database_name = 'testdb',
-    host = mysqldb, password = os_password)
-  con <- dbConnect(
-    RMariaDB::MariaDB(),
-    user = 'travis',
-    host = mysqldb,
-    password = os_password,
-    port = 3306,
-    dbname = 'testdb'
-  )
-  result <- dbListTables(con)
-  dbDisconnect(con)
-  expect_setequal(result, portal)
+  rdataretriever::install('portal', 'mysql')
+## RMariaDB api may need more tweaking
+#   con <- dbConnect(
+#     RMariaDB::MariaDB(),
+#     user = 'travis',
+#     host = mysqldb,
+#     password = os_password,
+#     port = 3306,
+#     dbname = 'testdb'
+#   )
+#   result <- dbListTables(con)
+#   dbDisconnect(con)
+#   expect_setequal(result, portal)
 })
 
 
-test_that("Install portal into sqlite", {
+test_that("Install the portal into sqlite", {
   # Install the portal into Sqlite
   portal <- c("portal_main", "portal_plots", "portal_species")
-  rdataretriever::install_sqlite('portal')
-  con <- dbConnect(RSQLite::SQLite(),dbname = "sqlite.db")
+  rdataretriever::install('portal', 'sqlite', db_file = "test.sqlite")
+  con <- dbConnect(RSQLite::SQLite(), dbname = "test.sqlite")
   result <- dbListTables(con)
   dbDisconnect(con)
-  #expect_setequal(result, portal)
   all_tables_installed = all(portal %in% result)
   expect_true(all_tables_installed)
-})
-
-
-test_that("Install and load a dataset as a list", {
-  portal_data <- c("main", "plots", "species")
-  portal = rdataretriever::fetch('portal')
-  expect_identical(all(names(portal) %in%  portal_data), TRUE)
 })

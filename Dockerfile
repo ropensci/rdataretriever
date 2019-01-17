@@ -9,9 +9,9 @@ RUN echo "R_LIBS=\"/usr/lib/R/library\"">> ~/.Rprofile
 RUN echo "R_LIBS=\"/usr/lib/R/library\"">> ~/.Renviron
 RUN echo "R_LIBS_USER=\"/usr/lib/R/library\"">> ~/.Renviron
 
-RUN apt-get update
-RUN apt-get install -y --force-yes build-essential wget git locales locales-all
-RUN apt-get install -y --force-yes postgresql-client mysql-client
+RUN apt-get update && apt-get install -y --no-install-recommends apt-utils
+RUN apt-get install -y --force-yes build-essential wget git locales locales-all > /dev/null
+RUN apt-get install -y --force-yes postgresql-client mysql-client > /dev/null
 
 # Set encoding
 ENV LC_ALL en_US.UTF-8
@@ -33,8 +33,9 @@ RUN chmod 0644 ~/.Rprofile
 RUN chmod 0644 ~/.profile
 
 # Install retriever python package
-RUN pip install git+https://git@github.com/weecology/retriever.git  && retriever ls
-RUN pip install  psycopg2 pymysql
+RUN pip install git+https://git@github.com/weecology/retriever.git
+RUN retriever ls > /dev/null
+RUN pip install  psycopg2 pymysql > /dev/null
 RUN R_RETICULATE_PYTHON="/usr/bin/python" | echo $R_RETICULATE_PYTHON >>  ~/.Renviron
 
 COPY . ./rdataretriever
