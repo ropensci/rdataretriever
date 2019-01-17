@@ -303,7 +303,7 @@ install_msaccess = function(dataset, file = 'access.mdb', table_name = '[{db} {t
   r_data_retriever$install_msaccess(dataset, file, table_name, debug, use_cache)
 }
 
-#' Install datasets via the Data Retriever (Duplicated).
+#' Install datasets via the Data Retriever (deprecated).
 #'
 #' Data is stored in either CSV files or one of the following database management
 #' systems: MySQL, PostgreSQL, SQLite, or Microsoft Access.
@@ -334,8 +334,8 @@ install_msaccess = function(dataset, file = 'access.mdb', table_name = '[{db} {t
 #' }
 install = function(dataset, connection, db_file = NULL, conn_file = NULL,
                    data_dir = '.', log_dir = NULL) {
-  #This function is duplicated
-  paste("This function it dulicated use, install_",
+  # This function is deprecated
+  paste("This function it deprecated use, install_",
     connection, "()", sep = "")
   if (connection == 'mysql' | connection == 'postgres') {
     if (is.null(conn_file)) {

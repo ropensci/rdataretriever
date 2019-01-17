@@ -7,15 +7,14 @@ suppressPackageStartupMessages(require(RPostgreSQL))
 suppressPackageStartupMessages(require(RSQLite))
 
 
-# Set passwords and host names deppending on test environment
+# Set passwords and host names depending on test environment
 os_password = ""
 pgdb = "localhost"
 mysqldb = "localhost"
-doker_or_travis = Sys.getenv("TRAVIS_OR_DOCKER")
+docker_or_travis = Sys.getenv("IN_DOCKER")
 
-
-# Check if the environment variable "TRAVIS_OR_DOCKER" is set to "true"
-if (doker_or_travis %in% "doker_or_travis") {
+# Check if the environment variable "IN_DOCKER" is set to "true"
+if (docker_or_travis == "true") {
   os_password = 'Password12!'
   pgdb = "pgdb"
   mysqldb = "mysqldb"

@@ -23,9 +23,9 @@ services:
     image: rdata_image
     command: bash -c "python --version"
     environment:
-      # If on_travis is set, use service names as hosts(travis)
+      # If IN_DOCKER is set, use service names as hosts(travis)
       # Otherwise use localhost (local tests)
-      "TRAVIS_OR_DOCKER" : "doker_or_travis"
+      "IN_DOCKER" : "true"
     build: .
     depends_on:
       - mysqldb

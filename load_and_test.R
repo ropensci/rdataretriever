@@ -5,6 +5,7 @@
 
 # Install pacman if it isn't already installed
 if ("pacman" %in% rownames(installed.packages()) == FALSE) install.packages("pacman")
+suppressMessages(install.packages("RMariaDB",  quiet = TRUE))
 suppressMessages(
 	pacman::p_load(devtools, RCurl, readr, rmarkdown,
 	testthat, tidyverse, DBI, RPostgreSQL,
