@@ -1,6 +1,6 @@
-if (!requireNamespace("reticulate", quietly = TRUE)){
+if (!requireNamespace("reticulate", quietly = TRUE)) {
   return()
-}else{
+} else {
   library(reticulate)
 }
 
@@ -32,16 +32,19 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
   r_data_retriever = reticulate::import('retriever')
   data_sets = list()
   #Accessing datasets() function from Python API
-  for(x in r_data_retriever$datasets()){
-    data_sets = c(data_sets,x$name)
+  for (x in r_data_retriever$datasets()) {
+    data_sets = c(data_sets, x$name)
   }
-  if(!dataset %in% data_sets){
-    stop("The dataset requested isn't currently available in the rdataretriever.\n
-          Run rdataretriever::datasets() to get a list of available datasets\n
-          Or run rdataretriver::get_updates() to get the newest available datasets.")
+
+  if (!dataset %in% data_sets) {
+    stop(
+      "The dataset requested isn't currently available in the rdataretriever.\n
+      Run rdataretriever::datasets() to get a list of available datasets\n
+      Or run rdataretriver::get_updates() to get the newest available datasets."
+    )
   }
   temp_path = tolower(tempdir())
-  if(!dir.exists(temp_path)){
+  if (!dir.exists(temp_path)) {
     dir.create(temp_path)
   }
   datasets = vector('list', length(dataset))
@@ -50,19 +53,24 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
     names(datasets) = gsub('-', '_', names(datasets))
   }
   else {
-    if (length(data_names) != length(dataset))
+    if (length(data_names) != length(dataset)) {
       stop('Number of names must match number of datasets')
-    else ((length(data_names) == 1) & (length(dataset) == 1))
-    stop("Assign name through the output instead (e.g., yourname = fetch('dataset')")
-    names(datasets) = data_names
+    }
+    else if ((length(data_names) == 1) & (length(dataset) == 1)) {
+      stop("Assign name through the output instead (e.g., yourname = fetch('dataset')")
+      names(datasets) = data_names
+    }
   }
   for (i in seq_along(dataset)) {
-    if (quiet)
+    if (quiet) {
       #Accessing install() function from Python API
-      r_data_retriever$install_csv(dataset = dataset[i],table_name = file.path(temp_path, '{db}_{table}.csv'))
-    else
-      #Am not sure of this if statemement
-      r_data_retriever$install(dataset[i], connection='csv', data_dir=temp_path)
+      r_data_retriever$install_csv(dataset = dataset[i],
+                                   table_name = file.path(temp_path, '{db}_{table}.csv'))
+    } else {
+      r_data_retriever$install_csv(dataset = dataset[i],
+                                   table_name = file.path(temp_path, '{db}_{table}.csv',
+                                    debug = TRUE))
+    }
     files = dir(temp_path)
     dataset_underscores = gsub('-', '_', dataset[i])
     files = files[grep(dataset_underscores, files)]
@@ -100,10 +108,10 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
 #' # when no path is specified
 #' dir()
 #' }
-download = function(dataset, path='./', quiet=FALSE, sub_dir=FALSE, debug=FALSE) {
+download = function(dataset, path = './', quiet = FALSE, sub_dir = FALSE, debug = FALSE) {
   r_data_retriever = reticulate::import('retriever')
   if (sub_dir)
-    r_data_retriever$download(dataset = dataset,path = path)
+    r_data_retriever$download(dataset = dataset, path = path)
   else
     r_data_retriever$download(dataset = dataset)
 }
@@ -119,18 +127,15 @@ download = function(dataset, path='./', quiet=FALSE, sub_dir=FALSE, debug=FALSE)
 #' \donttest{
 #' rdataretriever::datasets()
 #' }
-datasets = function(){
+datasets = function() {
   r_data_retriever =  reticulate::import('retriever')
   data_sets = c()
   #Accessing datasets() function from Python API
-  for(x in r_data_retriever$datasets()){
-    data_sets = c(data_sets,x$name)
+  for (x in r_data_retriever$datasets()) {
+    data_sets = c(data_sets, x$name)
   }
   print(data_sets)
 }
-
-
-
 
 #' Install datasets via the Data Retriever.
 #'
@@ -147,9 +152,9 @@ datasets = function(){
 #' \donttest{
 #' rdataretriever::install_csv('iris')
 #' }
-install_csv = function(dataset,table_name='{db}_{table}.csv',debug=FALSE, use_cache=TRUE){
+install_csv = function(dataset, table_name = '{db}_{table}.csv', debug = FALSE, use_cache = TRUE) {
   r_data_retriever = reticulate::import('retriever')
-  r_data_retriever$install_csv(dataset, table_name ,debug,use_cache)
+  r_data_retriever$install_csv(dataset, table_name , debug, use_cache)
 }
 
 #' Install datasets via the Data Retriever.
@@ -167,9 +172,9 @@ install_csv = function(dataset,table_name='{db}_{table}.csv',debug=FALSE, use_ca
 #' \donttest{
 #' rdataretriever::install_json('iris')
 #' }
-install_json = function(dataset,table_name='{db}_{table}.json',debug=FALSE, use_cache=TRUE){
+install_json = function(dataset, table_name = '{db}_{table}.json', debug = FALSE, use_cache = TRUE) {
   r_data_retriever = import('retriever')
-  r_data_retriever$install_json(dataset, table_name ,debug,use_cache)
+  r_data_retriever$install_json(dataset, table_name , debug, use_cache)
 }
 
 
@@ -188,9 +193,9 @@ install_json = function(dataset,table_name='{db}_{table}.json',debug=FALSE, use_
 #' \donttest{
 #' rdataretriever::install_xml('iris')
 #' }
-install_xml = function(dataset,table_name='{db}_{table}.xml',debug=FALSE, use_cache=TRUE){
+install_xml = function(dataset, table_name = '{db}_{table}.xml', debug = FALSE, use_cache = TRUE) {
   r_data_retriever = reticulate::import('retriever')
-  r_data_retriever$install_xml(dataset, table_name ,debug,use_cache)
+  r_data_retriever$install_xml(dataset, table_name , debug, use_cache)
 }
 
 #' Install datasets via the Data Retriever.
@@ -213,9 +218,9 @@ install_xml = function(dataset,table_name='{db}_{table}.xml',debug=FALSE, use_ca
 #' \donttest{
 #' rdataretriever :: install_mysql(dataset='portal', user='postgres', password='abcdef')
 #' }
-install_mysql = function(dataset, user='root', password='', host='localhost',
-                         port=3306, database_name='{db}', table_name='{db}.{table}',
-                         debug=FALSE, use_cache=TRUE){
+install_mysql = function(dataset, user = 'root', password = '', host = 'localhost',
+                         port = 3306, database_name = '{db}', table_name = '{db}.{table}',
+                         debug = FALSE, use_cache = TRUE) {
   r_data_retriever = reticulate::import('retriever')
   r_data_retriever$install_mysql(dataset, user, password, host,
                                  port, database_name, table_name,
@@ -235,6 +240,7 @@ install_mysql = function(dataset, user='root', password='', host='localhost',
 #' @param database_name database schema name in which dataset will be installed
 #' @param table_name table name specified especially for datasets
 #' containing one file
+#' @param bbox Optional extent values used to fetch data from the spatial dataset
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
 #' @export
@@ -243,14 +249,16 @@ install_mysql = function(dataset, user='root', password='', host='localhost',
 #' \donttest{
 #' rdataretriever::install_postgres(dataset='portal', user='postgres', password='abcdef')
 #' }
-install_postgres = function(dataset, user='postgres', password='', host='localhost',
-                            port=5432, database='postgres',
-                            database_name='{db}', table_name='{db}.{table}',
-                            debug=FALSE, use_cache=TRUE){
+install_postgres = function(dataset, user = 'postgres', password = '',
+                            host = 'localhost', port = 5432, database = 'postgres',
+                            database_name = '{db}', table_name = '{db}.{table}',
+                            bbox = list(), debug = FALSE, use_cache = TRUE) {
   r_data_retriever = reticulate::import('retriever')
+  #Use the R list function explicitly
+  bbox = reticulate::r_to_py(bbox)
   r_data_retriever$install_postgres(dataset, user, password, host,
                                     port, database, database_name,
-                                    table_name, debug, use_cache)
+                                    table_name, bbox, debug, use_cache)
 }
 
 #' Install datasets via the Data Retriever.
@@ -268,8 +276,8 @@ install_postgres = function(dataset, user='postgres', password='', host='localho
 #' \donttest{
 #' rdataretriever::install_sqlite(dataset='iris', file='sqlite.db', debug=FALSE, use_cache=TRUE)
 #' }
-install_sqlite = function(dataset, file='sqlite.db', table_name='{db}_{table}',
-                          debug=FALSE, use_cache=TRUE){
+install_sqlite = function(dataset, file = 'sqlite.db', table_name = '{db}_{table}',
+                          debug = FALSE, use_cache = TRUE) {
   r_data_retriever = reticulate::import('retriever')
   r_data_retriever$install_sqlite(dataset, file, table_name, debug, use_cache)
 }
@@ -289,12 +297,104 @@ install_sqlite = function(dataset, file='sqlite.db', table_name='{db}_{table}',
 #' \donttest{
 #' rdataretriever::install_msaccess(dataset='iris', file='sqlite.db',debug=FALSE, use_cache=TRUE)
 #' }
-install_msaccess = function(dataset, file='access.mdb', table_name='[{db} {table}]',
-                            debug=FALSE, use_cache=TRUE){
+install_msaccess = function(dataset, file = 'access.mdb', table_name = '[{db} {table}]',
+                            debug = FALSE, use_cache = TRUE) {
   r_data_retriever = reticulate::import('retriever')
-  r_data_retriever$install_msaccess(dataset,file,table_name,debug,use_cache)
+  r_data_retriever$install_msaccess(dataset, file, table_name, debug, use_cache)
 }
 
+#' Install datasets via the Data Retriever (deprecated).
+#'
+#' Data is stored in either CSV files or one of the following database management
+#' systems: MySQL, PostgreSQL, SQLite, or Microsoft Access.
+#'
+#' @param dataset the name of the dataset that you wish to download
+#' @param connection what type of database connection should be used.
+#' The options include: mysql, postgres, sqlite, msaccess, or csv'
+#' @param db_file the name of the datbase file the dataset should be loaded
+#' into
+#' @param conn_file the path to the .conn file that contains the connection
+#' configuration options for mysql and postgres databases. This defaults to
+#' mysql.conn or postgres.conn respectively. The connection file is a file that
+#' is formated in the following way:
+#' \tabular{ll}{
+#'   host     \tab my_server@my_host.com\cr
+#'   port     \tab my_port_number       \cr
+#'   user     \tab my_user_name         \cr
+#'   password \tab my_password
+#' }
+#' @param data_dir the location where the dataset should be installed.
+#' Only relevant for csv connection types. Defaults to current working directory
+#' @param log_dir the location where the retriever log should be stored if
+#' the progress is not printed to the console
+#' @export
+#' @examples
+#' \donttest{
+#' rdataretriever::install('iris', 'csv')
+#' }
+install = function(dataset, connection, db_file = NULL, conn_file = NULL,
+                   data_dir = '.', log_dir = NULL) {
+  # This function is deprecated
+  paste("This function it deprecated use, install_",
+    connection, "()", sep = "")
+  if (connection == 'mysql' | connection == 'postgres') {
+    if (is.null(conn_file)) {
+      conn_file = paste('./', connection, '.conn', sep = '')
+    }
+    if (!file.exists(conn_file)) {
+      format = '\nhost my_server@myhost.com\nport my_port_number\n
+                user my_user_name\npassword my_pass_word'
+      stop(
+        paste(
+          "conn_file:",
+          conn_file,
+          "does not exist. To use a",
+          connection,
+          "server create a 'conn_file' with the format:",
+          format,
+          "\nwhere order of arguments does not matter"
+        )
+      )
+    }
+    conn = data.frame(t(utils::read.table(conn_file, row.names = 1)))
+    writeLines(strwrap(paste('Using conn_file:', conn_file, 'to connect to a',
+        connection, 'server on host:', conn$host)))
+    if (connection == 'mysql') {
+      install_mysql(dataset, user = conn$user, host = conn$host,
+        port = conn$port, password = conn$password)
+    }
+    if (connection == 'postgres') {
+      install_postgres(dataset, user = conn$user, host = conn$host,
+        port = conn$port, password = conn$password)
+    }
+  } else if (connection == 'msaccess') {
+    if (is.null(db_file)) {
+      install_msaccess(dataset)
+    } else{
+      install_msaccess( dataset, file = 'access.mdb',
+        table_name = '[{db} {table}]', debug = FALSE, use_cache = TRUE)
+    }
+  } else if (connection == 'sqlite') {
+    if (is.null(db_file)) {
+      install_sqlite(dataset)
+    }
+    else {
+      install_sqlite( dataset, file = db_file, table_name = '{db}_{table}',
+        debug = FALSE, use_cache = TRUE)
+    }
+  } else if (connection %in% c('csv', 'json', 'xml')) {
+    table_name = file.path(data_dir, paste('{db}_{table}', connection, sep = "."))
+    if (connection == 'csv') {
+      install_csv(dataset, table_name = table_name, debug = FALSE, use_cache = TRUE)
+    }
+    else if (connection == 'json') {
+      install_json(dataset, table_name = table_name, debug = FALSE, use_cache = TRUE)
+    }
+    else if (connection == 'xml') {
+      install_xml(dataset, table_name = table_name, debug = FALSE, use_cache = TRUE)
+    }
+  }
+}
 
 #' Get dataset citation information and a description
 #' @param dataset name of the dataset
@@ -305,14 +405,14 @@ install_msaccess = function(dataset, file='access.mdb', table_name='[{db} {table
 #' \donttest{
 #' rdataretriever::get_citation('plant-comp-us')
 #' }
-get_citation = function(dataset){
+get_citation = function(dataset) {
   run_cli(paste('retriever citation', dataset))
 }
 
 #' Reset the scripts or data(raw_data) directory or both
 #'
 #' @param scope All resets both  scripst and data directory
-reset = function(scope='all') {
+reset = function(scope = 'all') {
   os = Sys.info()[['sysname']]
   home_dir = Sys.getenv('HOME')
   print(paste("This will delete", toupper(scope), "cached infomation"))
@@ -324,16 +424,20 @@ reset = function(scope='all') {
   } else if (tolower(scope) == "scripts" &
              tolower(choice.name) == "y") {
     if (file.exists(file.path(home_dir, ".retriever", "scripts"))) {
-      unlink(file.path(home_dir, ".retriever", "scripts"), recursive = TRUE)
+      unlink(file.path(home_dir, ".retriever", "scripts"),
+             recursive = TRUE)
     }
-  }else if (tolower(scope) == "data" & tolower(choice.name) == "y") {
+  } else if (tolower(scope) == "data" &
+             tolower(choice.name) == "y") {
     if (file.exists(file.path(home_dir, ".retriever", "raw_data"))) {
-      unlink(file.path(home_dir, ".retriever", "raw_data"), recursive = TRUE)
+      unlink(file.path(home_dir, ".retriever", "raw_data"),
+             recursive = TRUE)
     }
-  }else if (tolower(scope) == "connections" &
-            tolower(choice.name) == "y") {
+  } else if (tolower(scope) == "connections" &
+             tolower(choice.name) == "y") {
     if (file.exists(file.path(home_dir, ".retriever", "connections"))) {
-      unlink(file.path(home_dir, ".retriever", "connections"), recursive = TRUE)
+      unlink(file.path(home_dir, ".retriever", "connections"),
+             recursive = TRUE)
     }
   }
 }
@@ -366,49 +470,50 @@ get_updates = function() {
 #' \donttest{
 #' rdataretriever::use_RetrieverPath("/home/<system_name>/anaconda2/envs/py27/bin/")
 #' }
-use_RetrieverPath = function(path){
-  Sys.setenv(PATH = paste(path,':',Sys.getenv('PATH'),sep = ''))
+use_RetrieverPath = function(path) {
+  Sys.setenv(PATH = paste(path, ':', Sys.getenv('PATH'), sep = ''))
 }
 
 #' @import reticulate
 print.update_log = function(x, ...) {
-    if (length(x) == 0) {
-        cat('No scripts downloaded')
-    }
-    else {
-        # clean up and print the update log output
-        object = strsplit(paste(x, collapse = ' ; '), 'Downloading script: ')
-        object = sort(sapply(strsplit(object[[1]][-1], ' ; '),
-                       function(x) x[[1]][1]))
-        object[1] = paste('Downloaded scripts:', object[1])
-        cat(object, fill=TRUE, sep=', ')
-    }
+  if (length(x) == 0) {
+    cat('No scripts downloaded')
+  }
+  else {
+    #clean up and print the update log output
+    object = strsplit(paste(x, collapse = ' ; '), 'Downloading script: ')
+    object = sort(sapply(strsplit(object[[1]][-1], ' ; '),
+                         function(x)
+                           x[[1]][1]))
+    object[1] = paste('Downloaded scripts:', object[1])
+    cat(object, fill = TRUE, sep = ', ')
+  }
 }
 
 .onAttach = function(...) {
-    packageStartupMessage(
-        "\n  Use get_updates() to download the most recent release of download scripts
-
+  packageStartupMessage(
+    "\n  Use get_updates() to download the most recent release of download scripts
     New to rdataretriever? Examples at
-      https://github.com/ropensci/rdataretriever/
-      Use citation(package='rdataretriever') for the package citation
-    \nUse suppressPackageStartupMessages() to suppress these messages in the future")
+    https://github.com/ropensci/rdataretriever/
+    Use citation(package='rdataretriever') for the package citation
+    \nUse suppressPackageStartupMessages() to suppress these messages in the future"
+  )
 }
 
 .onLoad = function(...) {
-    check_for_retriever()
+  check_for_retriever()
 }
 
 set_home = function(...) {
-    current_home = normalizePath(Sys.getenv('HOME'), winslash = "/")
-    Sys.setenv(HOME = gsub("/Documents", "", Sys.getenv('HOME')))
+  current_home = normalizePath(Sys.getenv('HOME'), winslash = "/")
+  Sys.setenv(HOME = gsub("/Documents", "", Sys.getenv('HOME')))
 }
 
 check_for_retriever = function(...) {
   python_paths = py_config()[13][[1]]
-  python_paths = unique(unlist(lapply(python_paths,dirname)))
-  python_paths = paste(python_paths,collapse = ':')
-  Sys.setenv(PATH = paste(python_paths,':',Sys.getenv('PATH'),sep=''))
+  python_paths = unique(unlist(lapply(python_paths, dirname)))
+  python_paths = paste(python_paths, collapse = ':')
+  Sys.setenv(PATH = paste(python_paths, ':', Sys.getenv('PATH'), sep = ''))
   retriever_path = Sys.which('retriever')
   if (retriever_path == '') {
     path_warn = 'The retriever is not on your path and may not be installed.'
@@ -419,25 +524,26 @@ check_for_retriever = function(...) {
       packageStartupMessage(paste(path_warn, mac_instr))
     else
       packageStartupMessage(paste(path_warn, download_instr))
-    }
+  }
 }
 
 run_cli = function(...) {
-    os = Sys.info()[['sysname']]
-    if (os == "Windows") {
-        shell(...)
-    } else {
-        system(...)
-    }
+  os = Sys.info()[['sysname']]
+  if (os == "Windows") {
+    shell(...)
+  } else {
+    system(...)
+  }
 }
 
-get_os <- function(){
+get_os <- function() {
   sysinf <- Sys.info()
-  if (!is.null(sysinf)){
+  if (!is.null(sysinf)) {
     os <- sysinf['sysname']
     if (os == 'Darwin')
       os <- "osx"
-  } else { ## mystery machine
+  } else {
+    ## mystery machine
     os <- .Platform$OS.type
     if (grepl("^darwin", R.version$os))
       os <- "osx"

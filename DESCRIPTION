@@ -5,11 +5,17 @@ Description: Provides an R interface to the Data Retriever
     command line interface. The Data Retriever automates the
     tasks of finding, downloading, and cleaning public datasets,
     and then stores them in a local database.
-Version: 1.0.0
-Date: 2017-02-21
+Version: 1.1.0
+Date: 2019-1-14
 Authors@R: c(person("Daniel", "McGlinn", role = c("aut", "cre"),
     email = "danmcglinn@gmail.com",
     comment = c(ORCID = "0000-0003-2359-3526")),
+    person("Pranita", "Sharma", role = "aut",
+    email = "pranitarsharma@gmail.com",
+    comment = c(ORCID = "0000-0002-5871-380X")),
+    person("David J", "Harris", role = "aut",
+    email = "harry491@gmail.com",
+    comment = c(ORCID = "0000-0003-3332-9307")),
     person("Henry", "Senyondo", role = "aut",
     email = "henrykironde@gmail.com",
     comment = c(ORCID = "0000-0001-7105-5808")),
@@ -30,7 +36,7 @@ Imports:
     reticulate
 Suggests:
     testthat (>= 1.0.0)
-SystemRequirements: Python (>= 2.7) and Python headers and libraries
+SystemRequirements: Python (>= 3.0) and Python headers and libraries
 License: MIT + file LICENSE
 LazyData: true
 RoxygenNote: 6.1.1

@@ -1,0 +1,6 @@
+host pgdb
+port 5432 
+user postgres
+database testdb
+database_name testschema
+password Password12!
