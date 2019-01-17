@@ -509,8 +509,8 @@ print.update_log = function(x, ...) {
 }
 
 .onLoad = function(...) {
-    # Check if retriever can be imported
-    check_retriever_import()
+  # Check if retriever can be imported
+  check_retriever_import()
 }
 
 set_home = function(...) {
@@ -532,15 +532,30 @@ check_retriever_import = function(){
 }
 
 check_for_retriever = function(...) {
-  python_paths = py_config()[13][[1]]
-  python_paths = unique(unlist(lapply(python_paths, dirname)))
-  python_paths = paste(python_paths, collapse = ':')
-  Sys.setenv(PATH = paste(python_paths, ':', Sys.getenv('PATH'), sep = ''))
+  # Detect the Python and retriever paths
+  # Export the values as PATH and PYTHONHOME
+  python_paths_found = py_config()[13][[1]]
+  unique_python_paths = unique(unlist(lapply(python_paths_found, dirname)))
+  normalized_python_paths = unlist(lapply(unique_python_paths, normalizePath))
+  compile_path = paste(normalized_python_paths, collapse = ':')
+  # Export the detected values as part of PATH
+  Sys.setenv(PATH = paste(compile_path, ':', Sys.getenv('PATH'), sep = ''))
+  # Add these values as part of the PYTHONHOME VALUES
+  Sys.setenv(PYTHONPATH = paste(compile_path, ':', Sys.getenv('PATH'), sep =
+                                  ''))
   retriever_path = Sys.which('retriever')
   if (retriever_path == '') {
     path_warn = 'The retriever is not on your path and may not be installed.'
-    mac_instr = 'Follow the instructions for installing and manually adding the Data Retriever to your path at http://www.data-retriever.org/#install'
-    download_instr = 'Please upgrade to the most recent version of the Data Retriever, which will automatically add itself to the path http://www.data-retriever.org/#install'
+    mac_instr = paste(
+      'Follow the instructions for installing and manually adding',
+      'the Data Retriever to your path at http://www.data-retriever.org/#install',
+      sep = ' '
+    )
+    download_instr = paste(
+      'Please upgrade to the most recent version of the Data Retriever which will',
+      'automatically add itself to the path http://www.data-retriever.org/#install',
+      sep = ' '
+    )
     os = Sys.info()[['sysname']]
     if (os == 'Darwin')
       packageStartupMessage(paste(path_warn, mac_instr))
