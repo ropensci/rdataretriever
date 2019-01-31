@@ -1,27 +1,7 @@
 context("regression tests")
 
-if (!requireNamespace("reticulate", quietly = TRUE)) {
-  return()
-}
+source("test_helper.R")
 
-suppressPackageStartupMessages(require(reticulate))
-suppressPackageStartupMessages(require(DBI))
-# suppressPackageStartupMessages(require(RMariaDB))
-suppressPackageStartupMessages(require(RPostgreSQL))
-suppressPackageStartupMessages(require(RSQLite))
-
-# Set passwords and host names depending on test environment
-os_password = ""
-pgdb = "localhost"
-mysqldb = "localhost"
-docker_or_travis = Sys.getenv("IN_DOCKER")
-
-# Check if the environment variable "IN_DOCKER" is set to "true"
-if (docker_or_travis == "true") {
-  os_password = 'Password12!'
-  pgdb = "pgdb"
-  mysqldb = "mysqldb"
-}
 testthat::test_that("datasets returns some known values", {
   skip_on_cran()
   expect_identical("car-eval" %in% rdataretriever::datasets(), TRUE)
@@ -33,12 +13,8 @@ test_that("Download the raw portal dataset into './data/'", {
   rdataretriever::download('portal', './data/')
   for (file in portal)
   {
-    file_path <-
-      normalizePath(
-        file.path(getwd(), "tests/testthat/data", file),
-        winslash = "//",
-        mustWork = FALSE
-      )
+    file_path <- full_normalized_path(mustWork = FALSE,
+      getwd(), "tests/testthat/data", file)
     expect_identical(identical(file.info(file_path)$size, integer(0)), FALSE)
   }
 })
@@ -50,12 +26,8 @@ test_that("Install portal into csv", {
   rdataretriever::install_csv('portal')
   for (file in portal)
   {
-    file_path <-
-      normalizePath(
-        file.path(getwd(), "tests/testthat", paste(file, "csv", sep = ".")),
-        winslash = "//",
-        mustWork = FALSE
-      )
+    file_path <- full_normalized_path(mustWork = FALSE,
+      getwd(), "tests/testthat", paste(file, "csv", sep = "."))
     expect_identical(identical(file.info(file_path)$size, integer(0)), FALSE)
   }
 })
@@ -67,12 +39,8 @@ test_that("Install portal into json", {
   rdataretriever::install_json('portal')
   for (file in portal)
   {
-    file_path <-
-      normalizePath(
-        file.path(getwd(), "tests/testthat", paste(file, "json", sep = ".")),
-        winslash = "//",
-        mustWork = FALSE
-      )
+    file_path <- full_normalized_path(mustWork = FALSE,
+        getwd(), "tests/testthat", paste(file, "json", sep = "."))
     expect_identical(identical(file.info(file_path)$size, integer(0)), FALSE)
   }
 })
@@ -84,12 +52,8 @@ test_that("Install portal into xml", {
   rdataretriever::install_xml('portal')
   for (file in portal)
   {
-    file_path <-
-      normalizePath(
-        file.path(getwd(), "tests/testthat", paste(file, "xml", sep = ".")),
-        winslash = "//",
-        mustWork = FALSE
-      )
+    file_path <- full_normalized_path(mustWork = FALSE,
+        getwd(), "tests/testthat", paste(file, "xml", sep = "."))
     expect_identical(identical(file.info(file_path)$size, integer(0)), FALSE)
   }
 })
@@ -126,24 +90,17 @@ test_that("Install dataset into Postgres", {
 test_that("Install the dataset into Mysql", {
   try(err<-system(
     paste("mysql -u travis --host" , mysqldb,
-          "--port 3306 - Bse 'DROP DATABASE IF EXISTS testdb'"),
+          "--port 3306 -Bse 'DROP DATABASE IF EXISTS testdb'"),
     intern = TRUE,
     ignore.stderr = TRUE
   ))
   portal <- c("main", "plots", "species")
   rdataretriever::install_mysql('portal', database_name = 'testdb',
-    host = mysqldb, password = os_password)
-  con <- dbConnect(
-    RMariaDB::MariaDB(),
-    user = 'travis',
-    host = mysqldb,
-    password = os_password,
-    port = 3306,
-    dbname = 'testdb'
-  )
-  result <- dbListTables(con)
-  dbDisconnect(con)
-  expect_setequal(result, portal)
+    host = mysqldb)
+  # con <- dbConnect(RMariaDB::MariaDB(), default.file = mysql_conf)
+  # result <- dbListTables(con)
+  # dbDisconnect(con)
+  # expect_setequal(result, portal)
 })
 
 
