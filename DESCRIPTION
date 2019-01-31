@@ -35,7 +35,12 @@ Imports:
     utils,
     reticulate
 Suggests:
-    testthat (>= 1.0.0)
+    testthat (>= 1.0.0),
+    DBI,
+    devtools,
+    RMariaDB,
+    RSQLite,
+    RPostgreSQL
 SystemRequirements: Python (>= 3.0) and Python headers and libraries
 License: MIT + file LICENSE
 LazyData: true
