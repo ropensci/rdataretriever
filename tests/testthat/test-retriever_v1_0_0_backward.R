@@ -96,52 +96,59 @@ test_that("Install the portal into xml", {
 
 test_that("Install dataset into Postgres", {
   # Install the portal into Postgres
-  try(system(
-    paste("psql -U postgres -d testdb -p 5432 -h" , pgdb,
-          " -w -c \"DROP SCHEMA IF EXISTS testschema CASCADE\""),
-    intern = TRUE,
-    ignore.stderr = TRUE
-  ))
-  portal <- c("main", "plots", "species")
-  rdataretriever::install('portal', "postgres")
-  con <- dbConnect(
-    dbDriver("PostgreSQL"),
-    user = 'postgres',
-    host = pgdb,
-    password = os_password,
-    port = 5432,
-    dbname = 'testdb'
-  )
-  result <- dbGetQuery(con,
-      "SELECT table_name FROM information_schema.tables WHERE table_schema='testschema'"
+  if (docker_or_travis == "true") {
+    # These tests only run on travis and not locally
+    try(system(
+      paste("psql -U postgres -d testdb -p 5432 -h" , pgdb,
+            " -w -c \"DROP SCHEMA IF EXISTS testschema CASCADE\""),
+      intern = TRUE,
+      ignore.stderr = TRUE
+    ))
+    portal <- c("main", "plots", "species")
+    rdataretriever::install('portal', "postgres")
+    con <- dbConnect(
+      dbDriver("PostgreSQL"),
+      user = 'postgres',
+      host = pgdb,
+      password = os_password,
+      port = 5432,
+      dbname = 'testdb'
     )
-  dbDisconnect(con)
-  expect_identical(all(result$table_name %in%  portal), TRUE)
+    result <- dbGetQuery(con,
+        "SELECT table_name FROM information_schema.tables WHERE table_schema='testschema'"
+      )
+    dbDisconnect(con)
+    expect_identical(all(result$table_name %in%  portal), TRUE)
+  }
 })
 
 
+
 test_that("Install the dataset into Mysql", {
-  #Use msql client to drop the database
-  try(err<-system(
-    paste("mysql -u travis --host" , mysqldb,
-          "--port 3306 - Bse 'DROP DATABASE IF EXISTS testdb'"),
-    intern = TRUE,
-    ignore.stderr = TRUE
-  ))
-  portal <- c("main", "plots", "species")
-  rdataretriever::install('portal', 'mysql')
-## RMariaDB api may need more tweaking
-#   con <- dbConnect(
-#     RMariaDB::MariaDB(),
-#     user = 'travis',
-#     host = mysqldb,
-#     password = os_password,
-#     port = 3306,
-#     dbname = 'testdb'
-#   )
-#   result <- dbListTables(con)
-#   dbDisconnect(con)
-#   expect_setequal(result, portal)
+  # Use msql client to drop the database
+  if (docker_or_travis == "true") {
+    # These tests only run on travis and not locally
+    try(err <- system(
+      paste("mysql -u travis --host" , mysqldb,
+            "--port 3306 - Bse 'DROP DATABASE IF EXISTS testdb'"),
+      intern = TRUE,
+      ignore.stderr = TRUE
+    ))
+    portal <- c("main", "plots", "species")
+    rdataretriever::install('portal', 'mysql')
+    ## RMariaDB api may need more tweaking
+    #   con <- dbConnect(
+    #     RMariaDB::MariaDB(),
+    #     user = 'travis',
+    #     host = mysqldb,
+    #     password = os_password,
+    #     port = 3306,
+    #     dbname = 'testdb'
+    #   )
+    #   result <- dbListTables(con)
+    #   dbDisconnect(con)
+    #   expect_setequal(result, portal)
+  }
 })
 
 
