@@ -6,3 +6,7 @@
 cran-comments.md
 ^LICENSE\.md$
 ^CODE_OF_CONDUCT\.md$
+cli_tools
+load_and_test.R
+Dockerfile
+docker-compose.yml
