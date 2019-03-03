@@ -5,7 +5,8 @@
 \title{Install datasets via the Data Retriever.}
 \usage{
 install_sqlite(dataset, file = "sqlite.db",
-  table_name = "{db}_{table}", debug = FALSE, use_cache = TRUE)
+  table_name = "{db}_{table}", data_dir = getwd(), debug = FALSE,
+  use_cache = TRUE)
 }
 \arguments{
 \item{dataset}{the name of the dataset that you wish to install}
@@ -13,6 +14,8 @@ install_sqlite(dataset, file = "sqlite.db",
 \item{file}{Sqlite database file name or path}
 
 \item{table_name}{table name for installing of dataset}
+
+\item{data_dir}{the dir path to store the db, defaults to working dir}
 
 \item{debug}{Setting TRUE helps in debugging in case of errors}
 

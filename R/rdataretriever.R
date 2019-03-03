@@ -65,11 +65,11 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
     if (quiet) {
       #Accessing install() function from Python API
       r_data_retriever$install_csv(dataset = dataset[i],
-                                   table_name = file.path(temp_path, '{db}_{table}.csv'))
+                                   table_name = '{db}_{table}.csv', data_dir=temp_path)
     } else {
       r_data_retriever$install_csv(dataset = dataset[i],
-                                   table_name = file.path(temp_path, '{db}_{table}.csv',
-                                    debug = TRUE))
+                                   table_name = '{db}_{table}.csv', data_dir=temp_path,
+                                   debug = TRUE)
     }
     files = dir(temp_path)
     dataset_underscores = gsub('-', '_', dataset[i])
@@ -142,8 +142,8 @@ datasets = function() {
 #' Data is stored in CSV files
 #'
 #' @param dataset the name of the dataset that you wish to install
-#' @param table_name the name of the datbase file the dataset should be loaded
-#' into
+#' @param table_name the name of the database file to store data
+#' @param data_dir the dir path to store data, defaults to working dir
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
 #' @export
@@ -152,9 +152,9 @@ datasets = function() {
 #' \donttest{
 #' rdataretriever::install_csv('iris')
 #' }
-install_csv = function(dataset, table_name = '{db}_{table}.csv', debug = FALSE, use_cache = TRUE) {
+install_csv = function(dataset, table_name = '{db}_{table}.csv', data_dir=getwd(), debug = FALSE, use_cache = TRUE) {
   r_data_retriever = reticulate::import('retriever')
-  r_data_retriever$install_csv(dataset, table_name , debug, use_cache)
+  r_data_retriever$install_csv(dataset, table_name , data_dir, debug, use_cache)
 }
 
 #' Install datasets via the Data Retriever.
@@ -162,8 +162,8 @@ install_csv = function(dataset, table_name = '{db}_{table}.csv', debug = FALSE, 
 #' Data is stored in JSON files
 #'
 #' @param dataset the name of the dataset that you wish to install
-#' @param table_name the name of the datbase file the dataset should be loaded
-#' into
+#' @param table_name the name of the database file to store data
+#' @param data_dir the dir path to store data, defaults to working dir
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
 #' @export
@@ -172,9 +172,9 @@ install_csv = function(dataset, table_name = '{db}_{table}.csv', debug = FALSE, 
 #' \donttest{
 #' rdataretriever::install_json('iris')
 #' }
-install_json = function(dataset, table_name = '{db}_{table}.json', debug = FALSE, use_cache = TRUE) {
+install_json = function(dataset, table_name = '{db}_{table}.json', data_dir=getwd(), debug = FALSE, use_cache = TRUE) {
   r_data_retriever = import('retriever')
-  r_data_retriever$install_json(dataset, table_name , debug, use_cache)
+  r_data_retriever$install_json(dataset, table_name , data_dir, debug, use_cache)
 }
 
 
@@ -183,8 +183,8 @@ install_json = function(dataset, table_name = '{db}_{table}.json', debug = FALSE
 #' Data is stored in XML files
 #'
 #' @param dataset the name of the dataset that you wish to install
-#' @param table_name the name of the datbase file the dataset should be loaded
-#' into
+#' @param table_name the name of the database file to store data
+#' @param data_dir the dir path to store data, defaults to working dir
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
 #' @export
@@ -193,9 +193,9 @@ install_json = function(dataset, table_name = '{db}_{table}.json', debug = FALSE
 #' \donttest{
 #' rdataretriever::install_xml('iris')
 #' }
-install_xml = function(dataset, table_name = '{db}_{table}.xml', debug = FALSE, use_cache = TRUE) {
+install_xml = function(dataset, table_name = '{db}_{table}.xml', data_dir=getwd(), debug = FALSE, use_cache = TRUE) {
   r_data_retriever = reticulate::import('retriever')
-  r_data_retriever$install_xml(dataset, table_name , debug, use_cache)
+  r_data_retriever$install_xml(dataset, table_name , data_dir, debug, use_cache)
 }
 
 #' Install datasets via the Data Retriever.
@@ -268,6 +268,7 @@ install_postgres = function(dataset, user = 'postgres', password = '',
 #' @param dataset the name of the dataset that you wish to install
 #' @param file Sqlite database file name or path
 #' @param table_name table name for installing of dataset
+#' @param data_dir the dir path to store the db, defaults to working dir
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
 #' @export
@@ -277,10 +278,10 @@ install_postgres = function(dataset, user = 'postgres', password = '',
 #' rdataretriever::install_sqlite(dataset='iris', file='sqlite.db', debug=FALSE, use_cache=TRUE)
 #' }
 install_sqlite = function(dataset, file = 'sqlite.db', table_name = '{db}_{table}',
-                          debug = FALSE, use_cache = TRUE) {
+                          data_dir=getwd(), debug = FALSE, use_cache = TRUE) {
   r_data_retriever = reticulate::import('retriever')
   tryCatch(withCallingHandlers(
-    {r_data_retriever$install_sqlite(dataset, file, table_name, debug, use_cache)},
+    {r_data_retriever$install_sqlite(dataset, file, table_name, data_dir, debug, use_cache)},
     error=function(error_message) {
       message("Full error trace:")
       message(error_message)
