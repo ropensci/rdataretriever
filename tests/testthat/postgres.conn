@@ -1,6 +1,6 @@
-host pgdb
+host pgdb_rdata
 port 5432 
 user postgres
-database testdb
+database testdb_retriever
 database_name testschema
 password Password12!

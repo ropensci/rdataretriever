@@ -64,7 +64,7 @@ test_that("Install dataset into Postgres", {
   if (docker_or_travis == "true") {
     # These tests only run on travis and not locally
     try(system(
-      paste("psql -U postgres -d testdb -p 5432 -h" , pgdb,
+      paste("psql -U postgres -d testdb_retriever -p 5432 -h" , pgdb_rdata,
             " -w -c \"DROP SCHEMA IF EXISTS testschema CASCADE\""),
       intern = TRUE,
       ignore.stderr = TRUE
@@ -74,10 +74,10 @@ test_that("Install dataset into Postgres", {
     con <- dbConnect(
       dbDriver("PostgreSQL"),
       user = 'postgres',
-      host = pgdb,
+      host = pgdb_rdata,
       password = os_password,
       port = 5432,
-      dbname = 'testdb'
+      dbname = 'testdb_retriever'
     )
     result <- dbGetQuery(con,
         "SELECT table_name FROM information_schema.tables WHERE table_schema='testschema'"
@@ -94,8 +94,8 @@ test_that("Install the dataset into Mysql", {
   if (docker_or_travis == "true") {
     # These tests only run on travis and not locally
     try(err <- system(
-      paste("mysql -u travis --host" , mysqldb,
-            "--port 3306 -Bse 'DROP DATABASE IF EXISTS testdb'"),
+      paste("mysql -u travis --host" , mysqldb_rdata,
+            "--port 3306 -Bse 'DROP DATABASE IF EXISTS testdb_retriever'"),
       intern = TRUE,
       ignore.stderr = TRUE
     ))
@@ -105,10 +105,10 @@ test_that("Install the dataset into Mysql", {
     #   con <- dbConnect(
     #     RMariaDB::MariaDB(),
     #     user = 'travis',
-    #     host = mysqldb,
+    #     host = mysqldb_rdata,
     #     password = os_password,
     #     port = 3306,
-    #     dbname = 'testdb'
+    #     dbname = 'testdb_retriever'
     #   )
     #   result <- dbListTables(con)
     #   dbDisconnect(con)
