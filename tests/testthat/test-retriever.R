@@ -61,21 +61,21 @@ test_that("Install portal into xml", {
 test_that("Install dataset into Postgres", {
   # Install portal into Postgres at host
   try(system(
-    paste("psql -U postgres -d testdb -p 5432 -h" , pgdb,
+    paste("psql -U postgres -d testdb_retriever -p 5432 -h" , pgdb_rdata,
           " -w -c \"DROP SCHEMA IF EXISTS testschema CASCADE\""),
     intern = TRUE,
     ignore.stderr = TRUE
   ))
   portal <- c("main", "plots", "species")
-  rdataretriever::install_postgres('portal', host= pgdb,
-    password = os_password, database_name = 'testdb')
+  rdataretriever::install_postgres('portal', host= pgdb_rdata,
+    password = os_password, database_name = 'testdb_retriever')
   con <- dbConnect(
     dbDriver("PostgreSQL"),
     user = 'postgres',
-    host = pgdb,
+    host = pgdb_rdata,
     password = os_password,
     port = 5432,
-    dbname = 'testdb'
+    dbname = 'testdb_retriever'
   )
   result <-
     dbGetQuery(
@@ -89,14 +89,14 @@ test_that("Install dataset into Postgres", {
 
 test_that("Install the dataset into Mysql", {
   try(err<-system(
-    paste("mysql -u travis --host" , mysqldb,
-          "--port 3306 -Bse 'DROP DATABASE IF EXISTS testdb'"),
+    paste("mysql -u travis --host" , mysqldb_rdata,
+          "--port 3306 -Bse 'DROP DATABASE IF EXISTS testdb_retriever'"),
     intern = TRUE,
     ignore.stderr = TRUE
   ))
   portal <- c("main", "plots", "species")
-  rdataretriever::install_mysql('portal', database_name = 'testdb',
-    host = mysqldb)
+  rdataretriever::install_mysql('portal', database_name = 'testdb_retriever',
+    host = mysqldb_rdata)
   # con <- dbConnect(RMariaDB::MariaDB(), default.file = mysql_conf)
   # result <- dbListTables(con)
   # dbDisconnect(con)

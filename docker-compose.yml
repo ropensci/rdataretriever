@@ -1,22 +1,22 @@
 version: '3'
 
 services:
-  mysqldb:
+  mysqldb_rdata:
     image: mysql:5.7
     environment:
       MYSQL_USER: travis
       MYSQL_PASSWORD: Password12!
       MYSQL_ROOT_PASSWORD: Password12!
-      MYSQL_DATABASE: testdb
+      MYSQL_DATABASE: testdb_retriever
 
-  pgdb:
+  pgdb_rdata:
     image: postgres
     environment:
       # Lets use docker-entrypoint-initdb.d/init-user-db.sh
       # To set up user and Privileges
       # POSTGRES_USER: postgres
       POSTGRES_PASSWORD: Password12!
-      POSTGRES_DB: testdb
+      POSTGRES_DB: testdb_retriever
 
   rdata:
     container_name: rdata_container
@@ -28,7 +28,7 @@ services:
       "IN_DOCKER" : "true"
     build: .
     depends_on:
-      - mysqldb
-      - pgdb
+      - mysqldb_rdata
+      - pgdb_rdata
     ports:
       - 5001:80

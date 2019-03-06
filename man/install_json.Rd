@@ -4,14 +4,15 @@
 \alias{install_json}
 \title{Install datasets via the Data Retriever.}
 \usage{
-install_json(dataset, table_name = "{db}_{table}.json", debug = FALSE,
-  use_cache = TRUE)
+install_json(dataset, table_name = "{db}_{table}.json",
+  data_dir = getwd(), debug = FALSE, use_cache = TRUE)
 }
 \arguments{
 \item{dataset}{the name of the dataset that you wish to install}
 
-\item{table_name}{the name of the datbase file the dataset should be loaded
-into}
+\item{table_name}{the name of the database file to store data}
+
+\item{data_dir}{the dir path to store data, defaults to working dir}
 
 \item{debug}{Setting TRUE helps in debugging in case of errors}
 

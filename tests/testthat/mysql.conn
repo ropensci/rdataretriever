@@ -1,5 +1,5 @@
-host mysqldb
+host mysqldb_rdata
 port 3306
 user travis
-database_name testdb
+database_name testdb_retriever
 password Password12!

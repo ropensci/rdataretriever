@@ -10,16 +10,16 @@ suppressPackageStartupMessages(require(RSQLite))
 
 # Set passwords and host names depending on test environment
 os_password = ""
-pgdb = "localhost"
-mysqldb = "localhost"
+pgdb_rdata = "localhost"
+mysqldb_rdata = "localhost"
 mysql_conf = "~/.my.cnf"
 docker_or_travis = Sys.getenv("IN_DOCKER")
 
 # Check if the environment variable "IN_DOCKER" is set to "true"
 if (docker_or_travis == "true") {
   os_password = 'Password12!'
-  pgdb = "pgdb"
-  mysqldb = "mysqldb"
+  pgdb_rdata = "pgdb_rdata"
+  mysqldb_rdata = "mysqldb_rdata"
   mysql_conf = "/cli_tools/.my.cnf"
 }
 
