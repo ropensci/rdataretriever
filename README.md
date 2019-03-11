@@ -17,29 +17,61 @@ and more time analyzing it.
 This package lets you access the Retriever using R, so that the Retriever's data
 handling can easily be integrated into R workflows.
 
-Installation
-------------
-To use the R package `rdataretriever` you first need to install the Retriever.
-Installers are available for all major operating systems from the [Install page](http://www.data-retriever.org/#install)
-or it can be installed from [source](https://github.com/weecology/retriever).
+## Installation
 
-Add Retriever to the path
--------------------------
-The R package takes advantage of the Data Retriever's command line interface
-which must be enabled by adding it to the path on Mac platforms.
-On a Windows platform the Retriever should be added automatically to the path.
+`rdataretriever` is an R wrapper for the Python based Data Retriever. This means
+that Python and the `retriever` package need to be installed first.
 
-Install R package
------------------
+### Basic installation
 
-To install the development version of the R package `rdataretriever`, use the `devtools` package:
+*Use this if you are new to Python or don't have a local Python installation* 
 
-```coffee
-# install.packages("devtools")
-library(devtools)
-install_github("ropensci/rdataretriever")
-```
+1. Install the Python 3.7 version of the miniconda Python distribution from https://docs.conda.io/en/latest/miniconda.html
+2. In R install the `reticulate` package:
 
+  ```coffee
+  install.packages("reticulate")
+  ```
+
+3. In R run the following to install the `retriever` Python package:
+
+  ```coffee
+  library(reticulate)
+  py_available(initialize = TRUE)
+  py_install("retriever")
+  ```
+
+4. Install the `rdataretriever` R package:
+
+  ```coffee
+  devtools::install_github("ropensci/rdataretriever")
+  ```
+
+### Advanced installation
+
+*Use this if you are already familiar with Python and have a local Python installation*
+
+1. Check that your local Python installation is Python 3
+2. In R install the `reticulate` package:
+
+  ```coffee
+  install.packages("reticulate")
+  ```
+
+3. In R run the following (`replacing "/path/to/python" with the path to you Python executeable`) to install the `retriever` Python package:
+
+  ```coffee
+  library(reticulate)
+  use_python("/path/to/python")
+  py_install("retriever")
+  ```
+
+4. Install the `rdataretriever` R package:
+
+  ```coffee
+  devtools::install_github("ropensci/rdataretriever")
+  ```
+  
 Examples
 --------
 ```coffee
