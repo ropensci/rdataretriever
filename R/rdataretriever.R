@@ -40,7 +40,7 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
     stop(
       "The dataset requested isn't currently available in the rdataretriever.\n
       Run rdataretriever::datasets() to get a list of available datasets\n
-      Or run rdataretriver::get_updates() to get the newest available datasets."
+      Or run rdataretriever::get_updates() to get the newest available datasets."
     )
   }
   temp_path = tolower(tempdir())
