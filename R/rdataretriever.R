@@ -448,6 +448,23 @@ reset = function(scope = 'all') {
       unlink(file.path(home_dir, ".retriever", "connections"),
              recursive = TRUE)
     }
+  } else {
+    if (file.exists(file.path(home_dir, ".retriever", "raw_data", scope))) {
+      unlink(file.path(home_dir, ".retriever", "raw_data", scope),
+             recursive = TRUE)
+    }
+    script = gsub("-", "_", scope)
+    script_path_py = file.path(home_dir, ".retriever", "scripts", paste(script, ".py", sep=''))
+    script_path_json = file.path(home_dir, ".retriever", "scripts", paste(script, ".json", sep=''))
+    if (file.exists(script_path_py)) {
+      file.remove(script_path_py)
+      print(paste("successfully removed the script", scope, sep=' '))
+    } else if (file.exists(script_path_json)) {
+      file.remove(script_path_json)
+      print(paste("successfully removed the script", scope, sep=' '))
+    } else {
+      print(paste("can't find script", scope, sep=' '))
+    }
   }
 }
 
