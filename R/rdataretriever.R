@@ -422,50 +422,8 @@ get_citation = function(dataset) {
 #'
 #' @param scope All resets both  scripst and data directory
 reset = function(scope = 'all') {
-  os = Sys.info()[['sysname']]
-  home_dir = Sys.getenv('HOME')
-  print(paste("This will delete", toupper(scope), "cached infomation"))
-  choice.name <- readline(prompt = "Do you want to proceed? (y/N)")
-  if (tolower(scope) == "all" & tolower(choice.name) == "y") {
-    if (file.exists(file.path(home_dir, ".retriever"))) {
-      unlink(file.path(home_dir, ".retriever"), recursive = TRUE)
-    }
-  } else if (tolower(scope) == "scripts" &
-             tolower(choice.name) == "y") {
-    if (file.exists(file.path(home_dir, ".retriever", "scripts"))) {
-      unlink(file.path(home_dir, ".retriever", "scripts"),
-             recursive = TRUE)
-    }
-  } else if (tolower(scope) == "data" &
-             tolower(choice.name) == "y") {
-    if (file.exists(file.path(home_dir, ".retriever", "raw_data"))) {
-      unlink(file.path(home_dir, ".retriever", "raw_data"),
-             recursive = TRUE)
-    }
-  } else if (tolower(scope) == "connections" &
-             tolower(choice.name) == "y") {
-    if (file.exists(file.path(home_dir, ".retriever", "connections"))) {
-      unlink(file.path(home_dir, ".retriever", "connections"),
-             recursive = TRUE)
-    }
-  } else {
-    if (file.exists(file.path(home_dir, ".retriever", "raw_data", scope))) {
-      unlink(file.path(home_dir, ".retriever", "raw_data", scope),
-             recursive = TRUE)
-    }
-    script = gsub("-", "_", scope)
-    script_path_py = file.path(home_dir, ".retriever", "scripts", paste(script, ".py", sep=''))
-    script_path_json = file.path(home_dir, ".retriever", "scripts", paste(script, ".json", sep=''))
-    if (file.exists(script_path_py)) {
-      file.remove(script_path_py)
-      print(paste("successfully removed the script", scope, sep=' '))
-    } else if (file.exists(script_path_json)) {
-      file.remove(script_path_json)
-      print(paste("successfully removed the script", scope, sep=' '))
-    } else {
-      print(paste("can't find script", scope, sep=' '))
-    }
-  }
+  r_data_retriever = reticulate::import('retriever')
+  r_data_retriever$reset_retriever(scope)
 }
 
 #' Update the retriever's dataset scripts to the most recent versions.
