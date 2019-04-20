@@ -97,8 +97,9 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
 #' @param dataset the name of the dataset that you wish to download
 #' @param path the path where the data should be downloaded to
 #' @param quiet logical, if true retriever runs in quiet mode
-#' @param sub_dir if true and the downloaded dataset is stored in subdirectories those subdirectories will be preserved and placed according the path argument, defaults to false.
+#' @param sub_dir downloaded dataset is stored into a custom subdirectory.
 #' @param debug Setting TRUE helps in debugging in case of errors
+#' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
 #' @export
 #' @import reticulate
 #' @examples
@@ -108,12 +109,9 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
 #' # when no path is specified
 #' dir()
 #' }
-download = function(dataset, path = './', quiet = FALSE, sub_dir = FALSE, debug = FALSE) {
+download = function(dataset, path = './', quiet = FALSE, sub_dir = '', debug = FALSE, use_cache = TRUE) {
   r_data_retriever = reticulate::import('retriever')
-  if (sub_dir)
-    r_data_retriever$download(dataset = dataset, path = path)
-  else
-    r_data_retriever$download(dataset = dataset)
+  r_data_retriever$download(dataset, path, quiet, sub_dir, debug, use_cache)
 }
 
 #' Name all available dataset scripts.
@@ -419,8 +417,13 @@ get_citation = function(dataset) {
 }
 
 #' Reset the scripts or data(raw_data) directory or both
-#'
 #' @param scope All resets both  scripst and data directory
+#' @export
+#' @import reticulate
+#' @examples
+#' \donttest{
+#' rdataretriever::reset('iris')
+#' }
 reset = function(scope = 'all') {
   r_data_retriever = reticulate::import('retriever')
   r_data_retriever$reset_retriever(scope)

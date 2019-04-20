@@ -8,13 +8,26 @@ testthat::test_that("datasets returns some known values", {
 })
 
 
-test_that("Download the raw portal dataset into './data/'", {
+test_that("Download the raw portal dataset using path", {
   portal <- list("3299474", "3299483", "5603981")
-  rdataretriever::download('portal', './data/')
+  path = tempdir()
+  rdataretriever::download(dataset = 'portal', path = path)
   for (file in portal)
   {
-    file_path <- full_normalized_path(mustWork = FALSE,
-      getwd(), "tests/testthat/data", file)
+    file_path <- full_normalized_path(path, file, mustWork = FALSE)
+    expect_identical(identical(file.info(file_path)$size, integer(0)), FALSE)
+  }
+})
+
+
+test_that("Download the raw portal dataset using path and sub_dir", {
+  portal <- list("3299474", "3299483", "5603981")
+  path = tempdir()
+  sub_dir = 'sub_dir'
+  rdataretriever::download(dataset = 'portal', path = path, sub_dir = sub_dir)
+  for (file in portal)
+  {
+    file_path <- full_normalized_path(path, sub_dir, file, mustWork = FALSE)
     expect_identical(identical(file.info(file_path)$size, integer(0)), FALSE)
   }
 })
