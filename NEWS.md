@@ -1,3 +1,30 @@
+rdataretriever 2.0.0
+====================
+
+### New Coauthors
+
+We welcome Harshit Bansal as a coauthor on the package. 
+Thanks for the great help!
+
+### New Features
+
+* Add a customize installation to directory using data dir
+* Use Dockers for testing
+* Add spatial support using Postgis
+* Using reticulate
+* Add get_citation function
+* Update Reset retriever to include reseting specific scripts or data
+
+### Minor Improvements
+
+* Improve the test platform and use reticulate in the tests
+* Test using custom service names specific to project
+* Add potential path for retriever in Windows
+
+### Bug Fixes
+* No scripts when using reticulate based install on retriever
+
+
 rdataretriever 1.1.0
 ====================
 
