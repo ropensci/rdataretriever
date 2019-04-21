@@ -449,6 +449,19 @@ get_updates = function() {
   writeLines(strwrap(update_log[3]))
 }
 
+#' Update the retriever's global_script_list with the scripts present
+#' in the ~/.retriever directory.
+#' @export
+#' @import reticulate
+#' @examples
+#' \donttest{
+#' rdataretriever::reload_scripts()
+#' }
+reload_scripts = function() {
+  r_data_retriever = reticulate::import('retriever')
+  r_data_retriever$reload_scripts()
+}
+
 #' Setting path of retriever
 #'
 #' @param path location of retriever in the system
