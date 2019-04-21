@@ -135,3 +135,13 @@ test_that("Install and load a dataset as a list", {
   portal = rdataretriever::fetch('portal')
   expect_identical(all(names(portal) %in%  portal_data), TRUE)
 })
+
+test_that("Reset a dataset script", {
+  dataset = sample(rdataretriever::datasets(), 1)
+  rdataretriever::reset(dataset)
+  rdataretriever::reload_scripts()
+  expect_identical(dataset %in% rdataretriever::datasets(), FALSE)
+  rdataretriever::get_updates()
+  rdataretriever::reload_scripts()
+  expect_identical(dataset %in% rdataretriever::datasets(), TRUE)
+})
