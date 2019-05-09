@@ -4,7 +4,12 @@
 \alias{datasets}
 \title{Name all available dataset scripts.}
 \usage{
-datasets()
+datasets(keywords = "", licenses = "")
+}
+\arguments{
+\item{keywords}{Search all datasets by keywords}
+
+\item{licenses}{Search all datasets by licenses}
 }
 \value{
 returns a character vector with the available datasets for download

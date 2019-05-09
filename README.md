@@ -1,7 +1,7 @@
 # rdataretriever
 
 [![Build Status](https://travis-ci.org/ropensci/rdataretriever.png)](https://travis-ci.org/ropensci/rdataretriever)
-[![cran version](https://www.r-pkg.org/badges/version/rdataretriever)](https://cran.r-project.org/web/packages/rdataretriever/index.html)
+[![cran version](https://www.r-pkg.org/badges/version/rdataretriever)](https://CRAN.R-project.org/package=rdataretriever)
 [![Documentation Status](https://readthedocs.org/projects/retriever/badge/?version=latest)](https://retriever.readthedocs.io/en/latest/rdataretriever.html#)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/rdataretriever)](https://CRAN.R-project.org/package=rdataretriever) +
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ecoretriever)](https://CRAN.R-project.org/package=ecoretriever)
@@ -17,14 +17,24 @@ and more time analyzing it.
 This package lets you access the Retriever using R, so that the Retriever's data
 handling can easily be integrated into R workflows.
 
+## Table of Contents
+
+  - [Installation](#installation)
+      - [Installation from CRAN and PyPi](#installation-from-cran-and-pypi)
+      - [Installation with devtools and <code>reticulate</code>](#installation-with-devtools-and-reticulate)
+  - [Examples](#examples)
+  - [Spatial data installation](#spatial-data-installation)
+  - [Using Dockers](#using-dockers)
+  - [Acknowledgements](#acknowledgements)
+
 ## Installation
 
 `rdataretriever` is an R wrapper for the Python based Data Retriever. This means
 that Python and the `retriever` package need to be installed first.
 
-### Basic installation
+#### Installation from `CRAN` and `PyPi`
 
-*Use this if you are new to Python or don't have a local Python installation* 
+*Use this if you are new to Python or don't have a local Python installation*
 
 1. Install the Python 3.7 version of the miniconda Python distribution from https://docs.conda.io/en/latest/miniconda.html
 2. In R install the `reticulate` package:
@@ -47,7 +57,7 @@ that Python and the `retriever` package need to be installed first.
   devtools::install_github("ropensci/rdataretriever")
   ```
 
-### Advanced installation
+#### Installation with `devtools` and `reticulate`
 
 *Use this if you are already familiar with Python and have a local Python installation*
 
@@ -94,8 +104,8 @@ head(portal$species)
 
 ```
 
-New Spatial data Installation
------------------------------
+Spatial data Installation
+-------------------------
 
 **Set-up and Requirements**
 
@@ -107,7 +117,7 @@ The `rdataretriever` supports installation of spatial data into `Postgres DBMS`.
 
 1. **Install PostgreSQL and PostGis**
 
-	To install `PostgreSQL with PostGis` for use with spatial data please refer to the
+	To install `PostgreSQL` with `PostGis` for use with spatial data please refer to the
 	[OSGeo Postgres installation instructions](https://trac.osgeo.org/postgis/wiki/UsersWikiPostGIS21UbuntuPGSQL93Apt).
 
 	We recommend storing your PostgreSQL login information in a `.pgpass` file to
@@ -120,7 +130,7 @@ The `rdataretriever` supports installation of spatial data into `Postgres DBMS`.
 	**For example, this could be a sample of paths exported on Mac:**
 
 	```shell
-	#~/.bash_profile file, Postgres PATHS and tools .
+	#~/.bash_profile file, Postgres PATHS and tools.
 	export PATH="/Applications/Postgres.app/Contents/MacOS/bin:${PATH}"
 	export PATH="$PATH:/Applications/Postgres.app/Contents/Versions/10/bin"
 
@@ -128,7 +138,7 @@ The `rdataretriever` supports installation of spatial data into `Postgres DBMS`.
 
 2. **Enable PostGIS extensions**
 
-	If you have Postgres set up, enable `PostGIS extensions`.
+	If you have `Postgres` set up, enable `PostGIS` extensions.
 	This is done by using either `Postgres CLI` or `GUI(PgAdmin)` and run
 
 	**For psql CLI**
@@ -169,6 +179,33 @@ To run tests
 
 `docker-compose  run rdata Rscript load_and_test.R`
 
+Release
+-------
+
+Make sure you have test passing on R-oldrelease, current R-release and R-devel
+
+To check the package
+
+```Shell
+R CMD Build #build the package
+R CMD check  --as-cran --no-manual rdataretriever_[version]tar.gz
+```
+
+To Test
+
+```R
+setwd("./rdataretriever") # Set working directory
+# install all deps
+# install.packages("reticulate")
+library(DBI)
+library(RPostgreSQL)
+library(RSQLite)
+library(reticulate)
+library(RMariaDB)
+install.packages(".", repos = NULL, type="source")
+roxygen2::roxygenise()
+devtools::test()
+```
 
 To get citation information for the `rdataretriever` in R use `citation(package = 'rdataretriever')`
 

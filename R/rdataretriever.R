@@ -1,9 +1,3 @@
-if (!requireNamespace("reticulate", quietly = TRUE)) {
-  return()
-} else {
-  library(reticulate)
-}
-
 #' Fetch a dataset via the Data Retriever
 #'
 #' Each datafile in a given dataset is downloaded to a temporary directory and
@@ -14,8 +8,6 @@ if (!requireNamespace("reticulate", quietly = TRUE)) {
 #' @param data_names the names you wish to assign to cells of the list which
 #' stores the fetched dataframes. This is only relevant if you are
 #' downloading more than one dataset.
-#' @export
-#' @import reticulate
 #' @examples
 #' \donttest{
 #' ## fetch the portal Database
@@ -28,8 +20,10 @@ if (!requireNamespace("reticulate", quietly = TRUE)) {
 #' names(vegdata)
 #' names(vegdata$plant_comp_ok)
 #' }
+#' @importFrom reticulate import r_to_py
+#' @export
 fetch = function(dataset, quiet=TRUE, data_names=NULL){
-  r_data_retriever = reticulate::import('retriever')
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   data_sets = list()
   #Accessing datasets() function from Python API
   for (x in r_data_retriever$datasets()) {
@@ -89,6 +83,7 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
   return(datasets)
 }
 
+
 #' Download datasets via the Data Retriever.
 #'
 #' Directly downloads data files with no processing, allowing downloading of
@@ -100,8 +95,6 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
 #' @param sub_dir downloaded dataset is stored into a custom subdirectory.
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
-#' @export
-#' @import reticulate
 #' @examples
 #' \donttest{
 #' rdataretriever::download('plant-comp-ok')
@@ -109,8 +102,10 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
 #' # when no path is specified
 #' dir()
 #' }
+#' @importFrom reticulate import r_to_py
+#' @export
 download = function(dataset, path = './', quiet = FALSE, sub_dir = '', debug = FALSE, use_cache = TRUE) {
-  r_data_retriever = reticulate::import('retriever')
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   r_data_retriever$download(dataset, path, quiet, sub_dir, debug, use_cache)
 }
 
@@ -119,17 +114,19 @@ download = function(dataset, path = './', quiet = FALSE, sub_dir = '', debug = F
 #' Additional information on the available datasets can be found at url https://retriever.readthedocs.io/en/latest/datasets.html
 #'
 #' @return returns a character vector with the available datasets for download
-#' @export
-#' @import reticulate
+#' @param keywords Search all datasets by keywords
+#' @param licenses Search all datasets by licenses
 #' @examples
 #' \donttest{
 #' rdataretriever::datasets()
 #' }
-datasets = function() {
-  r_data_retriever =  reticulate::import('retriever')
+#' @importFrom reticulate import r_to_py
+#' @export
+datasets = function(keywords = '', licenses = '') {
+  r_data_retriever <- import("retriever", delay_load = TRUE)
   data_sets = c()
   #Accessing datasets() function from Python API
-  for (x in r_data_retriever$datasets()) {
+  for (x in r_data_retriever$datasets(keywords, licenses)) {
     data_sets = c(data_sets, x$name)
   }
   print(data_sets)
@@ -144,14 +141,14 @@ datasets = function() {
 #' @param data_dir the dir path to store data, defaults to working dir
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
-#' @export
-#' @import reticulate
 #' @examples
 #' \donttest{
 #' rdataretriever::install_csv('iris')
 #' }
+#' @importFrom reticulate import r_to_py
+#' @export
 install_csv = function(dataset, table_name = '{db}_{table}.csv', data_dir=getwd(), debug = FALSE, use_cache = TRUE) {
-  r_data_retriever = reticulate::import('retriever')
+  r_data_retriever <- import("retriever", delay_load = TRUE)
   r_data_retriever$install_csv(dataset, table_name , data_dir, debug, use_cache)
 }
 
@@ -164,12 +161,12 @@ install_csv = function(dataset, table_name = '{db}_{table}.csv', data_dir=getwd(
 #' @param data_dir the dir path to store data, defaults to working dir
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
-#' @export
-#' @import reticulate
 #' @examples
 #' \donttest{
 #' rdataretriever::install_json('iris')
 #' }
+#' @importFrom reticulate import r_to_py
+#' @export
 install_json = function(dataset, table_name = '{db}_{table}.json', data_dir=getwd(), debug = FALSE, use_cache = TRUE) {
   r_data_retriever = import('retriever')
   r_data_retriever$install_json(dataset, table_name , data_dir, debug, use_cache)
@@ -185,14 +182,14 @@ install_json = function(dataset, table_name = '{db}_{table}.json', data_dir=getw
 #' @param data_dir the dir path to store data, defaults to working dir
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
-#' @export
-#' @import reticulate
 #' @examples
 #' \donttest{
 #' rdataretriever::install_xml('iris')
 #' }
+#' @importFrom reticulate import r_to_py
+#' @export
 install_xml = function(dataset, table_name = '{db}_{table}.xml', data_dir=getwd(), debug = FALSE, use_cache = TRUE) {
-  r_data_retriever = reticulate::import('retriever')
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   r_data_retriever$install_xml(dataset, table_name , data_dir, debug, use_cache)
 }
 
@@ -210,16 +207,16 @@ install_xml = function(dataset, table_name = '{db}_{table}.xml', data_dir=getwd(
 #' containing one file
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
-#' @export
-#' @import reticulate
 #' @examples
 #' \donttest{
 #' rdataretriever :: install_mysql(dataset='portal', user='postgres', password='abcdef')
 #' }
+#' @importFrom reticulate import r_to_py
+#' @export
 install_mysql = function(dataset, user = 'root', password = '', host = 'localhost',
                          port = 3306, database_name = '{db}', table_name = '{db}.{table}',
                          debug = FALSE, use_cache = TRUE) {
-  r_data_retriever = reticulate::import('retriever')
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   r_data_retriever$install_mysql(dataset, user, password, host,
                                  port, database_name, table_name,
                                  debug, use_cache)
@@ -241,17 +238,17 @@ install_mysql = function(dataset, user = 'root', password = '', host = 'localhos
 #' @param bbox Optional extent values used to fetch data from the spatial dataset
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
-#' @export
-#' @import reticulate
 #' @examples
 #' \donttest{
 #' rdataretriever::install_postgres(dataset='portal', user='postgres', password='abcdef')
 #' }
+#' @importFrom reticulate import r_to_py
+#' @export
 install_postgres = function(dataset, user = 'postgres', password = '',
                             host = 'localhost', port = 5432, database = 'postgres',
                             database_name = '{db}', table_name = '{db}.{table}',
                             bbox = list(), debug = FALSE, use_cache = TRUE) {
-  r_data_retriever = reticulate::import('retriever')
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   #Use the R list function explicitly
   bbox = reticulate::r_to_py(bbox)
   r_data_retriever$install_postgres(dataset, user, password, host,
@@ -269,15 +266,15 @@ install_postgres = function(dataset, user = 'postgres', password = '',
 #' @param data_dir the dir path to store the db, defaults to working dir
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
-#' @export
-#' @import reticulate
 #' @examples
 #' \donttest{
 #' rdataretriever::install_sqlite(dataset='iris', file='sqlite.db', debug=FALSE, use_cache=TRUE)
 #' }
+#' @importFrom reticulate import r_to_py
+#' @export
 install_sqlite = function(dataset, file = 'sqlite.db', table_name = '{db}_{table}',
                           data_dir=getwd(), debug = FALSE, use_cache = TRUE) {
-  r_data_retriever = reticulate::import('retriever')
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   tryCatch(withCallingHandlers(
     {r_data_retriever$install_sqlite(dataset, file, table_name, data_dir, debug, use_cache)},
     error=function(error_message) {
@@ -298,15 +295,15 @@ install_sqlite = function(dataset, file = 'sqlite.db', table_name = '{db}_{table
 #' @param table_name table name for installing of dataset
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
-#' @export
-#' @import reticulate
 #' @examples
 #' \donttest{
 #' rdataretriever::install_msaccess(dataset='iris', file='sqlite.db',debug=FALSE, use_cache=TRUE)
 #' }
+#' @importFrom reticulate import r_to_py
+#' @export
 install_msaccess = function(dataset, file = 'access.mdb', table_name = '[{db} {table}]',
                             debug = FALSE, use_cache = TRUE) {
-  r_data_retriever = reticulate::import('retriever')
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   r_data_retriever$install_msaccess(dataset, file, table_name, debug, use_cache)
 }
 
@@ -334,11 +331,12 @@ install_msaccess = function(dataset, file = 'access.mdb', table_name = '[{db} {t
 #' Only relevant for csv connection types. Defaults to current working directory
 #' @param log_dir the location where the retriever log should be stored if
 #' the progress is not printed to the console
-#' @export
 #' @examples
 #' \donttest{
 #' rdataretriever::install('iris', 'csv')
 #' }
+#' @importFrom reticulate import r_to_py
+#' @export
 install = function(dataset, connection, db_file = NULL, conn_file = NULL,
                    data_dir = '.', log_dir = NULL) {
   # This function is deprecated
@@ -406,26 +404,26 @@ install = function(dataset, connection, db_file = NULL, conn_file = NULL,
 #' Get dataset citation information and a description
 #' @param dataset name of the dataset
 #' @return returns a string with the citation information
-#' @export
-#' @import reticulate
 #' @examples
 #' \donttest{
 #' rdataretriever::get_citation('plant-comp-us')
 #' }
+#' @importFrom reticulate import r_to_py
+#' @export
 get_citation = function(dataset) {
   run_cli(paste('retriever citation', dataset))
 }
 
 #' Reset the scripts or data(raw_data) directory or both
 #' @param scope All resets both  scripst and data directory
-#' @export
-#' @import reticulate
 #' @examples
 #' \donttest{
 #' rdataretriever::reset('iris')
 #' }
+#' @importFrom reticulate import r_to_py
+#' @export
 reset = function(scope = 'all') {
-  r_data_retriever = reticulate::import('retriever')
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   r_data_retriever$reset_retriever(scope)
 }
 
@@ -438,43 +436,43 @@ reset = function(scope = 'all') {
 #' that have not yet been incorperated into an official release, and you should
 #' consider checking that page if you have any concerns.
 #' @keywords utilities
-#' @export
 #' @examples
 #' \donttest{
 #' rdataretriever::get_updates()
 #' }
+#' @importFrom reticulate import r_to_py
+#' @export
 get_updates = function() {
   writeLines(strwrap('Please wait while the retriever updates its scripts, ...'))
-  update_log = run_cli('retriever update')
-  writeLines(strwrap(update_log[3]))
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
+  r_data_retriever$check_for_updates()
 }
 
 #' Update the retriever's global_script_list with the scripts present
 #' in the ~/.retriever directory.
-#' @export
-#' @import reticulate
 #' @examples
 #' \donttest{
 #' rdataretriever::reload_scripts()
 #' }
+#' @importFrom reticulate import r_to_py
+#' @export
 reload_scripts = function() {
-  r_data_retriever = reticulate::import('retriever')
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   r_data_retriever$reload_scripts()
 }
 
 #' Setting path of retriever
 #'
 #' @param path location of retriever in the system
-#' @export
 #' @examples
 #' \donttest{
 #' rdataretriever::use_RetrieverPath("/home/<system_name>/anaconda2/envs/py27/bin/")
 #' }
+#' @export
 use_RetrieverPath = function(path) {
   Sys.setenv(PATH = paste(path, ':', Sys.getenv('PATH'), sep = ''))
 }
 
-#' @import reticulate
 print.update_log = function(x, ...) {
   if (length(x) == 0) {
     cat('No scripts downloaded')
@@ -487,72 +485,6 @@ print.update_log = function(x, ...) {
                            x[[1]][1]))
     object[1] = paste('Downloaded scripts:', object[1])
     cat(object, fill = TRUE, sep = ', ')
-  }
-}
-
-.onAttach = function(...) {
-  packageStartupMessage(
-    "\n  Use get_updates() to download the most recent release of download scripts
-    New to rdataretriever? Examples at
-    https://github.com/ropensci/rdataretriever/
-    Use citation(package='rdataretriever') for the package citation
-    \nUse suppressPackageStartupMessages() to suppress these messages in the future"
-  )
-}
-
-.onLoad = function(...) {
-  # Check if retriever can be imported
-  check_retriever_import()
-}
-
-set_home = function(...) {
-  current_home = normalizePath(Sys.getenv('HOME'), winslash = "/")
-  Sys.setenv(HOME = gsub("/Documents", "", Sys.getenv('HOME')))
-}
-
-check_retriever_import = function(){
-  # Check if reticulate can import retriever
-  tryCatch(
-    {imported_retriever = reticulate::import('retriever')},
-    error=function(error_message) {
-      message("The python module retriever was not found")
-      message("Full error trace:")
-      message(error_message)
-      return(NA)
-    }
-  )
-}
-
-check_for_retriever = function(...) {
-  # Detect the Python and retriever paths
-  # Export the values as PATH and PYTHONHOME
-  python_paths_found = py_config()[13][[1]]
-  unique_python_paths = unique(unlist(lapply(python_paths_found, dirname)))
-  normalized_python_paths = unlist(lapply(unique_python_paths, normalizePath))
-  compile_path = paste(normalized_python_paths, collapse = ':')
-  # Export the detected values as part of PATH
-  Sys.setenv(PATH = paste(compile_path, ':', Sys.getenv('PATH'), sep = ''))
-  # Add these values as part of the PYTHONHOME VALUES
-  Sys.setenv(PYTHONPATH = paste(compile_path, ':', Sys.getenv('PATH'), sep =
-                                  ''))
-  retriever_path = Sys.which('retriever')
-  if (retriever_path == '') {
-    path_warn = 'The retriever is not on your path and may not be installed.'
-    mac_instr = paste(
-      'Follow the instructions for installing and manually adding',
-      'the Data Retriever to your path at http://www.data-retriever.org/#install',
-      sep = ' '
-    )
-    download_instr = paste(
-      'Please upgrade to the most recent version of the Data Retriever which will',
-      'automatically add itself to the path http://www.data-retriever.org/#install',
-      sep = ' '
-    )
-    os = Sys.info()[['sysname']]
-    if (os == 'Darwin')
-      packageStartupMessage(paste(path_warn, mac_instr))
-    else
-      packageStartupMessage(paste(path_warn, download_instr))
   }
 }
 
@@ -581,3 +513,23 @@ get_os <- function() {
   }
   tolower(os)
 }
+
+# global reference to python modules (will be initialized in .onLoad)
+retriever <- NULL
+
+.onLoad = function(libname, pkgname) {
+    if(reticulate::py_available()){
+        install_python_modules <- function(method = "auto", conda = "auto") {
+            reticulate::py_install("retriever", method = method, conda = conda)
+        }
+    }
+    if (suppressWarnings(suppressMessages(requireNamespace("reticulate")))) {
+        modules <- reticulate::py_module_available("retriever")
+        if (modules) {
+            ## assignment in parent environment!
+            retriever <<- reticulate::import("retriever", delay_load = TRUE)
+        }
+    }
+}
+
+

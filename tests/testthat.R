@@ -1,6 +1,4 @@
-library(testthat)
-library(devtools)
-library(rdataretriever)
+library("testthat")
+library("devtools")
 
-# This is used for local testing.
-test_dir(".", reporter = c("check", "progress"))
+test_check("rdataretriever")

@@ -1,13 +1,3 @@
-if (!requireNamespace("reticulate", quietly = TRUE)) {
-  return()
-}
-
-suppressPackageStartupMessages(require(reticulate))
-suppressPackageStartupMessages(require(DBI))
-# suppressPackageStartupMessages(require(RMariaDB))
-suppressPackageStartupMessages(require(RPostgreSQL))
-suppressPackageStartupMessages(require(RSQLite))
-
 # Set passwords and host names depending on test environment
 os_password = ""
 pgdb_rdata = "localhost"
@@ -30,3 +20,25 @@ full_normalized_path = function(paths, ..., mustWork = FALSE) {
                              winslash = "/",
                              mustWork = mustWork)
 }
+
+# helper to skip tests if python is not avaialable
+skip_if_no_python <- function() {
+  modules <- reticulate::py_module_available("retriever")
+  if (!modules){
+    testthat::skip("retriever not available for testing")
+  } else{
+  load_required_packages()
+  }
+}
+
+load_required_packages<- function() {
+  if (!requireNamespace("reticulate", quietly = TRUE)) {
+    testthat::skip("reticulate not available for testing")
+  }
+  suppressPackageStartupMessages(require(reticulate))
+  suppressPackageStartupMessages(require(DBI))
+  # suppressPackageStartupMessages(require(RMariaDB))
+  suppressPackageStartupMessages(require(RPostgreSQL))
+  suppressPackageStartupMessages(require(RSQLite))
+}
+
