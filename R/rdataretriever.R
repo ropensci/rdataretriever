@@ -502,7 +502,12 @@ print.update_log = function(x, ...) {
 
 .onLoad = function(...) {
   # Check if retriever can be imported
-  check_retriever_import()
+  python_path = Sys.which('Python')
+  if (!is.null(python_path)){
+    check_for_retriever()
+    check_retriever_import()
+  }
+
 }
 
 set_home = function(...) {
@@ -526,15 +531,14 @@ check_retriever_import = function(){
 check_for_retriever = function(...) {
   # Detect the Python and retriever paths
   # Export the values as PATH and PYTHONHOME
-  python_paths_found = py_config()[13][[1]]
+  python_paths_found = py_config()$python
   unique_python_paths = unique(unlist(lapply(python_paths_found, dirname)))
   normalized_python_paths = unlist(lapply(unique_python_paths, normalizePath))
   compile_path = paste(normalized_python_paths, collapse = ':')
   # Export the detected values as part of PATH
   Sys.setenv(PATH = paste(compile_path, ':', Sys.getenv('PATH'), sep = ''))
   # Add these values as part of the PYTHONHOME VALUES
-  Sys.setenv(PYTHONPATH = paste(compile_path, ':', Sys.getenv('PATH'), sep =
-                                  ''))
+  Sys.setenv(PYTHONPATH = paste(compile_path, ':', Sys.getenv('PATH'), sep = ''))
   retriever_path = Sys.which('retriever')
   if (retriever_path == '') {
     path_warn = 'The retriever is not on your path and may not be installed.'
@@ -553,7 +557,9 @@ check_for_retriever = function(...) {
       packageStartupMessage(paste(path_warn, mac_instr))
     else
       packageStartupMessage(paste(path_warn, download_instr))
+    return(NA)
   }
+  return (TRUE)
 }
 
 run_cli = function(...) {

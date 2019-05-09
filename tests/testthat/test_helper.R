@@ -30,3 +30,12 @@ full_normalized_path = function(paths, ..., mustWork = FALSE) {
                              winslash = "/",
                              mustWork = mustWork)
 }
+
+# helper to skip tests if python is not avaialable
+skip_if_no_python <- function() {
+  python_path = Sys.which('Python')
+  if (is.null(python_path))
+    skip("python environments not available for testing")
+  if(is.null(reticulate::import('retriever')))
+    skip("python environments not available for testing")
+}
