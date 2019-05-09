@@ -1,7 +1,7 @@
 # rdataretriever
 
 [![Build Status](https://travis-ci.org/ropensci/rdataretriever.png)](https://travis-ci.org/ropensci/rdataretriever)
-[![cran version](https://www.r-pkg.org/badges/version/rdataretriever)](https://cran.r-project.org/web/packages/rdataretriever/index.html)
+[![cran version](https://www.r-pkg.org/badges/version/rdataretriever)](https://CRAN.R-project.org/package=rdataretriever)
 [![Documentation Status](https://readthedocs.org/projects/retriever/badge/?version=latest)](https://retriever.readthedocs.io/en/latest/rdataretriever.html#)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/rdataretriever)](https://CRAN.R-project.org/package=rdataretriever) +
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ecoretriever)](https://CRAN.R-project.org/package=ecoretriever)
@@ -169,7 +169,34 @@ To run tests
 
 `docker-compose  run rdata Rscript load_and_test.R`
 
+Release
+-------
 
+Make sure you have test passing on R-oldrelease, current R-release and R-devel
+
+To check the package
+
+```Shell
+R CMD Build #build the package
+R CMD check  --as-cran --no-manual rdataretriever_[version]tar.gz
+```
+
+To Test
+
+```R
+setwd("./rdataretriever") # Set working directory
+# install all deps 
+# install.packages("RMariaDB")
+# install.packages("reticulate")
+library(DBI)
+library(RPostgreSQL)
+library(RSQLite)
+library(reticulate)
+library(RMariaDB)
+install.packages(".", repos = NULL, type="source")
+roxygen2::roxygenise()
+devtools::test()
+```
 To get citation information for the `rdataretriever` in R use `citation(package = 'rdataretriever')`
 
 Acknowledgements
