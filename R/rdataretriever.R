@@ -1,3 +1,4 @@
+r_data_retriever <- NULL
 if (!requireNamespace("reticulate", quietly = TRUE)) {
   return()
 } else {
@@ -29,7 +30,7 @@ if (!requireNamespace("reticulate", quietly = TRUE)) {
 #' names(vegdata$plant_comp_ok)
 #' }
 fetch = function(dataset, quiet=TRUE, data_names=NULL){
-  r_data_retriever = reticulate::import('retriever')
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   data_sets = list()
   #Accessing datasets() function from Python API
   for (x in r_data_retriever$datasets()) {
@@ -110,7 +111,7 @@ fetch = function(dataset, quiet=TRUE, data_names=NULL){
 #' dir()
 #' }
 download = function(dataset, path = './', quiet = FALSE, sub_dir = '', debug = FALSE, use_cache = TRUE) {
-  r_data_retriever = reticulate::import('retriever')
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   r_data_retriever$download(dataset, path, quiet, sub_dir, debug, use_cache)
 }
 
@@ -126,7 +127,7 @@ download = function(dataset, path = './', quiet = FALSE, sub_dir = '', debug = F
 #' rdataretriever::datasets()
 #' }
 datasets = function() {
-  r_data_retriever =  reticulate::import('retriever')
+  r_data_retriever =  reticulate::import("retriever", delay_load = TRUE)
   data_sets = c()
   #Accessing datasets() function from Python API
   for (x in r_data_retriever$datasets()) {
@@ -151,7 +152,7 @@ datasets = function() {
 #' rdataretriever::install_csv('iris')
 #' }
 install_csv = function(dataset, table_name = '{db}_{table}.csv', data_dir=getwd(), debug = FALSE, use_cache = TRUE) {
-  r_data_retriever = reticulate::import('retriever')
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   r_data_retriever$install_csv(dataset, table_name , data_dir, debug, use_cache)
 }
 
@@ -192,7 +193,7 @@ install_json = function(dataset, table_name = '{db}_{table}.json', data_dir=getw
 #' rdataretriever::install_xml('iris')
 #' }
 install_xml = function(dataset, table_name = '{db}_{table}.xml', data_dir=getwd(), debug = FALSE, use_cache = TRUE) {
-  r_data_retriever = reticulate::import('retriever')
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   r_data_retriever$install_xml(dataset, table_name , data_dir, debug, use_cache)
 }
 
@@ -219,7 +220,7 @@ install_xml = function(dataset, table_name = '{db}_{table}.xml', data_dir=getwd(
 install_mysql = function(dataset, user = 'root', password = '', host = 'localhost',
                          port = 3306, database_name = '{db}', table_name = '{db}.{table}',
                          debug = FALSE, use_cache = TRUE) {
-  r_data_retriever = reticulate::import('retriever')
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   r_data_retriever$install_mysql(dataset, user, password, host,
                                  port, database_name, table_name,
                                  debug, use_cache)
@@ -251,7 +252,7 @@ install_postgres = function(dataset, user = 'postgres', password = '',
                             host = 'localhost', port = 5432, database = 'postgres',
                             database_name = '{db}', table_name = '{db}.{table}',
                             bbox = list(), debug = FALSE, use_cache = TRUE) {
-  r_data_retriever = reticulate::import('retriever')
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   #Use the R list function explicitly
   bbox = reticulate::r_to_py(bbox)
   r_data_retriever$install_postgres(dataset, user, password, host,
@@ -277,7 +278,7 @@ install_postgres = function(dataset, user = 'postgres', password = '',
 #' }
 install_sqlite = function(dataset, file = 'sqlite.db', table_name = '{db}_{table}',
                           data_dir=getwd(), debug = FALSE, use_cache = TRUE) {
-  r_data_retriever = reticulate::import('retriever')
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   tryCatch(withCallingHandlers(
     {r_data_retriever$install_sqlite(dataset, file, table_name, data_dir, debug, use_cache)},
     error=function(error_message) {
@@ -306,7 +307,7 @@ install_sqlite = function(dataset, file = 'sqlite.db', table_name = '{db}_{table
 #' }
 install_msaccess = function(dataset, file = 'access.mdb', table_name = '[{db} {table}]',
                             debug = FALSE, use_cache = TRUE) {
-  r_data_retriever = reticulate::import('retriever')
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   r_data_retriever$install_msaccess(dataset, file, table_name, debug, use_cache)
 }
 
@@ -425,7 +426,7 @@ get_citation = function(dataset) {
 #' rdataretriever::reset('iris')
 #' }
 reset = function(scope = 'all') {
-  r_data_retriever = reticulate::import('retriever')
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   r_data_retriever$reset_retriever(scope)
 }
 
@@ -458,7 +459,7 @@ get_updates = function() {
 #' rdataretriever::reload_scripts()
 #' }
 reload_scripts = function() {
-  r_data_retriever = reticulate::import('retriever')
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   r_data_retriever$reload_scripts()
 }
 
@@ -518,6 +519,7 @@ set_home = function(...) {
 check_retriever_import = function(){
   # Check if reticulate can import retriever
   retriever_path = Sys.which('retriever')
+  r_data_retriever <<- reticulate::import("retriever", delay_load = TRUE)
   if (!is.null(retriever_path)){
     print("The python module retriever was not found")
     print("Please install retriever:")
