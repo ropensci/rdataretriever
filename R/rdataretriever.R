@@ -517,15 +517,11 @@ set_home = function(...) {
 
 check_retriever_import = function(){
   # Check if reticulate can import retriever
-  tryCatch(
-    {imported_retriever = reticulate::import('retriever')},
-    error=function(error_message) {
-      message("The python module retriever was not found")
-      message("Full error trace:")
-      message(error_message)
-      return(NA)
-    }
-  )
+  retriever_path = Sys.which('retriever')
+  if (!is.null(retriever_path)){
+    print("The python module retriever was not found")
+    print("Please install retriever:")
+  }
 }
 
 check_for_retriever = function(...) {
@@ -557,7 +553,7 @@ check_for_retriever = function(...) {
       packageStartupMessage(paste(path_warn, mac_instr))
     else
       packageStartupMessage(paste(path_warn, download_instr))
-    return(NA)
+    return(FALSE)
   }
   return (TRUE)
 }

@@ -36,6 +36,7 @@ skip_if_no_python <- function() {
   python_path = Sys.which('Python')
   if (is.null(python_path))
     skip("python environments not available for testing")
-  if(is.null(reticulate::import('retriever')))
+  retriever_path = Sys.which('retriever')
+  if(is.null(retriever_path))
     skip("python environments not available for testing")
 }
