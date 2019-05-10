@@ -37,6 +37,6 @@ skip_if_no_python <- function() {
   if (is.null(python_path))
     skip("python environments not available for testing")
   retriever_path = Sys.which('retriever')
-  if(is.null(retriever_path))
+  if(is.null(retriever_path) && !Sys.getenv("IN_DOCKER")=="true")
     skip("python environments not available for testing")
 }
