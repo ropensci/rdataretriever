@@ -1,9 +1,4 @@
 r_data_retriever <- NULL
-if (!requireNamespace("reticulate", quietly = TRUE)) {
-  return()
-} else {
-  library(reticulate)
-}
 
 #' Fetch a dataset via the Data Retriever
 #'
@@ -508,7 +503,6 @@ print.update_log = function(x, ...) {
     check_for_retriever()
     check_retriever_import()
   }
-
 }
 
 set_home = function(...) {

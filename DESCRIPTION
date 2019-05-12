@@ -36,7 +36,7 @@ Depends:
     R (>= 3.4.0)
 Imports:
     utils,
-    reticulate
+    reticulate (>= 1.8)
 Suggests:
     testthat (>= 1.0.0),
     DBI,

@@ -17,12 +17,23 @@ and more time analyzing it.
 This package lets you access the Retriever using R, so that the Retriever's data
 handling can easily be integrated into R workflows.
 
+## Table of Contents
+
+  - [Installation](#installation)
+      - [Installation from CRAN and PyPi](#installation-from-cran-and-pypi)
+      - [Installation with devtools and <code>reticulate</code>](#installation-with-devtools-and-reticulate)
+      - [Installation from source](#installation-from-source)
+  - [Examples](#examples)
+  - [Spatial data installation](#spatial-data-installation)
+  - [Using Dockers](#using-dockers)
+  - [Acknowledgements](#acknowledgements)
+
 ## Installation
 
 `rdataretriever` is an R wrapper for the Python based Data Retriever. This means
 that Python and the `retriever` package need to be installed first.
 
-### Basic installation
+#### Installation from CRAN and PyPi
 
 *Use this if you are new to Python or don't have a local Python installation* 
 
@@ -47,7 +58,7 @@ that Python and the `retriever` package need to be installed first.
   devtools::install_github("ropensci/rdataretriever")
   ```
 
-### Advanced installation
+#### Installation with devtools and reticulate
 
 *Use this if you are already familiar with Python and have a local Python installation*
 
@@ -94,8 +105,8 @@ head(portal$species)
 
 ```
 
-New Spatial data Installation
------------------------------
+Spatial data Installation
+-------------------------
 
 **Set-up and Requirements**
 

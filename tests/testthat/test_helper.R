@@ -1,12 +1,3 @@
-if (!requireNamespace("reticulate", quietly = TRUE)) {
-  return()
-}
-
-suppressPackageStartupMessages(require(reticulate))
-suppressPackageStartupMessages(require(DBI))
-# suppressPackageStartupMessages(require(RMariaDB))
-suppressPackageStartupMessages(require(RPostgreSQL))
-suppressPackageStartupMessages(require(RSQLite))
 
 # Set passwords and host names depending on test environment
 os_password = ""
@@ -39,4 +30,16 @@ skip_if_no_python <- function() {
   retriever_path = Sys.which('retriever')
   if(is.null(retriever_path) && !Sys.getenv("IN_DOCKER")=="true")
     skip("python environments not available for testing")
+  load_required_packages()
 }
+load_required_packages<- function() {
+  if (!requireNamespace("reticulate", quietly = TRUE)) {
+    return()
+  }
+  suppressPackageStartupMessages(require(reticulate))
+  suppressPackageStartupMessages(require(DBI))
+  # suppressPackageStartupMessages(require(RMariaDB))
+  suppressPackageStartupMessages(require(RPostgreSQL))
+  suppressPackageStartupMessages(require(RSQLite))
+}
+
