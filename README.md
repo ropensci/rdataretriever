@@ -32,7 +32,7 @@ handling can easily be integrated into R workflows.
 `rdataretriever` is an R wrapper for the Python based Data Retriever. This means
 that Python and the `retriever` package need to be installed first.
 
-#### Installation from `CRAN` and `PyPi`
+#### Installation from `CRAN` and `conda` or `Anaconda`
 
 *Use this if you are new to Python or don't have a local Python installation*
 
@@ -54,14 +54,15 @@ that Python and the `retriever` package need to be installed first.
 4. Install the `rdataretriever` R package:
 
   ```coffee
-  devtools::install_github("ropensci/rdataretriever")
+  install.packages("rdataretriever") # from CRAN
+  devtools::install_github("ropensci/rdataretriever") # from GitHub
   ```
 
-#### Installation with `devtools` and `reticulate`
+#### Installation with `devtools`
 
 *Use this if you are already familiar with Python and have a local Python installation*
 
-1. Check that your local Python installation is Python 3
+1. Check that your local Python installation is Python 3.6 and above
 2. In R install the `reticulate` package:
 
   ```coffee
@@ -79,9 +80,10 @@ that Python and the `retriever` package need to be installed first.
 4. Install the `rdataretriever` R package:
 
   ```coffee
-  devtools::install_github("ropensci/rdataretriever")
+  devtools::install_github("ropensci/rdataretriever") # from GitHub
+  install.packages("rdataretriever") # from CRAN
   ```
-  
+
 Examples
 --------
 ```coffee
@@ -182,7 +184,7 @@ To run tests
 Release
 -------
 
-Make sure you have test passing on R-oldrelease, current R-release and R-devel
+Make sure you have tests passing on R-oldrelease, current R-release and R-devel
 
 To check the package
 
