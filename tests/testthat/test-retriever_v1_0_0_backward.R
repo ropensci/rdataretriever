@@ -3,12 +3,13 @@ context("regression tests version 1.0.0")
 source("test_helper.R")
 
 testthat::test_that("datasets returns some known values", {
-  skip_on_cran()
+  skip_if_no_python()
   expect_identical("car-eval" %in% rdataretriever::datasets(), TRUE)
 })
 
 
 test_that("Download the raw portal dataset into './data/'", {
+  skip_if_no_python()
   portal <- list("3299474", "3299483", "5603981")
   rdataretriever::download('portal', './data/')
   for (file in portal)
@@ -21,6 +22,7 @@ test_that("Download the raw portal dataset into './data/'", {
 
 
 test_that("Install the portal into csv", {
+  skip_if_no_python()
   # Install portal into csv files in your working directory
   portal <- list("portal_main", "portal_plots", "portal_species")
   rdataretriever::install('portal', 'csv')
@@ -34,6 +36,7 @@ test_that("Install the portal into csv", {
 
 
 test_that("Install the portal into json", {
+  skip_if_no_python()
   # Install portal into json
   portal <- list("portal_main", "portal_plots", "portal_species")
   rdataretriever::install('portal', 'json')
@@ -47,6 +50,7 @@ test_that("Install the portal into json", {
 
 
 test_that("Install the portal into xml", {
+  skip_if_no_python()
   # Install portal into xml
   portal <- list("portal_main", "portal_plots", "portal_species")
   rdataretriever::install('portal', 'xml')
@@ -60,6 +64,8 @@ test_that("Install the portal into xml", {
 
 
 test_that("Install dataset into Postgres", {
+  skip_if_no_python()
+  skip_on_cran()
   # Install the portal into Postgres
   if (docker_or_travis == "true") {
     # These tests only run on travis and not locally
@@ -90,6 +96,8 @@ test_that("Install dataset into Postgres", {
 
 
 test_that("Install the dataset into Mysql", {
+  skip_if_no_python()
+  skip_on_cran()
   # Use msql client to drop the database
   if (docker_or_travis == "true") {
     # These tests only run on travis and not locally
@@ -118,6 +126,7 @@ test_that("Install the dataset into Mysql", {
 
 
 test_that("Install the portal into sqlite", {
+  skip_if_no_python()
   # Install the portal into Sqlite
   portal <- c("portal_main", "portal_plots", "portal_species")
   rdataretriever::install('portal', 'sqlite', db_file = "test.sqlite")
