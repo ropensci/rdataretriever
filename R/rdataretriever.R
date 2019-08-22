@@ -25,11 +25,12 @@
 fetch = function(dataset, quiet=TRUE, data_names=NULL){
   r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   data_sets = list()
-  #Accessing datasets() function from Python API
-  for (x in r_data_retriever$datasets()) {
-    data_sets = c(data_sets, x$name)
+  #Accessing dataset_names() function from Python API
+  all_datasets = r_data_retriever$dataset_names()
+  offline_datasets = all_datasets['offline']
+  for (x in offline_datasets) {
+    data_sets = c(data_sets, x)
   }
-
   if (!dataset %in% data_sets) {
     stop(
       "The dataset requested isn't currently available in the rdataretriever.\n
@@ -124,12 +125,20 @@ download = function(dataset, path = './', quiet = FALSE, sub_dir = '', debug = F
 #' @export
 datasets = function(keywords = '', licenses = '') {
   r_data_retriever <- import("retriever", delay_load = TRUE)
-  data_sets = c()
   #Accessing datasets() function from Python API
-  for (x in r_data_retriever$datasets(keywords, licenses)) {
-    data_sets = c(data_sets, x$name)
+  all_datasets = r_data_retriever$datasets(keywords, licenses)
+  offline_datasets = c()
+  online_datasets = c()
+  for (dataset in all_datasets['offline']) {
+    for (d in dataset) {
+      offline_datasets = c(offline_datasets, d$name)
+    }
   }
-  print(data_sets)
+  for (dataset in all_datasets['online']) {
+    online_datasets = c(online_datasets, dataset)
+  }
+  datasets_list = list('offline'=offline_datasets, 'online'=online_datasets)
+  return (datasets_list)
 }
 
 #' Install datasets via the Data Retriever.
@@ -531,5 +540,3 @@ retriever <- NULL
         }
     }
 }
-
-

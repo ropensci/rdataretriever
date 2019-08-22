@@ -4,7 +4,12 @@ source("test_helper.R")
 
 testthat::test_that("datasets returns some known values", {
   skip_if_no_python()
-  expect_identical("car-eval" %in% rdataretriever::datasets(), TRUE)
+  offline_datasets = rdataretriever::datasets()['offline']
+  offline_dataset_names = c()
+  for (dataset in offline_datasets) {
+    offline_dataset_names = c(offline_dataset_names, dataset)
+  }
+  expect_identical("car-eval" %in% offline_dataset_names, TRUE)
 })
 
 
