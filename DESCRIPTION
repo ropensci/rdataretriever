@@ -31,7 +31,8 @@ Authors@R: c(person("Daniel", "McGlinn", role = "aut",
     email = "ethan@weecology.org",
     comment = c(ORCID = "0000-0001-6728-7745")))
 BugReports: https://github.com/ropensci/rdataretriever/issues
-URL: https://github.com/ropensci/rdataretriever/
+URL: https://docs.ropensci.org/rdataretriever (website),
+    https://github.com/ropensci/rdataretriever/
 Depends:
     R (>= 3.4.0)
 Imports:
