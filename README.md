@@ -37,10 +37,10 @@ that Python and the `retriever` package need to be installed first.
 *Use this if you are new to Python or don't have a local Python installation*
 
 1. Install the Python 3.7 version of the miniconda Python distribution from https://docs.conda.io/en/latest/miniconda.html
-2. In R install the `reticulate` package:
+2. In R install the `reticulate` package (the current release, 1.13, does not work on Windows so installation using devtools is recommended):
 
   ```coffee
-  install.packages("reticulate")
+  devtools::install_github("rstudio/reticulate")
   ```
 
 3. In R run the following to install the `retriever` Python package:
