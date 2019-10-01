@@ -4,6 +4,8 @@ source("test_helper.R")
 
 testthat::test_that("datasets returns some known values", {
   skip_if_no_python()
+  rdataretriever::get_updates()
+  rdataretriever::reload_scripts()
   expect_identical("car-eval" %in% rdataretriever::datasets(), TRUE)
 })
 

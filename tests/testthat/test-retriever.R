@@ -143,6 +143,8 @@ test_that("Install portal into sqlite", {
 
 test_that("Install and load a dataset as a list", {
   skip_if_no_python()
+  rdataretriever::get_updates()
+  rdataretriever::reload_scripts()
   portal_data <- c("main", "plots", "species")
   portal = rdataretriever::fetch('portal')
   expect_identical(all(names(portal) %in%  portal_data), TRUE)
