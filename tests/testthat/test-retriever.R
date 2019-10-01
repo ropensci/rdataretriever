@@ -5,7 +5,12 @@ source("test_helper.R")
 testthat::test_that("datasets returns some known values", {
   skip_if_no_python()
   skip_on_cran()
-  expect_identical("car-eval" %in% rdataretriever::datasets(), TRUE)
+  offline_datasets = rdataretriever::datasets()['offline']
+  offline_dataset_names = c()
+  for (dataset in offline_datasets) {
+    offline_dataset_names = c(offline_dataset_names, dataset)
+  }
+  expect_identical("car-eval" %in% offline_dataset_names, TRUE)
 })
 
 
@@ -154,8 +159,16 @@ test_that("Reset a dataset script", {
   dataset = "iris"
   rdataretriever::reset(dataset)
   rdataretriever::reload_scripts()
-  expect_identical(dataset %in% rdataretriever::datasets(), FALSE)
+  json_path = paste("~/.retriever/scripts/", "iris", ".json", sep="")
+  py_path = paste("~/.retriever/scripts/", "iris", ".py", sep="")
+  expect_identical(file.exists(json_path), FALSE)
+  expect_identical(file.exists(py_path), FALSE)
   rdataretriever::get_updates()
   rdataretriever::reload_scripts()
-  expect_identical(dataset %in% rdataretriever::datasets(), TRUE)
+  offline_datasets = rdataretriever::datasets()['offline']
+  offline_dataset_names = c()
+  for (dataset in offline_datasets) {
+    offline_dataset_names = c(offline_dataset_names, dataset)
+  }
+  expect_identical("iris" %in% offline_dataset_names, TRUE)
 })
