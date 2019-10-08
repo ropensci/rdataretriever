@@ -1,3 +1,132 @@
+#' Title check_for_updates
+#'
+#' @param repo 
+#'
+#' @return
+#' @examples
+#' \donttest{
+#' rdataretriever::check_for_updates()
+#' }
+#' @importFrom reticulate import r_to_py
+#' @export
+check_for_updates= function(repo = ''){
+  writeLines(strwrap('Please wait while the retriever updates its scripts, ...'))
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
+  if (repo == '') {
+    r_data_retriever$check_for_updates()
+  } else {
+    r_data_retriever$check_for_updates(repo)
+  }
+}
+
+
+#' Title commit
+#'
+#' @param dataset 
+#' @param commit_message 
+#' @param path 
+#' @param quiet 
+#'
+#' @return
+#' @examples
+#' \donttest{
+#' rdataretriever::commit('iris')
+#' }
+#' @importFrom reticulate import r_to_py
+#' @export
+commit= function(dataset, commit_message = '', path = NULL, quiet = FALSE){
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
+  r_data_retriever$commit(dataset, commit_message, path, quiet)
+}
+
+
+#' Title commit_log
+#'
+#' @param dataset 
+#'
+#' @examples
+#' \donttest{
+#' rdataretriever::commit_log('iris')
+#' }
+#' @importFrom reticulate import r_to_py
+#' @export
+commit_log= function(dataset){
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
+  r_data_retriever$commit_log(dataset)
+}
+
+
+#' Name all available dataset scripts.
+#'
+#' Additional information on the available datasets can be found at url https://retriever.readthedocs.io/en/latest/datasets.html
+#'
+#' @return returns a character vector with the available datasets for download
+#' @examples
+#' \donttest{
+#' rdataretriever::dataset_names()
+#' }
+#' @importFrom reticulate import r_to_py
+#' @export
+dataset_names = function() {
+  r_data_retriever <- import("retriever", delay_load = TRUE)
+  #Accessing datasets() function from Python API
+  all_datasets = r_data_retriever$datasets()
+  offline_datasets = c()
+  online_datasets = c()
+  for (dataset in all_datasets['offline']) {
+    for (d in dataset) {
+      offline_datasets = c(offline_datasets, d$name)
+    }
+  }
+  for (dataset in all_datasets['online']) {
+    online_datasets = c(online_datasets, dataset)
+  }
+  datasets_list = list('offline'=offline_datasets, 'online'=online_datasets)
+  return (datasets_list)
+}
+
+
+#' Title
+#'
+#' @param keywords 
+#' @param licenses 
+#' @param repo 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+get_dataset_names_upstream= function(keywords = '', licenses = '', repo = '') {
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
+  if (repo == '') {
+    r_data_retriever$get_dataset_names_upstream(keywords = keywords, licenses = licenses)
+  } else {
+    r_data_retriever$get_dataset_names_upstream(keywords = keywords, licenses = licenses, repo)
+  }
+}
+
+
+#' Title
+#'
+#' @param dataset 
+#' @param repo 
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' @importFrom reticulate import r_to_py
+#' @export
+get_script_upstream= function(dataset, repo = ''){
+  r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
+  if (repo == '') {
+    r_data_retriever$get_script_upstream(dataset)
+  } else {
+    r_data_retriever$check_for_updates(dataset, repo)
+  }
+}
+
+
 #' Fetch a dataset via the Data Retriever
 #'
 #' Each datafile in a given dataset is downloaded to a temporary directory and
@@ -22,7 +151,7 @@
 #' }
 #' @importFrom reticulate import r_to_py
 #' @export
-fetch = function(dataset, quiet=TRUE, data_names=NULL){
+fetch = function(dataset, quiet = TRUE, data_names = NULL){
   r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   data_sets = list()
   #Accessing dataset_names() function from Python API
