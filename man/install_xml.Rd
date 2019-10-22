@@ -5,10 +5,11 @@
 \title{Install datasets via the Data Retriever.}
 \usage{
 install_xml(dataset, table_name = "{db}_{table}.xml",
-  data_dir = getwd(), debug = FALSE, use_cache = TRUE)
+  data_dir = getwd(), debug = FALSE, use_cache = TRUE,
+  force = FALSE, hash_value = NULL)
 }
 \arguments{
-\item{dataset}{the name of the dataset that you wish to install}
+\item{dataset}{the name of the dataset that you wish to install or path to a committed dataset zip file}
 
 \item{table_name}{the name of the database file to store data}
 
@@ -17,6 +18,10 @@ install_xml(dataset, table_name = "{db}_{table}.xml",
 \item{debug}{Setting TRUE helps in debugging in case of errors}
 
 \item{use_cache}{Setting FALSE reinstalls scripts even if they are already installed}
+
+\item{force}{Setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment}
+
+\item{hash_value}{the hash value of committed dataset when installing from provenance directory}
 }
 \description{
 Data is stored in XML files

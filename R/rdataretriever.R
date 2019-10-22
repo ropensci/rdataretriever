@@ -274,40 +274,44 @@ datasets = function(keywords = '', licenses = '') {
 #'
 #' Data is stored in CSV files
 #'
-#' @param dataset the name of the dataset that you wish to install
+#' @param dataset the name of the dataset that you wish to install or path to a committed dataset zip file
 #' @param table_name the name of the database file to store data
 #' @param data_dir the dir path to store data, defaults to working dir
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
+#' @param force Setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
+#' @param hash_value the hash value of committed dataset when installing from provenance directory
 #' @examples
 #' \donttest{
 #' rdataretriever::install_csv('iris')
 #' }
 #' @importFrom reticulate import r_to_py
 #' @export
-install_csv = function(dataset, table_name = '{db}_{table}.csv', data_dir=getwd(), debug = FALSE, use_cache = TRUE) {
+install_csv = function(dataset, table_name = '{db}_{table}.csv', data_dir=getwd(), debug = FALSE, use_cache = TRUE, force = FALSE, hash_value = NULL) {
   r_data_retriever <- import("retriever", delay_load = TRUE)
-  r_data_retriever$install_csv(dataset, table_name , data_dir, debug, use_cache)
+  r_data_retriever$install_csv(dataset, table_name , data_dir, debug, use_cache, force, hash_value)
 }
 
 #' Install datasets via the Data Retriever.
 #'
 #' Data is stored in JSON files
 #'
-#' @param dataset the name of the dataset that you wish to install
+#' @param dataset the name of the dataset that you wish to install or path to a committed dataset zip file
 #' @param table_name the name of the database file to store data
 #' @param data_dir the dir path to store data, defaults to working dir
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
+#' @param force Setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
+#' @param hash_value the hash value of committed dataset when installing from provenance directory
 #' @examples
 #' \donttest{
 #' rdataretriever::install_json('iris')
 #' }
 #' @importFrom reticulate import r_to_py
 #' @export
-install_json = function(dataset, table_name = '{db}_{table}.json', data_dir=getwd(), debug = FALSE, use_cache = TRUE) {
+install_json = function(dataset, table_name = '{db}_{table}.json', data_dir=getwd(), debug = FALSE, use_cache = TRUE, force = FALSE, hash_value  = NULL) {
   r_data_retriever = import('retriever')
-  r_data_retriever$install_json(dataset, table_name , data_dir, debug, use_cache)
+  r_data_retriever$install_json(dataset, table_name , data_dir, debug, use_cache, force, hash_value)
 }
 
 
@@ -315,27 +319,29 @@ install_json = function(dataset, table_name = '{db}_{table}.json', data_dir=getw
 #'
 #' Data is stored in XML files
 #'
-#' @param dataset the name of the dataset that you wish to install
+#' @param dataset the name of the dataset that you wish to install or path to a committed dataset zip file
 #' @param table_name the name of the database file to store data
 #' @param data_dir the dir path to store data, defaults to working dir
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
+#' @param force Setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
+#' @param hash_value the hash value of committed dataset when installing from provenance directory
 #' @examples
 #' \donttest{
 #' rdataretriever::install_xml('iris')
 #' }
 #' @importFrom reticulate import r_to_py
 #' @export
-install_xml = function(dataset, table_name = '{db}_{table}.xml', data_dir=getwd(), debug = FALSE, use_cache = TRUE) {
+install_xml = function(dataset, table_name = '{db}_{table}.xml', data_dir=getwd(), debug = FALSE, use_cache = TRUE, force = FALSE, hash_value = NULL) {
   r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
-  r_data_retriever$install_xml(dataset, table_name , data_dir, debug, use_cache)
+  r_data_retriever$install_xml(dataset, table_name , data_dir, debug, use_cache, force, hash_value)
 }
 
 #' Install datasets via the Data Retriever.
 #'
 #' Data is stored in MySQL database
 #'
-#' @param dataset the name of the dataset that you wish to install
+#' @param dataset the name of the dataset that you wish to install or path to a committed dataset zip file
 #' @param user username for database connection
 #' @param password password for database connection
 #' @param host hostname for connection
@@ -345,6 +351,8 @@ install_xml = function(dataset, table_name = '{db}_{table}.xml', data_dir=getwd(
 #' containing one file
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
+#' @param force Setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
+#' @param hash_value the hash value of committed dataset when installing from provenance directory
 #' @examples
 #' \donttest{
 #' rdataretriever :: install_mysql(dataset='portal', user='postgres', password='abcdef')
@@ -353,18 +361,18 @@ install_xml = function(dataset, table_name = '{db}_{table}.xml', data_dir=getwd(
 #' @export
 install_mysql = function(dataset, user = 'root', password = '', host = 'localhost',
                          port = 3306, database_name = '{db}', table_name = '{db}.{table}',
-                         debug = FALSE, use_cache = TRUE) {
+                         debug = FALSE, use_cache = TRUE, force = FALSE, hash_value = NULL) {
   r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   r_data_retriever$install_mysql(dataset, user, password, host,
                                  port, database_name, table_name,
-                                 debug, use_cache)
+                                 debug, use_cache, force, hash_value)
 }
 
 #' Install datasets via the Data Retriever.
 #'
 #' Data is stored in PostgreSQL database
 #'
-#' @param dataset the name of the dataset that you wish to install
+#' @param dataset the name of the dataset that you wish to install or path to a committed dataset zip file
 #' @param user username for database connection
 #' @param password password for database connection
 #' @param host hostname for connection
@@ -376,6 +384,8 @@ install_mysql = function(dataset, user = 'root', password = '', host = 'localhos
 #' @param bbox Optional extent values used to fetch data from the spatial dataset
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
+#' @param force Setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
+#' @param hash_value the hash value of committed dataset when installing from provenance directory
 #' @examples
 #' \donttest{
 #' rdataretriever::install_postgres(dataset='portal', user='postgres', password='abcdef')
@@ -385,25 +395,27 @@ install_mysql = function(dataset, user = 'root', password = '', host = 'localhos
 install_postgres = function(dataset, user = 'postgres', password = '',
                             host = 'localhost', port = 5432, database = 'postgres',
                             database_name = '{db}', table_name = '{db}.{table}',
-                            bbox = list(), debug = FALSE, use_cache = TRUE) {
+                            bbox = list(), debug = FALSE, use_cache = TRUE, force = FALSE, hash_value = NULL) {
   r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   #Use the R list function explicitly
   bbox = reticulate::r_to_py(bbox)
   r_data_retriever$install_postgres(dataset, user, password, host,
                                     port, database, database_name,
-                                    table_name, bbox, debug, use_cache)
+                                    table_name, bbox, debug, use_cache, force, hash_value)
 }
 
 #' Install datasets via the Data Retriever.
 #'
 #' Data is stored in SQLite database
 #'
-#' @param dataset the name of the dataset that you wish to install
+#' @param dataset the name of the dataset that you wish to install or path to a committed dataset zip file
 #' @param file Sqlite database file name or path
 #' @param table_name table name for installing of dataset
 #' @param data_dir the dir path to store the db, defaults to working dir
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
+#' @param force Setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
+#' @param hash_value the hash value of committed dataset when installing from provenance directory
 #' @examples
 #' \donttest{
 #' rdataretriever::install_sqlite(dataset='iris', file='sqlite.db', debug=FALSE, use_cache=TRUE)
@@ -411,10 +423,10 @@ install_postgres = function(dataset, user = 'postgres', password = '',
 #' @importFrom reticulate import r_to_py
 #' @export
 install_sqlite = function(dataset, file = 'sqlite.db', table_name = '{db}_{table}',
-                          data_dir=getwd(), debug = FALSE, use_cache = TRUE) {
+                          data_dir=getwd(), debug = FALSE, use_cache = TRUE, force = FALSE, hash_value = NULL) {
   r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   tryCatch(withCallingHandlers(
-    {r_data_retriever$install_sqlite(dataset, file, table_name, data_dir, debug, use_cache)},
+    {r_data_retriever$install_sqlite(dataset, file, table_name, data_dir, debug, use_cache, force, hash_value)},
     error=function(error_message) {
       message("Full error trace:")
       message(error_message)
@@ -428,11 +440,13 @@ install_sqlite = function(dataset, file = 'sqlite.db', table_name = '{db}_{table
 #'
 #' Data is stored in MSAccess database
 #'
-#' @param dataset the name of the dataset that you wish to install
+#' @param dataset the name of the dataset that you wish to install or path to a committed dataset zip file
 #' @param file file name for database
 #' @param table_name table name for installing of dataset
 #' @param debug Setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
+#' @param force Setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
+#' @param hash_value the hash value of committed dataset when installing from provenance directory
 #' @examples
 #' \donttest{
 #' rdataretriever::install_msaccess(dataset='iris', file='sqlite.db',debug=FALSE, use_cache=TRUE)
@@ -440,7 +454,7 @@ install_sqlite = function(dataset, file = 'sqlite.db', table_name = '{db}_{table
 #' @importFrom reticulate import r_to_py
 #' @export
 install_msaccess = function(dataset, file = 'access.mdb', table_name = '[{db} {table}]',
-                            debug = FALSE, use_cache = TRUE) {
+                            debug = FALSE, use_cache = TRUE, force = FALSE, hash_value = NULL) {
   r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   r_data_retriever$install_msaccess(dataset, file, table_name, debug, use_cache)
 }
