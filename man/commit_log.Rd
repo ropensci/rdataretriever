@@ -2,15 +2,15 @@
 % Please edit documentation in R/rdataretriever.R
 \name{commit_log}
 \alias{commit_log}
-\title{Title commit_log}
+\title{See the log of committed dataset stored in provenance directory}
 \usage{
 commit_log(dataset)
 }
 \arguments{
-\item{dataset}{}
+\item{dataset}{name of the dataset stored in provenance directory}
 }
 \description{
-Title commit_log
+See the log of committed dataset stored in provenance directory
 }
 \examples{
 \donttest{

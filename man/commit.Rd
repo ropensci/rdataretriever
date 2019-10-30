@@ -2,21 +2,21 @@
 % Please edit documentation in R/rdataretriever.R
 \name{commit}
 \alias{commit}
-\title{Title commit}
+\title{Commit a dataset}
 \usage{
 commit(dataset, commit_message = "", path = NULL, quiet = FALSE)
 }
 \arguments{
-\item{dataset}{}
+\item{dataset}{name of the dataset}
 
-\item{commit_message}{}
+\item{commit_message}{commit message for the commit}
 
-\item{path}{}
+\item{path}{path to save the committed dataset, if no path given save in provenance directory}
 
-\item{quiet}{}
+\item{quiet}{logical, if true retriever runs in quiet mode}
 }
 \description{
-Title commit
+Commit a dataset
 }
 \examples{
 \donttest{

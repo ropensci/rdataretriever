@@ -2,17 +2,17 @@
 % Please edit documentation in R/rdataretriever.R
 \name{get_dataset_names_upstream}
 \alias{get_dataset_names_upstream}
-\title{Title}
+\title{Title get_dataset_names_upstream}
 \usage{
 get_dataset_names_upstream(keywords = "", licenses = "", repo = "")
 }
 \arguments{
-\item{keywords}{}
+\item{keywords}{filter datasets based on keywords}
 
-\item{licenses}{}
+\item{licenses}{filter datasets based on license}
 
-\item{repo}{}
+\item{repo}{path to the repository}
 }
 \description{
-Title
+Title get_dataset_names_upstream
 }

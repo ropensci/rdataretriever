@@ -1,6 +1,6 @@
 #' Title check_for_updates
 #'
-#' @param repo 
+#' @param repo path to the repository
 #'
 #' @return
 #' @examples
@@ -20,12 +20,12 @@ check_for_updates= function(repo = ''){
 }
 
 
-#' Title commit
+#' Commit a dataset
 #'
-#' @param dataset 
-#' @param commit_message 
-#' @param path 
-#' @param quiet 
+#' @param dataset name of the dataset
+#' @param commit_message commit message for the commit
+#' @param path path to save the committed dataset, if no path given save in provenance directory
+#' @param quiet logical, if true retriever runs in quiet mode
 #'
 #' @return
 #' @examples
@@ -40,9 +40,9 @@ commit= function(dataset, commit_message = '', path = NULL, quiet = FALSE){
 }
 
 
-#' Title commit_log
+#' See the log of committed dataset stored in provenance directory
 #'
-#' @param dataset 
+#' @param dataset name of the dataset stored in provenance directory
 #'
 #' @examples
 #' \donttest{
@@ -86,11 +86,11 @@ dataset_names = function() {
 }
 
 
-#' Title
+#' Title get_dataset_names_upstream
 #'
-#' @param keywords 
-#' @param licenses 
-#' @param repo 
+#' @param keywords filter datasets based on keywords
+#' @param licenses filter datasets based on license
+#' @param repo path to the repository
 #'
 #' @return
 #' @export
@@ -106,10 +106,10 @@ get_dataset_names_upstream= function(keywords = '', licenses = '', repo = '') {
 }
 
 
-#' Title
+#' Title get_script_upstream
 #'
-#' @param dataset 
-#' @param repo 
+#' @param dataset name of the dataset
+#' @param repo path to the repository
 #'
 #' @return
 #' @export

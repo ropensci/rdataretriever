@@ -2,15 +2,15 @@
 % Please edit documentation in R/rdataretriever.R
 \name{get_script_upstream}
 \alias{get_script_upstream}
-\title{Title}
+\title{Title get_script_upstream}
 \usage{
 get_script_upstream(dataset, repo = "")
 }
 \arguments{
-\item{dataset}{}
+\item{dataset}{name of the dataset}
 
-\item{repo}{}
+\item{repo}{path to the repository}
 }
 \description{
-Title
+Title get_script_upstream
 }

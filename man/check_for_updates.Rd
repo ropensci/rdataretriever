@@ -7,7 +7,7 @@
 check_for_updates(repo = "")
 }
 \arguments{
-\item{repo}{}
+\item{repo}{path to the repository}
 }
 \description{
 Title check_for_updates
