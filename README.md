@@ -76,6 +76,11 @@ that Python and the `retriever` package need to be installed first.
   use_python("/path/to/python")
   py_install("retriever")
   ```
+  Note: When using virtual environment make sure the `python` using which virtual environment has been created is
+  installed using `--enable-shared` option.
+  ```bash
+  ./configure --enable-shared
+  ```
 
 4. Install the `rdataretriever` R package:
 
@@ -169,6 +174,34 @@ rdataretriever::install_postgres('usgs-elevation', list(-94.98704597353938, 39.0
 
 ```
 
+
+Provenance
+----------
+`rdataretriever` allows users to save a dataset in its current state which can be used later.
+
+Note: You can save your datasets in provenance directory by setting the environment variable `PROVENANCE_DIR`
+
+**Commit a dataset**
+```coffee
+rdataretriever::commit('abalone-age', commit_message='Sample commit', path='/home/user/')
+```
+To commit directly to provenance directory:
+```coffee
+rdataretriever::commit('abalone-age', commit_message='Sample commit')
+```
+**Log of committed dataset in provenance directory**
+```coffee
+rdataretriever::commit_log('abalone-age')
+```
+
+**Install a committed dataset**
+```coffee
+rdataretriever::install_sqlite('abalone-age-a76e77.zip') 
+```
+Datasets stored in provenance directory can be installed directly using hash value
+```coffee
+rdataretriever::install_sqlite('abalone-age', hash_value='a76e77`)
+``` 
 
 Using Dockers
 -------------
