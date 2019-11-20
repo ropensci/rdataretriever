@@ -43,6 +43,6 @@ Data is stored in PostgreSQL database
 }
 \examples{
 \donttest{
-rdataretriever::install_postgres(dataset='portal', user='postgres', password='abcdef')
+rdataretriever::install_postgres(dataset = "portal", user = "postgres", password = "abcdef")
 }
 }

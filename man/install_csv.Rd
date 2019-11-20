@@ -28,6 +28,6 @@ Data is stored in CSV files
 }
 \examples{
 \donttest{
-rdataretriever::install_csv('iris')
+rdataretriever::install_csv("iris")
 }
 }

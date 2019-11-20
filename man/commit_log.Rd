@@ -14,6 +14,6 @@ See the log of committed dataset stored in provenance directory
 }
 \examples{
 \donttest{
-rdataretriever::commit_log('iris')
+rdataretriever::commit_log("iris")
 }
 }

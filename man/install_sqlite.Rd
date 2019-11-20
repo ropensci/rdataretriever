@@ -30,6 +30,6 @@ Data is stored in SQLite database
 }
 \examples{
 \donttest{
-rdataretriever::install_sqlite(dataset='iris', file='sqlite.db', debug=FALSE, use_cache=TRUE)
+rdataretriever::install_sqlite(dataset = "iris", file = "sqlite.db", debug = FALSE, use_cache = TRUE)
 }
 }

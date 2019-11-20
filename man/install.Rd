@@ -39,6 +39,6 @@ systems: MySQL, PostgreSQL, SQLite, or Microsoft Access.
 }
 \examples{
 \donttest{
-rdataretriever::install('iris', 'csv')
+rdataretriever::install("iris", "csv")
 }
 }

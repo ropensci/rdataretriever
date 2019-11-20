@@ -2,7 +2,7 @@
 % Please edit documentation in R/rdataretriever.R
 \name{check_for_updates}
 \alias{check_for_updates}
-\title{Title check_for_updates}
+\title{Check for updates}
 \usage{
 check_for_updates(repo = "")
 }
@@ -10,7 +10,7 @@ check_for_updates(repo = "")
 \item{repo}{path to the repository}
 }
 \description{
-Title check_for_updates
+Check for updates
 }
 \examples{
 \donttest{

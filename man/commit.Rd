@@ -20,6 +20,6 @@ Commit a dataset
 }
 \examples{
 \donttest{
-rdataretriever::commit('iris')
+rdataretriever::commit("iris")
 }
 }

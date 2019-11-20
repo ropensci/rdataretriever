@@ -2,7 +2,7 @@
 % Please edit documentation in R/rdataretriever.R
 \name{get_script_upstream}
 \alias{get_script_upstream}
-\title{Title get_script_upstream}
+\title{Get script upstream}
 \usage{
 get_script_upstream(dataset, repo = "")
 }
@@ -12,5 +12,10 @@ get_script_upstream(dataset, repo = "")
 \item{repo}{path to the repository}
 }
 \description{
-Title get_script_upstream
+Get script upstream
+}
+\examples{
+\donttest{
+rdataretriever::get_script_upstream("iris")
+}
 }
