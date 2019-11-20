@@ -28,6 +28,6 @@ Data is stored in JSON files
 }
 \examples{
 \donttest{
-rdataretriever::install_json('iris')
+rdataretriever::install_json("iris")
 }
 }

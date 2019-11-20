@@ -16,6 +16,6 @@ Get script upstream
 }
 \examples{
 \donttest{
-rdataretriever::get_script_upstream('iris')
+rdataretriever::get_script_upstream("iris")
 }
 }

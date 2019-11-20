@@ -17,6 +17,6 @@ Get dataset citation information and a description
 }
 \examples{
 \donttest{
-rdataretriever::get_citation('plant-comp-us')
+rdataretriever::get_citation("plant-comp-us")
 }
 }

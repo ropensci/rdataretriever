@@ -26,7 +26,7 @@ non-tabular data.
 }
 \examples{
 \donttest{
-rdataretriever::download('plant-comp-ok')
+rdataretriever::download("plant-comp-ok")
 # downloaded files will be copied to your working directory
 # when no path is specified
 dir()

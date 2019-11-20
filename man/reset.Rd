@@ -14,6 +14,6 @@ Reset the scripts or data(raw_data) directory or both
 }
 \examples{
 \donttest{
-rdataretriever::reset('iris')
+rdataretriever::reset("iris")
 }
 }

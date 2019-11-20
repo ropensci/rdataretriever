@@ -18,6 +18,6 @@ Get dataset names from upstream
 }
 \examples{
 \donttest{
-rdataretriever::get_dataset_names_upstream(keywords = '', licenses = '', repo = '')
+rdataretriever::get_dataset_names_upstream(keywords = "", licenses = "", repo = "")
 }
 }

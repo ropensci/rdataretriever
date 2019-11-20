@@ -28,6 +28,6 @@ Data is stored in XML files
 }
 \examples{
 \donttest{
-rdataretriever::install_xml('iris')
+rdataretriever::install_xml("iris")
 }
 }
