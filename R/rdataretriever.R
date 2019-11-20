@@ -1,8 +1,7 @@
-#' Title check_for_updates
+#' Check for updates
 #'
 #' @param repo path to the repository
 #'
-#' @return
 #' @examples
 #' \donttest{
 #' rdataretriever::check_for_updates()
@@ -27,16 +26,16 @@ check_for_updates= function(repo = ''){
 #' @param path path to save the committed dataset, if no path given save in provenance directory
 #' @param quiet logical, if true retriever runs in quiet mode
 #'
-#' @return
 #' @examples
 #' \donttest{
 #' rdataretriever::commit('iris')
 #' }
 #' @importFrom reticulate import r_to_py
 #' @export
-commit= function(dataset, commit_message = '', path = NULL, quiet = FALSE){
+commit = function(dataset, commit_message = '', path = NULL, quiet = FALSE){
   r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   r_data_retriever$commit(dataset, commit_message, path, quiet)
+  cat("Successfully committed.")
 }
 
 
@@ -50,9 +49,14 @@ commit= function(dataset, commit_message = '', path = NULL, quiet = FALSE){
 #' }
 #' @importFrom reticulate import r_to_py
 #' @export
-commit_log= function(dataset){
+commit_log = function(dataset){
   r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
-  r_data_retriever$commit_log(dataset)
+  log_out = r_data_retriever$commit_log(dataset)
+  res = unlist(log_out)
+  names(res) <- c("date", "commit_message", "hash_value")
+  message(paste0('Commit message: ', res$commit_message))
+  message(paste0('Hash: ', res$hash_value))
+  message(paste0('Date: ', res$date))
 }
 
 
@@ -86,16 +90,17 @@ dataset_names = function() {
 }
 
 
-#' Title get_dataset_names_upstream
+#' Get dataset names from upstream
 #'
 #' @param keywords filter datasets based on keywords
 #' @param licenses filter datasets based on license
 #' @param repo path to the repository
 #'
-#' @return
-#' @export
-#'
 #' @examples
+#' \donttest{
+#' rdataretriever::get_dataset_names_upstream(keywords = '', licenses = '', repo = '')
+#' }
+#' @export
 get_dataset_names_upstream= function(keywords = '', licenses = '', repo = '') {
   r_data_retriever = reticulate::import("retriever", delay_load = TRUE)
   if (repo == '') {
@@ -106,15 +111,17 @@ get_dataset_names_upstream= function(keywords = '', licenses = '', repo = '') {
 }
 
 
-#' Title get_script_upstream
+#' Get script upstream
 #'
 #' @param dataset name of the dataset
 #' @param repo path to the repository
 #'
-#' @return
 #' @export
 #'
 #' @examples
+#' \donttest{
+#' rdataretriever::get_script_upstream('iris')
+#' }
 #' @importFrom reticulate import r_to_py
 #' @export
 get_script_upstream= function(dataset, repo = ''){
