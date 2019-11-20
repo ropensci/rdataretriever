@@ -22,12 +22,12 @@ then imported as a data.frame as a member of a named list.
 \examples{
 \donttest{
 ## fetch the portal Database
-portal = rdataretriever::fetch('portal')
+portal <- rdataretriever::fetch("portal")
 class(portal)
 names(portal)
 ## preview the data in the portal species datafile
 head(portal$species)
-vegdata = rdataretriever::fetch(c('plant-comp-ok', 'plant-occur-oosting'))
+vegdata <- rdataretriever::fetch(c("plant-comp-ok", "plant-occur-oosting"))
 names(vegdata)
 names(vegdata$plant_comp_ok)
 }

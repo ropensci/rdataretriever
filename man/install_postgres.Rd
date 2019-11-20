@@ -7,10 +7,11 @@
 install_postgres(dataset, user = "postgres", password = "",
   host = "localhost", port = 5432, database = "postgres",
   database_name = "{db}", table_name = "{db}.{table}", bbox = list(),
-  debug = FALSE, use_cache = TRUE)
+  debug = FALSE, use_cache = TRUE, force = FALSE,
+  hash_value = NULL)
 }
 \arguments{
-\item{dataset}{the name of the dataset that you wish to install}
+\item{dataset}{the name of the dataset that you wish to install or path to a committed dataset zip file}
 
 \item{user}{username for database connection}
 
@@ -32,12 +33,16 @@ containing one file}
 \item{debug}{Setting TRUE helps in debugging in case of errors}
 
 \item{use_cache}{Setting FALSE reinstalls scripts even if they are already installed}
+
+\item{force}{Setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment}
+
+\item{hash_value}{the hash value of committed dataset when installing from provenance directory}
 }
 \description{
 Data is stored in PostgreSQL database
 }
 \examples{
 \donttest{
-rdataretriever::install_postgres(dataset='portal', user='postgres', password='abcdef')
+rdataretriever::install_postgres(dataset = "portal", user = "postgres", password = "abcdef")
 }
 }

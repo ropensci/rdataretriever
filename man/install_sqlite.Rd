@@ -6,10 +6,10 @@
 \usage{
 install_sqlite(dataset, file = "sqlite.db",
   table_name = "{db}_{table}", data_dir = getwd(), debug = FALSE,
-  use_cache = TRUE)
+  use_cache = TRUE, force = FALSE, hash_value = NULL)
 }
 \arguments{
-\item{dataset}{the name of the dataset that you wish to install}
+\item{dataset}{the name of the dataset that you wish to install or path to a committed dataset zip file}
 
 \item{file}{Sqlite database file name or path}
 
@@ -20,12 +20,16 @@ install_sqlite(dataset, file = "sqlite.db",
 \item{debug}{Setting TRUE helps in debugging in case of errors}
 
 \item{use_cache}{Setting FALSE reinstalls scripts even if they are already installed}
+
+\item{force}{Setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment}
+
+\item{hash_value}{the hash value of committed dataset when installing from provenance directory}
 }
 \description{
 Data is stored in SQLite database
 }
 \examples{
 \donttest{
-rdataretriever::install_sqlite(dataset='iris', file='sqlite.db', debug=FALSE, use_cache=TRUE)
+rdataretriever::install_sqlite(dataset = "iris", file = "sqlite.db", debug = FALSE, use_cache = TRUE)
 }
 }
