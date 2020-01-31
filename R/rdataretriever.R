@@ -594,7 +594,7 @@ install <- function(dataset, connection, db_file = NULL, conn_file = NULL,
 #' @importFrom reticulate import r_to_py
 #' @export
 get_citation <- function(dataset) {
-  run_cli(paste("retriever citation", dataset))
+  run_cli(paste("retriever citation", dataset), intern = TRUE)
 }
 
 #' Reset the scripts or data(raw_data) directory or both
