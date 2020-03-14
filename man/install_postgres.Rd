@@ -4,11 +4,21 @@
 \alias{install_postgres}
 \title{Install datasets via the Data Retriever.}
 \usage{
-install_postgres(dataset, user = "postgres", password = "",
-  host = "localhost", port = 5432, database = "postgres",
-  database_name = "{db}", table_name = "{db}.{table}", bbox = list(),
-  debug = FALSE, use_cache = TRUE, force = FALSE,
-  hash_value = NULL)
+install_postgres(
+  dataset,
+  user = "postgres",
+  password = "",
+  host = "localhost",
+  port = 5432,
+  database = "postgres",
+  database_name = "{db}",
+  table_name = "{db}.{table}",
+  bbox = list(),
+  debug = FALSE,
+  use_cache = TRUE,
+  force = FALSE,
+  hash_value = NULL
+)
 }
 \arguments{
 \item{dataset}{the name of the dataset that you wish to install or path to a committed dataset zip file}

@@ -4,9 +4,15 @@
 \alias{install_msaccess}
 \title{Install datasets via the Data Retriever.}
 \usage{
-install_msaccess(dataset, file = "access.mdb",
-  table_name = "[{db} {table}]", debug = FALSE, use_cache = TRUE,
-  force = FALSE, hash_value = NULL)
+install_msaccess(
+  dataset,
+  file = "access.mdb",
+  table_name = "[{db} {table}]",
+  debug = FALSE,
+  use_cache = TRUE,
+  force = FALSE,
+  hash_value = NULL
+)
 }
 \arguments{
 \item{dataset}{the name of the dataset that you wish to install or path to a committed dataset zip file}

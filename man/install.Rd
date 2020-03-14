@@ -4,8 +4,14 @@
 \alias{install}
 \title{Install datasets via the Data Retriever (deprecated).}
 \usage{
-install(dataset, connection, db_file = NULL, conn_file = NULL,
-  data_dir = ".", log_dir = NULL)
+install(
+  dataset,
+  connection,
+  db_file = NULL,
+  conn_file = NULL,
+  data_dir = ".",
+  log_dir = NULL
+)
 }
 \arguments{
 \item{dataset}{the name of the dataset that you wish to download}
