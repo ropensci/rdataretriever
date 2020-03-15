@@ -172,3 +172,13 @@ test_that("Reset a dataset script", {
   }
   expect_identical("iris" %in% offline_dataset_names, TRUE)
 })
+
+test_that("Citation info is correct", {
+  skip_if_no_python()
+  portal_citation <- rdataretriever::get_citation('portal')
+  expect_equal(length(portal_citation), 5)
+  expect_true(is.character(portal_citation))
+  expect_match(portal_citation[3], 
+               "Citation:   S. K. Morgan Ernest, Thomas J. Valone, and James H. Brown. 2009. Long-term monitoring and experimental manipulation of a Chihuahuan Desert ecosystem near Portal, Arizona, USA. Ecology 90:1708.", 
+               fixed = TRUE)
+})
