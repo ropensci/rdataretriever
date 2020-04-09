@@ -4,8 +4,14 @@
 \alias{download}
 \title{Download datasets via the Data Retriever.}
 \usage{
-download(dataset, path = "./", quiet = FALSE, sub_dir = "",
-  debug = FALSE, use_cache = TRUE)
+download(
+  dataset,
+  path = "./",
+  quiet = FALSE,
+  sub_dir = "",
+  debug = FALSE,
+  use_cache = TRUE
+)
 }
 \arguments{
 \item{dataset}{the name of the dataset that you wish to download}

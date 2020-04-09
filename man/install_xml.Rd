@@ -4,9 +4,15 @@
 \alias{install_xml}
 \title{Install datasets via the Data Retriever.}
 \usage{
-install_xml(dataset, table_name = "{db}_{table}.xml",
-  data_dir = getwd(), debug = FALSE, use_cache = TRUE,
-  force = FALSE, hash_value = NULL)
+install_xml(
+  dataset,
+  table_name = "{db}_{table}.xml",
+  data_dir = getwd(),
+  debug = FALSE,
+  use_cache = TRUE,
+  force = FALSE,
+  hash_value = NULL
+)
 }
 \arguments{
 \item{dataset}{the name of the dataset that you wish to install or path to a committed dataset zip file}

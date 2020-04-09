@@ -90,6 +90,21 @@ dataset_names <- function() {
 }
 
 
+#' Get citation
+#'
+#' @param dataset dataset to obtain citation
+#'
+#' @examples
+#' \donttest{
+#' rdataretriever::get_script_citation(dataset = "")
+#' }
+#' @export
+get_script_citation <- function(dataset = "") {
+  r_data_retriever <- reticulate::import("retriever", delay_load = TRUE)
+  r_data_retriever$get_script_citation(dataset)
+}
+
+
 #' Get dataset names from upstream
 #'
 #' @param keywords filter datasets based on keywords
