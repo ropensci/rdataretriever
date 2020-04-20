@@ -3,7 +3,7 @@ context("regression tests")
 source("test_helper.R")
 
 testthat::test_that("datasets returns some known values", {
-  skip_if_no_python()
+  skip_if_no_retriever()
   skip_on_cran()
   offline_datasets = rdataretriever::datasets()['offline']
   offline_dataset_names = c()
@@ -15,7 +15,7 @@ testthat::test_that("datasets returns some known values", {
 
 
 test_that("Download the raw portal dataset using path", {
-  skip_if_no_python()
+  skip_if_no_retriever()
   portal <- list("3299474", "3299483", "5603981")
   path = tempdir()
   rdataretriever::download(dataset = 'portal', path = path)
@@ -28,7 +28,7 @@ test_that("Download the raw portal dataset using path", {
 
 
 test_that("Download the raw portal dataset using path and sub_dir", {
-  skip_if_no_python()
+  skip_if_no_retriever()
   portal <- list("3299474", "3299483", "5603981")
   path = tempdir()
   sub_dir = 'sub_dir'
@@ -42,7 +42,7 @@ test_that("Download the raw portal dataset using path and sub_dir", {
 
 
 test_that("Install portal into csv", {
-  skip_if_no_python()
+  skip_if_no_retriever()
   # Install portal into csv files in your working directory
   portal <- list("portal_main", "portal_plots", "portal_species")
   rdataretriever::install_csv('portal')
@@ -56,7 +56,7 @@ test_that("Install portal into csv", {
 
 
 test_that("Install portal into json", {
-  skip_if_no_python()
+  skip_if_no_retriever()
   # Install portal into json
   portal <- list("portal_main", "portal_plots", "portal_species")
   rdataretriever::install_json('portal')
@@ -70,7 +70,7 @@ test_that("Install portal into json", {
 
 
 test_that("Install portal into xml", {
-  skip_if_no_python()
+  skip_if_no_retriever()
   # Install portal into xml
   portal <- list("portal_main", "portal_plots", "portal_species")
   rdataretriever::install_xml('portal')
@@ -83,7 +83,8 @@ test_that("Install portal into xml", {
 })
 
 test_that("Install dataset into Postgres", {
-  skip_if_no_python()
+  skip_if_no_retriever()
+  skip_if_no_postgres()
   skip_on_cran()
   # Install portal into Postgres at host
   try(system(
@@ -114,7 +115,7 @@ test_that("Install dataset into Postgres", {
 
 
 test_that("Install the dataset into Mysql", {
-  skip_if_no_python()
+  skip_if_no_retriever()
   skip_on_cran()
   try(err<-system(
     paste("mysql -u travis --host" , mysqldb_rdata,
@@ -133,7 +134,8 @@ test_that("Install the dataset into Mysql", {
 
 
 test_that("Install portal into sqlite", {
-  skip_if_no_python()
+  skip_if_no_sqlite()
+  skip_if_no_retriever()
   # Install the portal into Sqlite
   portal <- c("portal_main", "portal_plots", "portal_species")
   rdataretriever::install_sqlite('portal')
@@ -147,14 +149,14 @@ test_that("Install portal into sqlite", {
 
 
 test_that("Install and load a dataset as a list", {
-  skip_if_no_python()
+  skip_if_no_retriever()
   portal_data <- c("main", "plots", "species")
   portal = rdataretriever::fetch('portal')
   expect_identical(all(names(portal) %in%  portal_data), TRUE)
 })
 
 test_that("Reset a dataset script", {
-  skip_if_no_python()
+  skip_if_no_retriever()
   skip_on_cran()
   dataset = "iris"
   rdataretriever::reset(dataset)
@@ -174,7 +176,7 @@ test_that("Reset a dataset script", {
 })
 
 test_that("Citation info is correct", {
-  skip_if_no_python()
+  skip_if_no_retriever()
   portal_citation <- rdataretriever::get_citation('portal')
   expect_true(is.character(portal_citation))
   expect_match(portal_citation[1],
