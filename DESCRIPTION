@@ -49,4 +49,4 @@ Suggests:
 SystemRequirements: Python (>= 3.0) and Python headers and libraries
 License: MIT + file LICENSE
 LazyData: true
-RoxygenNote: 7.0.0
+RoxygenNote: 7.1.0
