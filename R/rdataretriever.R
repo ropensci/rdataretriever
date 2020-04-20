@@ -96,8 +96,7 @@ dataset_names <- function() {
 #' }
 #' @export
 get_script_citation <- function(dataset = "") {
-  r_data_retriever <- reticulate::import("retriever", delay_load = TRUE)
-  r_data_retriever$get_script_citation(dataset)
+  retriever$get_script_citation(dataset)
 }
 
 
@@ -308,8 +307,7 @@ datasets <- function(keywords = "", licenses = "") {
 #' @importFrom reticulate import r_to_py
 #' @export
 install_csv <- function(dataset, table_name = "{db}_{table}.csv", data_dir = getwd(), debug = FALSE, use_cache = TRUE, force = FALSE, hash_value = NULL) {
-  r_data_retriever <- import("retriever", delay_load = TRUE)
-  r_data_retriever$install_csv(dataset, table_name, data_dir, debug, use_cache, force, hash_value)
+  retriever$install_csv(dataset, table_name, data_dir, debug, use_cache, force, hash_value)
 }
 
 #' Install datasets via the Data Retriever.
@@ -330,8 +328,7 @@ install_csv <- function(dataset, table_name = "{db}_{table}.csv", data_dir = get
 #' @importFrom reticulate import r_to_py
 #' @export
 install_json <- function(dataset, table_name = "{db}_{table}.json", data_dir = getwd(), debug = FALSE, use_cache = TRUE, force = FALSE, hash_value = NULL) {
-  r_data_retriever <- import("retriever")
-  r_data_retriever$install_json(dataset, table_name, data_dir, debug, use_cache, force, hash_value)
+  retriever$install_json(dataset, table_name, data_dir, debug, use_cache, force, hash_value)
 }
 
 
@@ -353,8 +350,7 @@ install_json <- function(dataset, table_name = "{db}_{table}.json", data_dir = g
 #' @importFrom reticulate import r_to_py
 #' @export
 install_xml <- function(dataset, table_name = "{db}_{table}.xml", data_dir = getwd(), debug = FALSE, use_cache = TRUE, force = FALSE, hash_value = NULL) {
-  r_data_retriever <- reticulate::import("retriever", delay_load = TRUE)
-  r_data_retriever$install_xml(dataset, table_name, data_dir, debug, use_cache, force, hash_value)
+  retriever$install_xml(dataset, table_name, data_dir, debug, use_cache, force, hash_value)
 }
 
 #' Install datasets via the Data Retriever.
@@ -382,8 +378,7 @@ install_xml <- function(dataset, table_name = "{db}_{table}.xml", data_dir = get
 install_mysql <- function(dataset, user = "root", password = "", host = "localhost",
                           port = 3306, database_name = "{db}", table_name = "{db}.{table}",
                           debug = FALSE, use_cache = TRUE, force = FALSE, hash_value = NULL) {
-  r_data_retriever <- reticulate::import("retriever", delay_load = TRUE)
-  r_data_retriever$install_mysql(
+  retriever$install_mysql(
     dataset, user, password, host,
     port, database_name, table_name,
     debug, use_cache, force, hash_value
@@ -418,10 +413,9 @@ install_postgres <- function(dataset, user = "postgres", password = "",
                              host = "localhost", port = 5432, database = "postgres",
                              database_name = "{db}", table_name = "{db}.{table}",
                              bbox = list(), debug = FALSE, use_cache = TRUE, force = FALSE, hash_value = NULL) {
-  r_data_retriever <- reticulate::import("retriever", delay_load = TRUE)
   # Use the R list function explicitly
   bbox <- reticulate::r_to_py(bbox)
-  r_data_retriever$install_postgres(
+  retriever$install_postgres(
     dataset, user, password, host,
     port, database, database_name,
     table_name, bbox, debug, use_cache, force, hash_value
@@ -448,10 +442,9 @@ install_postgres <- function(dataset, user = "postgres", password = "",
 #' @export
 install_sqlite <- function(dataset, file = "sqlite.db", table_name = "{db}_{table}",
                            data_dir = getwd(), debug = FALSE, use_cache = TRUE, force = FALSE, hash_value = NULL) {
-  r_data_retriever <- reticulate::import("retriever", delay_load = TRUE)
   tryCatch(withCallingHandlers(
     {
-      r_data_retriever$install_sqlite(dataset, file, table_name, data_dir, debug, use_cache, force, hash_value)
+      retriever$install_sqlite(dataset, file, table_name, data_dir, debug, use_cache, force, hash_value)
     },
     error = function(error_message) {
       message("Full error trace:")
@@ -480,8 +473,7 @@ install_sqlite <- function(dataset, file = "sqlite.db", table_name = "{db}_{tabl
 #' @export
 install_msaccess <- function(dataset, file = "access.mdb", table_name = "[{db} {table}]",
                              debug = FALSE, use_cache = TRUE, force = FALSE, hash_value = NULL) {
-  r_data_retriever <- reticulate::import("retriever", delay_load = TRUE)
-  r_data_retriever$install_msaccess(dataset, file, table_name, debug, use_cache)
+  retriever$install_msaccess(dataset, file, table_name, debug, use_cache)
 }
 
 #' Install datasets via the Data Retriever (deprecated).

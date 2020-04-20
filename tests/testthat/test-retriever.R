@@ -185,7 +185,7 @@ test_that("Citation info is correct", {
 })
 
 test_that("Citation of scripts", {
-  skip_if_no_python()
+  skip_if_no_retriever()
   portal_citation <- rdataretriever::get_script_citation('portal')
   expect_true(is.character(portal_citation))
   expect_match(portal_citation[1],

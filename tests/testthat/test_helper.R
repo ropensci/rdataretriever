@@ -43,7 +43,8 @@ skip_if_no_postgres <- function() {
 }
 
 skip_if_no_sqlite <- function() {
-  deps_available <- suppressPackageStartupMessages(require(RSQLite))
+  deps_available <- suppressPackageStartupMessages(require(DBI) && 
+                                                   require(RSQLite))
   if (!deps_available) {
     testthat::skip("RSQLite not available for testing")
   }
