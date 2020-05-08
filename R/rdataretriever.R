@@ -10,11 +10,10 @@
 #' @export
 check_for_updates <- function(repo = "") {
   writeLines(strwrap("Please wait while the retriever updates its scripts, ..."))
-  r_data_retriever <- reticulate::import("retriever", delay_load = TRUE)
   if (repo == "") {
-    r_data_retriever$check_for_updates()
+    retriever$check_for_updates()
   } else {
-    r_data_retriever$check_for_updates(repo)
+    retriever$check_for_updates(repo)
   }
 }
 
@@ -33,8 +32,7 @@ check_for_updates <- function(repo = "") {
 #' @importFrom reticulate import r_to_py
 #' @export
 commit <- function(dataset, commit_message = "", path = NULL, quiet = FALSE) {
-  r_data_retriever <- reticulate::import("retriever", delay_load = TRUE)
-  r_data_retriever$commit(dataset, commit_message, path, quiet)
+  retriever$commit(dataset, commit_message, path, quiet)
   cat("Successfully committed.")
 }
 
@@ -50,8 +48,7 @@ commit <- function(dataset, commit_message = "", path = NULL, quiet = FALSE) {
 #' @importFrom reticulate import r_to_py
 #' @export
 commit_log <- function(dataset) {
-  r_data_retriever <- reticulate::import("retriever", delay_load = TRUE)
-  log_out <- r_data_retriever$commit_log(dataset)
+  log_out <- retriever$commit_log(dataset)
   res <- unlist(log_out)
   names(res) <- c("date", "commit_message", "hash_value")
   message(paste0("Commit message: ", res$commit_message))
@@ -72,9 +69,8 @@ commit_log <- function(dataset) {
 #' @importFrom reticulate import r_to_py
 #' @export
 dataset_names <- function() {
-  r_data_retriever <- import("retriever", delay_load = TRUE)
   # Accessing datasets() function from Python API
-  all_datasets <- r_data_retriever$datasets()
+  all_datasets <- retriever$datasets()
   offline_datasets <- c()
   online_datasets <- c()
   for (dataset in all_datasets["offline"]) {
@@ -100,8 +96,7 @@ dataset_names <- function() {
 #' }
 #' @export
 get_script_citation <- function(dataset = "") {
-  r_data_retriever <- reticulate::import("retriever", delay_load = TRUE)
-  r_data_retriever$get_script_citation(dataset)
+  retriever$get_script_citation(dataset)
 }
 
 
@@ -117,11 +112,10 @@ get_script_citation <- function(dataset = "") {
 #' }
 #' @export
 get_dataset_names_upstream <- function(keywords = "", licenses = "", repo = "") {
-  r_data_retriever <- reticulate::import("retriever", delay_load = TRUE)
   if (repo == "") {
-    r_data_retriever$get_dataset_names_upstream(keywords = keywords, licenses = licenses)
+    retriever$get_dataset_names_upstream(keywords = keywords, licenses = licenses)
   } else {
-    r_data_retriever$get_dataset_names_upstream(keywords = keywords, licenses = licenses, repo)
+    retriever$get_dataset_names_upstream(keywords = keywords, licenses = licenses, repo)
   }
 }
 
@@ -140,11 +134,10 @@ get_dataset_names_upstream <- function(keywords = "", licenses = "", repo = "") 
 #' @importFrom reticulate import r_to_py
 #' @export
 get_script_upstream <- function(dataset, repo = "") {
-  r_data_retriever <- reticulate::import("retriever", delay_load = TRUE)
   if (repo == "") {
-    r_data_retriever$get_script_upstream(dataset)
+    retriever$get_script_upstream(dataset)
   } else {
-    r_data_retriever$check_for_updates(dataset, repo)
+    retriever$check_for_updates(dataset, repo)
   }
 }
 
@@ -174,10 +167,9 @@ get_script_upstream <- function(dataset, repo = "") {
 #' @importFrom reticulate import r_to_py
 #' @export
 fetch <- function(dataset, quiet = TRUE, data_names = NULL) {
-  r_data_retriever <- reticulate::import("retriever", delay_load = TRUE)
   data_sets <- list()
   # Accessing dataset_names() function from Python API
-  all_datasets <- r_data_retriever$dataset_names()
+  all_datasets <- retriever$dataset_names()
   offline_datasets <- all_datasets["offline"]
   for (x in offline_datasets) {
     data_sets <- c(data_sets, x)
@@ -210,12 +202,12 @@ fetch <- function(dataset, quiet = TRUE, data_names = NULL) {
   for (i in seq_along(dataset)) {
     if (quiet) {
       # Accessing install() function from Python API
-      r_data_retriever$install_csv(
+      retriever$install_csv(
         dataset = dataset[i],
         table_name = "{db}_{table}.csv", data_dir = temp_path
       )
     } else {
-      r_data_retriever$install_csv(
+      retriever$install_csv(
         dataset = dataset[i],
         table_name = "{db}_{table}.csv", data_dir = temp_path,
         debug = TRUE
@@ -264,8 +256,7 @@ fetch <- function(dataset, quiet = TRUE, data_names = NULL) {
 #' @importFrom reticulate import r_to_py
 #' @export
 download <- function(dataset, path = "./", quiet = FALSE, sub_dir = "", debug = FALSE, use_cache = TRUE) {
-  r_data_retriever <- reticulate::import("retriever", delay_load = TRUE)
-  r_data_retriever$download(dataset, path, quiet, sub_dir, debug, use_cache)
+  retriever$download(dataset, path, quiet, sub_dir, debug, use_cache)
 }
 
 #' Name all available dataset scripts.
@@ -282,9 +273,8 @@ download <- function(dataset, path = "./", quiet = FALSE, sub_dir = "", debug = 
 #' @importFrom reticulate import r_to_py
 #' @export
 datasets <- function(keywords = "", licenses = "") {
-  r_data_retriever <- import("retriever", delay_load = TRUE)
   # Accessing datasets() function from Python API
-  all_datasets <- r_data_retriever$datasets(keywords, licenses)
+  all_datasets <- retriever$datasets(keywords, licenses)
   offline_datasets <- c()
   online_datasets <- c()
   for (dataset in all_datasets["offline"]) {
@@ -317,8 +307,7 @@ datasets <- function(keywords = "", licenses = "") {
 #' @importFrom reticulate import r_to_py
 #' @export
 install_csv <- function(dataset, table_name = "{db}_{table}.csv", data_dir = getwd(), debug = FALSE, use_cache = TRUE, force = FALSE, hash_value = NULL) {
-  r_data_retriever <- import("retriever", delay_load = TRUE)
-  r_data_retriever$install_csv(dataset, table_name, data_dir, debug, use_cache, force, hash_value)
+  retriever$install_csv(dataset, table_name, data_dir, debug, use_cache, force, hash_value)
 }
 
 #' Install datasets via the Data Retriever.
@@ -339,8 +328,7 @@ install_csv <- function(dataset, table_name = "{db}_{table}.csv", data_dir = get
 #' @importFrom reticulate import r_to_py
 #' @export
 install_json <- function(dataset, table_name = "{db}_{table}.json", data_dir = getwd(), debug = FALSE, use_cache = TRUE, force = FALSE, hash_value = NULL) {
-  r_data_retriever <- import("retriever")
-  r_data_retriever$install_json(dataset, table_name, data_dir, debug, use_cache, force, hash_value)
+  retriever$install_json(dataset, table_name, data_dir, debug, use_cache, force, hash_value)
 }
 
 
@@ -362,8 +350,7 @@ install_json <- function(dataset, table_name = "{db}_{table}.json", data_dir = g
 #' @importFrom reticulate import r_to_py
 #' @export
 install_xml <- function(dataset, table_name = "{db}_{table}.xml", data_dir = getwd(), debug = FALSE, use_cache = TRUE, force = FALSE, hash_value = NULL) {
-  r_data_retriever <- reticulate::import("retriever", delay_load = TRUE)
-  r_data_retriever$install_xml(dataset, table_name, data_dir, debug, use_cache, force, hash_value)
+  retriever$install_xml(dataset, table_name, data_dir, debug, use_cache, force, hash_value)
 }
 
 #' Install datasets via the Data Retriever.
@@ -391,8 +378,7 @@ install_xml <- function(dataset, table_name = "{db}_{table}.xml", data_dir = get
 install_mysql <- function(dataset, user = "root", password = "", host = "localhost",
                           port = 3306, database_name = "{db}", table_name = "{db}.{table}",
                           debug = FALSE, use_cache = TRUE, force = FALSE, hash_value = NULL) {
-  r_data_retriever <- reticulate::import("retriever", delay_load = TRUE)
-  r_data_retriever$install_mysql(
+  retriever$install_mysql(
     dataset, user, password, host,
     port, database_name, table_name,
     debug, use_cache, force, hash_value
@@ -427,10 +413,9 @@ install_postgres <- function(dataset, user = "postgres", password = "",
                              host = "localhost", port = 5432, database = "postgres",
                              database_name = "{db}", table_name = "{db}.{table}",
                              bbox = list(), debug = FALSE, use_cache = TRUE, force = FALSE, hash_value = NULL) {
-  r_data_retriever <- reticulate::import("retriever", delay_load = TRUE)
   # Use the R list function explicitly
   bbox <- reticulate::r_to_py(bbox)
-  r_data_retriever$install_postgres(
+  retriever$install_postgres(
     dataset, user, password, host,
     port, database, database_name,
     table_name, bbox, debug, use_cache, force, hash_value
@@ -457,10 +442,9 @@ install_postgres <- function(dataset, user = "postgres", password = "",
 #' @export
 install_sqlite <- function(dataset, file = "sqlite.db", table_name = "{db}_{table}",
                            data_dir = getwd(), debug = FALSE, use_cache = TRUE, force = FALSE, hash_value = NULL) {
-  r_data_retriever <- reticulate::import("retriever", delay_load = TRUE)
   tryCatch(withCallingHandlers(
     {
-      r_data_retriever$install_sqlite(dataset, file, table_name, data_dir, debug, use_cache, force, hash_value)
+      retriever$install_sqlite(dataset, file, table_name, data_dir, debug, use_cache, force, hash_value)
     },
     error = function(error_message) {
       message("Full error trace:")
@@ -489,8 +473,7 @@ install_sqlite <- function(dataset, file = "sqlite.db", table_name = "{db}_{tabl
 #' @export
 install_msaccess <- function(dataset, file = "access.mdb", table_name = "[{db} {table}]",
                              debug = FALSE, use_cache = TRUE, force = FALSE, hash_value = NULL) {
-  r_data_retriever <- reticulate::import("retriever", delay_load = TRUE)
-  r_data_retriever$install_msaccess(dataset, file, table_name, debug, use_cache)
+  retriever$install_msaccess(dataset, file, table_name, debug, use_cache)
 }
 
 #' Install datasets via the Data Retriever (deprecated).
@@ -527,8 +510,8 @@ install <- function(dataset, connection, db_file = NULL, conn_file = NULL,
                     data_dir = ".", log_dir = NULL) {
   # This function is deprecated
   paste("This function it deprecated use, install_",
-    connection, "()",
-    sep = ""
+        connection, "()",
+        sep = ""
   )
   if (connection == "mysql" | connection == "postgres") {
     if (is.null(conn_file)) {
@@ -556,14 +539,14 @@ install <- function(dataset, connection, db_file = NULL, conn_file = NULL,
     )))
     if (connection == "mysql") {
       install_mysql(dataset,
-        user = conn$user, host = conn$host,
-        port = conn$port, password = conn$password
+                    user = conn$user, host = conn$host,
+                    port = conn$port, password = conn$password
       )
     }
     if (connection == "postgres") {
       install_postgres(dataset,
-        user = conn$user, host = conn$host,
-        port = conn$port, password = conn$password
+                       user = conn$user, host = conn$host,
+                       port = conn$port, password = conn$password
       )
     }
   } else if (connection == "msaccess") {
@@ -571,8 +554,8 @@ install <- function(dataset, connection, db_file = NULL, conn_file = NULL,
       install_msaccess(dataset)
     } else {
       install_msaccess(dataset,
-        file = "access.mdb",
-        table_name = "[{db} {table}]", debug = FALSE, use_cache = TRUE
+                       file = "access.mdb",
+                       table_name = "[{db} {table}]", debug = FALSE, use_cache = TRUE
       )
     }
   } else if (connection == "sqlite") {
@@ -581,8 +564,8 @@ install <- function(dataset, connection, db_file = NULL, conn_file = NULL,
     }
     else {
       install_sqlite(dataset,
-        file = db_file, table_name = "{db}_{table}",
-        debug = FALSE, use_cache = TRUE
+                     file = db_file, table_name = "{db}_{table}",
+                     debug = FALSE, use_cache = TRUE
       )
     }
   } else if (connection %in% c("csv", "json", "xml")) {
@@ -621,8 +604,7 @@ get_citation <- function(dataset) {
 #' @importFrom reticulate import r_to_py
 #' @export
 reset <- function(scope = "all") {
-  r_data_retriever <- reticulate::import("retriever", delay_load = TRUE)
-  r_data_retriever$reset_retriever(scope)
+  retriever$reset_retriever(scope)
 }
 
 #' Update the retriever's dataset scripts to the most recent versions.
@@ -642,8 +624,7 @@ reset <- function(scope = "all") {
 #' @export
 get_updates <- function() {
   writeLines(strwrap("Please wait while the retriever updates its scripts, ..."))
-  r_data_retriever <- reticulate::import("retriever", delay_load = TRUE)
-  r_data_retriever$check_for_updates()
+  retriever$check_for_updates()
 }
 
 #' Update the retriever's global_script_list with the scripts present
@@ -655,8 +636,7 @@ get_updates <- function() {
 #' @importFrom reticulate import r_to_py
 #' @export
 reload_scripts <- function() {
-  r_data_retriever <- reticulate::import("retriever", delay_load = TRUE)
-  r_data_retriever$reload_scripts()
+  retriever$reload_scripts()
 }
 
 #' Setting path of retriever
@@ -718,20 +698,19 @@ get_os <- function() {
   tolower(os)
 }
 
+#' install the python module `retriever`
+#' 
+#' @inheritParams reticulate::py_install
+#' 
+#' @export
+install_retriever <- function(method = "auto", conda = "auto") {
+  reticulate::py_install("retriever", method = method, conda = conda)
+}
+
 # global reference to python modules (will be initialized in .onLoad)
 retriever <- NULL
 
 .onLoad <- function(libname, pkgname) {
-  if (reticulate::py_available()) {
-    install_python_modules <- function(method = "auto", conda = "auto") {
-      reticulate::py_install("retriever", method = method, conda = conda)
-    }
-  }
-  if (suppressWarnings(suppressMessages(requireNamespace("reticulate")))) {
-    modules <- reticulate::py_module_available("retriever")
-    if (modules) {
-      ## assignment in parent environment!
-      retriever <<- reticulate::import("retriever", delay_load = TRUE)
-    }
-  }
+  ## assignment in parent environment!
+  retriever <<- reticulate::import("retriever", delay_load = TRUE)
 }

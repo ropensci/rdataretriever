@@ -22,23 +22,31 @@ full_normalized_path = function(paths, ..., mustWork = FALSE) {
 }
 
 # helper to skip tests if python is not avaialable
-skip_if_no_python <- function() {
-  modules <- reticulate::py_module_available("retriever")
-  if (!modules){
-    testthat::skip("retriever not available for testing")
-  } else{
-  load_required_packages()
-  }
-}
-
-load_required_packages<- function() {
+skip_if_no_retriever <- function() {
+  # check for reticulate
   if (!requireNamespace("reticulate", quietly = TRUE)) {
     testthat::skip("reticulate not available for testing")
   }
-  suppressPackageStartupMessages(require(reticulate))
-  suppressPackageStartupMessages(require(DBI))
-  # suppressPackageStartupMessages(require(RMariaDB))
-  suppressPackageStartupMessages(require(RPostgreSQL))
-  suppressPackageStartupMessages(require(RSQLite))
+  
+  retriever_available <- reticulate::py_module_available("retriever")
+  if (!retriever_available) {
+    testthat::skip("retriever not available for testing")
+  }
+}
+
+skip_if_no_postgres <- function() {
+  deps_available <- suppressPackageStartupMessages(require(DBI) && 
+                                                   require(RPostgreSQL))
+  if (!deps_available) {
+    testthat::skip("DBI and RPostgreSQL not available for testing")
+  }
+}
+
+skip_if_no_sqlite <- function() {
+  deps_available <- suppressPackageStartupMessages(require(DBI) && 
+                                                   require(RSQLite))
+  if (!deps_available) {
+    testthat::skip("RSQLite not available for testing")
+  }
 }
 
