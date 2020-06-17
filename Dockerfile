@@ -3,8 +3,8 @@ FROM rocker/tidyverse:latest
 MAINTAINER Weecology "https://github.com/weecology/rdataretriever"
 
 # Write enviromental options to config files
-RUN echo "options(repos='https://cran.mtu.edu/')" >> ~/.Rprofile
-RUN echo "options(repos='https://cran.mtu.edu/')" >> ~/.Renviron
+RUN echo "options(repos='https://cloud.r-project.org/')" >> ~/.Rprofile
+RUN echo "options(repos='https://cloud.r-project.org/')" >> ~/.Renviron
 RUN echo "R_LIBS=\"/usr/lib/R/library\"">> ~/.Rprofile
 RUN echo "R_LIBS=\"/usr/lib/R/library\"">> ~/.Renviron
 RUN echo "R_LIBS_USER=\"/usr/lib/R/library\"">> ~/.Renviron
