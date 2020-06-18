@@ -20,8 +20,8 @@ handling can easily be integrated into R workflows.
 ## Table of Contents
 
   - [Installation](#installation)
-      - [Installation from CRAN and PyPi](#installation-from-cran-and-pypi)
-      - [Installation with devtools and <code>reticulate</code>](#installation-with-devtools-and-reticulate)
+      - [Installation with `conda` or virtual environments](#installation-with-conda-or-virtual-environments)
+      - [Installation using Python standard distribution](#Installation-using-Python-standard-distribution)
   - [Examples](#examples)
   - [Spatial data installation](#spatial-data-installation)
   - [Using Dockers](#using-dockers)
@@ -29,21 +29,60 @@ handling can easily be integrated into R workflows.
 
 ## Installation
 
-`rdataretriever` is an R wrapper for the Python based Data Retriever. This means
-that Python and the `retriever` package need to be installed first.
+Requirements:
 
-#### Installation from `CRAN` and `conda` or `Anaconda`
+The `rdataretriever` is an R wrapper for the Python package, [Data Retriever](http://data-retriever.org). This means
+that *Python* and the `retriever` Python package need to be installed first.
 
-*Use this if you are new to Python or don't have a local Python installation*
+- R (A recent release is recommended)
+- reticulate R package
+- Python 3.6 and above
+- The Data Retriever Python package
+
+#### Installation with Conda or virtual environments
 
 1. Install the Python 3.7 version of the miniconda Python distribution from https://docs.conda.io/en/latest/miniconda.html
 2. In R install the `reticulate` package (the current release, 1.13, does not work on Windows so installation using devtools is recommended):
 
   ```coffee
-  devtools::install_github("rstudio/reticulate")
+  devtools::install_github("rstudio/reticulate") # from GitHub
   ```
 
-3. In R run the following to install the `retriever` Python package:
+Verify that the path used by reticulate is correct
+
+  ```coffee
+  Sys.which('Python')
+  library(reticulate)
+  py_config()
+  ```
+
+Sample output:
+
+  ```coffee
+  > py_config()
+  python:         /Users/Documents/Environments/py36/bin/python
+  virtualenv:     /Users/Documents/Environments/py36/bin/activate_this.py
+  numpy:          /Users/Documents/Environments/py36/lib/python3.6/site-packages/numpy..
+  numpy_version:  1.15.4
+  python versions found:
+   /Users/Documents/Environments/py36/bin/python
+   /usr/bin/python
+   /usr/local/bin/python
+  ```
+
+If the values of python are not pointing to the correct python environment,
+
+```
+  Restart R
+  Load reticulate `library(reticulate)`
+  Use the functions `use_python()`, `use_virtualenv()`, `use_condaenv()` to set the path.
+  Check py_config(). The order is important, py_config() is found to avoid resetting the path for the current session
+```
+Note: Currently these functions are not working as smooth as expected, we do recommended that you obtain the path of python for the
+active virtual enviroment and set it using `use_python(PATH_TO_ENV)`.
+It is also recommended to set the value of `RETICULATE_PYTHON` to the Python location if possible
+
+3. Install the Python package `retriever`. You can use reticulate's python package installer or pip or conda.
 
   ```coffee
   library(reticulate)
@@ -51,43 +90,19 @@ that Python and the `retriever` package need to be installed first.
   py_install("retriever")
   ```
 
-4. Install the `rdataretriever` R package:
+4. Install the `rdataretriever` R package using one of the commands below:
 
   ```coffee
   install.packages("rdataretriever") # from CRAN
   devtools::install_github("ropensci/rdataretriever") # from GitHub
+  install.packages(".", repos = NULL, type="source") # from source
   ```
 
-#### Installation with `devtools`
+#### Installation using Python standard distribution
 
-*Use this if you are already familiar with Python and have a local Python installation*
-
-1. Check that your local Python installation is Python 3.6 and above
-2. In R install the `reticulate` package:
-
-  ```coffee
-  install.packages("reticulate")
-  ```
-
-3. In R run the following (`replacing "/path/to/python" with the path to you Python executeable`) to install the `retriever` Python package:
-
-  ```coffee
-  library(reticulate)
-  use_python("/path/to/python")
-  py_install("retriever")
-  ```
-  Note: When using virtual environment make sure the `python` using which virtual environment has been created is
-  installed using `--enable-shared` option.
-  ```bash
-  ./configure --enable-shared
-  ```
-
-4. Install the `rdataretriever` R package:
-
-  ```coffee
-  devtools::install_github("ropensci/rdataretriever") # from GitHub
-  install.packages("rdataretriever") # from CRAN
-  ```
+Set the path for *Python* and *RETICULATE_PYTHON* to the Python location
+Install reticulate in R , Load retriculate and verify the python path used, see 2 above
+Install retriever as in 3 and 4 above
 
 Examples
 --------
