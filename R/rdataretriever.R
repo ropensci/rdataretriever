@@ -605,6 +605,7 @@ get_citation <- function(dataset) {
 #' @export
 reset <- function(scope = "all") {
   retriever$reset_retriever(scope)
+  reload_scripts()
 }
 
 #' Update the retriever's dataset scripts to the most recent versions.
@@ -625,6 +626,7 @@ reset <- function(scope = "all") {
 get_updates <- function() {
   writeLines(strwrap("Please wait while the retriever updates its scripts, ..."))
   retriever$check_for_updates()
+  reload_scripts()
 }
 
 #' Update the retriever's global_script_list with the scripts present
