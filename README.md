@@ -10,102 +10,120 @@
 R interface to the [Data Retriever](http://data-retriever.org).
 
 The Data Retriever automates the tasks of finding, downloading, and cleaning up
-publicly available data, and then stores them in a local database or csv
-files. This lets data analysts spend less time cleaning up and managing data,
-and more time analyzing it.
+publicly available data, and loads them or stores them in variety of databases
+or flat file formats. This lets data analysts spend less time cleaning up and
+managing data, and more time analyzing it.
 
-This package lets you access the Retriever using R, so that the Retriever's data
-handling can easily be integrated into R workflows.
+This package lets you work with the Data Retriever (written in Python) using R,
+so that the Retriever's data handling can easily be integrated into R workflows.
 
 ## Table of Contents
 
   - [Installation](#installation)
-      - [Installation with `conda` or virtual environments](#installation-with-conda-or-virtual-environments)
-      - [Installation using Python standard distribution](#Installation-using-Python-standard-distribution)
-  - [Examples](#examples)
-  - [Spatial data installation](#spatial-data-installation)
-  - [Using Dockers](#using-dockers)
+      - [Basic Installation (no Python experience needed)](#basic-installation)
+      - [Advanced Installation for Python Users](#advanced-installation-for-python-users)
+  - [Installing Tabular Datasets](#installing-tabular-datasets)
+  - [Installing Spatial Datasets](#installing-spatial-datasets)
+  - [Using Docker Containers](#using-docker-containers)
+  - [Provenance](#provenance)
   - [Acknowledgements](#acknowledgements)
 
 ## Installation
 
-Requirements:
-
 The `rdataretriever` is an R wrapper for the Python package, [Data Retriever](http://data-retriever.org). This means
 that *Python* and the `retriever` Python package need to be installed first.
 
-- R (A recent release is recommended)
-- reticulate R package
-- Python 3.6 and above
-- The Data Retriever Python package
+### Basic Installation
 
-#### Installation with Conda or virtual environments
+If you just want to use the Data Retriever from within R follow these
+instuctions run the following commands in R. This will create a local Python
+installation that will only be used by R and install the needed Python package
+for you.
 
-1. Install the Python 3.7 version of the miniconda Python distribution from https://docs.conda.io/en/latest/miniconda.html
-2. In R install the `reticulate` package (the current release, 1.13, does not work on Windows so installation using devtools is recommended):
-
-  ```coffee
-  devtools::install_github("rstudio/reticulate") # from GitHub
-  ```
-
-Verify that the path used by reticulate is correct
-
-  ```coffee
-  Sys.which('Python')
-  library(reticulate)
-  py_config()
-  ```
-
-Sample output:
-
-  ```coffee
-  > py_config()
-  python:         /Users/Documents/Environments/py36/bin/python
-  virtualenv:     /Users/Documents/Environments/py36/bin/activate_this.py
-  numpy:          /Users/Documents/Environments/py36/lib/python3.6/site-packages/numpy..
-  numpy_version:  1.15.4
-  python versions found:
-   /Users/Documents/Environments/py36/bin/python
-   /usr/bin/python
-   /usr/local/bin/python
-  ```
-
-If the values of python are not pointing to the correct python environment,
-
+```coffee
+install.packages('reticulate') # Install R package for interacting with Python
+reticulate::install_miniconda() # Install Python
+reticulate::py_install('retriever') # Install the Python retriever package
+install.packages('rdataretriever') # Install the R package for running the retriever
+rdataretriever::get_updates() # Update the available datasets
 ```
-  Restart R
-  Load reticulate `library(reticulate)`
-  Use the functions `use_python()`, `use_virtualenv()`, `use_condaenv()` to set the path.
-  Check py_config(). The order is important, py_config() is found to avoid resetting the path for the current session
+
+**After running these commands restart R.**
+
+### Advanced Installation for Python Users
+
+If you are using Python for other tasks you can use `rdataretriever` with your
+existing Python installation (though the [basic installation](#basic-installation)
+above will also work in this case by creating a separate miniconda install and
+Python environment).
+
+#### Install the `retriever` Python package
+
+Install the `retriever` Python package into your prefered Python environment
+using either `conda` (64-bit conda is required):
+
+  ```bash
+  conda install -c conda-forge retriever
+  ```
+
+  or `pip`:
+
+  ```bash
+  pip install retriever
+  ```
+
+#### Select the Python environment to use in R
+
+`rdataretriever` will try to find Python environments with `retriever` (see the
+`reticulate` documentation on
+[order of discovery](https://rstudio.github.io/reticulate/articles/versions.html#order-of-discovery-1)
+for more details) installed. Alternatively you can select a Python environment
+to use when working with `rdataretriever` (and other packages using
+`reticulate`).
+
+The most robust way to do this is to set the `RETICULATE_PYTHON` environment
+variable to point to the preferred Python executable:
+
+```coffee
+Sys.setenv(RETICULATE_PYTHON = "/path/to/python")
 ```
-Note: Currently these functions are not working as smooth as expected, we do recommended that you obtain the path of python for the
-active virtual enviroment and set it using `use_python(PATH_TO_ENV)`.
-It is also recommended to set the value of `RETICULATE_PYTHON` to the Python location if possible
 
-3. Install the Python package `retriever`. You can use reticulate's python package installer or pip or conda.
+This command can be run interactively or placed in `.Renviron` in your home
+directory.
 
-  ```coffee
-  library(reticulate)
-  py_available(initialize = TRUE)
-  py_install("retriever")
-  ```
+Alternatively you can do select the Python environment through the `reticulate`
+package for either `conda`:
 
-4. Install the `rdataretriever` R package using one of the commands below:
+```coffee
+library(reticulate)
+use_conda('name_of_conda_environment')
+```
 
-  ```coffee
-  install.packages("rdataretriever") # from CRAN
-  devtools::install_github("ropensci/rdataretriever") # from GitHub
-  install.packages(".", repos = NULL, type="source") # from source
-  ```
+or `virtualenv`:
 
-#### Installation using Python standard distribution
+```coffee
+library(reticulate)
+use_virtualenv("path_to_virtualenv_environment")
+```
 
-Set the path for *Python* and *RETICULATE_PYTHON* to the Python location
-Install reticulate in R , Load retriculate and verify the python path used, see 2 above
-Install retriever as in 3 and 4 above
+You can check to see which Python environment is being used with:
 
-Examples
---------
+```coffee
+py_config()
+```
+
+#### Install the `rdataretriever` R package
+
+```coffee
+install.packages("rdataretriever") # latest release from CRAN
+```
+
+```coffee
+devtools::install_github("ropensci/rdataretriever") # development version from GitHub
+```
+
+## Installing Tabular Datasets
+
 ```coffee
 library(rdataretriever)
 
@@ -126,8 +144,7 @@ head(portal$species)
 
 ```
 
-Spatial data Installation
--------------------------
+## Installing Spatial Datasets
 
 **Set-up and Requirements**
 
@@ -190,8 +207,8 @@ rdataretriever::install_postgres('usgs-elevation', list(-94.98704597353938, 39.0
 ```
 
 
-Provenance
-----------
+## Provenance
+
 `rdataretriever` allows users to save a dataset in its current state which can be used later.
 
 Note: You can save your datasets in provenance directory by setting the environment variable `PROVENANCE_DIR`
@@ -218,8 +235,7 @@ Datasets stored in provenance directory can be installed directly using hash val
 rdataretriever::install_sqlite('abalone-age', hash_value='a76e77`)
 ``` 
 
-Using Dockers
--------------
+## Using Docker Containers
 
 To run the image interactively
 

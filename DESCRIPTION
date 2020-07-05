@@ -38,7 +38,7 @@ URL: https://docs.ropensci.org/rdataretriever (website),
 Depends:
     R (>= 3.4.0)
 Imports:
-    reticulate (>= 1.8)
+    reticulate (>= 1.16)
 Suggests:
     testthat (>= 1.0.0),
     DBI,
