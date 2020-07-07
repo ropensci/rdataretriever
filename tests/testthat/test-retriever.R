@@ -192,3 +192,11 @@ test_that("Citation of scripts", {
                "S. K. Morgan Ernest, Thomas J. Valone, and James H. Brown. 2009. Long-term monitoring and experimental manipulation of a Chihuahuan Desert ecosystem near Portal, Arizona, USA. Ecology 90:1708.",
                fixed = TRUE)
 })
+
+test_that("Data Retriever version info", {
+  skip_if_no_retriever()
+  retriever_verion <- rdataretriever::data_retriever_version()
+  url2fetch <- "https://raw.githubusercontent.com/weecology/retriever/master/retriever/_version.py"
+  url_content <- getURL(url2fetch)
+  expect_true(grepl(retriever_verion[1], url_content, fixed = TRUE))
+})

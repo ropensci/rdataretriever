@@ -3,6 +3,7 @@
 export(check_for_updates)
 export(commit)
 export(commit_log)
+export(data_retriever_version)
 export(dataset_names)
 export(datasets)
 export(download)
