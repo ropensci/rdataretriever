@@ -141,6 +141,17 @@ get_script_upstream <- function(dataset, repo = "") {
   }
 }
 
+#' Get retriever version
+#' @return returns a string with the version information
+#' @examples
+#' \donttest{
+#' rdataretriever::get_version()
+#' }
+#' @importFrom reticulate import r_to_py
+#' @export
+get_version <- function() {
+  retriever$"__version__"
+}
 
 #' Fetch a dataset via the Data Retriever
 #'
