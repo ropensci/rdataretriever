@@ -4,7 +4,10 @@
 \alias{data_retriever_version}
 \title{Get Data Retriever version}
 \usage{
-data_retriever_version()
+data_retriever_version(clean = TRUE)
+}
+\arguments{
+\item{clean}{boolean return cleaned version appropriate for semver}
 }
 \value{
 returns a string with the version information

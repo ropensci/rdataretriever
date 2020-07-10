@@ -195,8 +195,13 @@ test_that("Citation of scripts", {
 
 test_that("Data Retriever version info", {
   skip_if_no_retriever()
-  retriever_verion <- rdataretriever::data_retriever_version()
+  retriever_version <- rdataretriever::data_retriever_version(clean = FALSE)
   url2fetch <- "https://raw.githubusercontent.com/weecology/retriever/master/retriever/_version.py"
-  url_content <- getURL(url2fetch)
-  expect_true(grepl(retriever_verion[1], url_content, fixed = TRUE))
+  url_content <- RCurl::getURL(url2fetch)
+  expect_true(grepl(retriever_version[1], url_content, fixed = TRUE))
+})
+
+test_that("Data Retriever meets minimum version", {
+  skip_if_no_retriever()
+  expect_true(rdataretriever::retriever_meets_min_version())
 })
