@@ -113,18 +113,18 @@ test_that("Install the dataset into Mysql", {
     ))
     portal <- c("main", "plots", "species")
     rdataretriever::install('portal', 'mysql')
-    ## RMariaDB api may need more tweaking
-    #   con <- dbConnect(
-    #     RMariaDB::MariaDB(),
-    #     user = 'travis',
-    #     host = mysqldb_rdata,
-    #     password = os_password,
-    #     port = 3306,
-    #     dbname = 'testdb_retriever'
-    #   )
-    #   result <- dbListTables(con)
-    #   dbDisconnect(con)
-    #   expect_setequal(result, portal)
+    # RMariaDB api may need more tweaking
+    con <- dbConnect(
+           RMariaDB::MariaDB(),
+           user = 'travis',
+           host = mysqldb_rdata,
+           password = os_password,
+           port = 3306,
+           dbname = 'testdb_retriever'
+          )
+    result <- dbListTables(con)
+    dbDisconnect(con)
+    expect_setequal(result, portal)
   }
 })
 
