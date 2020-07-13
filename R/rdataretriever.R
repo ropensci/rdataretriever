@@ -142,6 +142,7 @@ get_script_upstream <- function(dataset, repo = "") {
 }
 
 #' Get Data Retriever version
+#' @param clean boolean return cleaned version appropriate for semver
 #' @return returns a string with the version information
 #' @examples
 #' \donttest{
@@ -149,8 +150,44 @@ get_script_upstream <- function(dataset, repo = "") {
 #' }
 #' @importFrom reticulate import r_to_py
 #' @export
-data_retriever_version <- function() {
-  retriever$"__version__"
+data_retriever_version <- function(clean = TRUE) {
+  raw_version <- retriever$"__version__"
+  if (clean) {
+    no_dev_version <- gsub(".dev", "", raw_version)
+    clean_version <- gsub("v", "", no_dev_version)
+    return(clean_version)
+  } else {
+    return(raw_version)
+  }
+}
+
+#' Check Data Retriever version satisfies requirements
+#' @return boolean
+#' @examples
+#' \donttest{
+#' rdataretriever::check_data_retriever_version()
+#' }
+#' @importFrom reticulate import r_to_py
+#' @importFrom semver parse_version
+#' @export
+retriever_meets_min_version <- function() {
+  retriever_version <- data_retriever_version()
+  retriever_semver <- parse_version(retriever_version)
+  sys_req_raw <- packageDescription('rdataretriever', fields = "SystemRequirements")
+  regex_pattern <- "retriever \\([>=< ]*([0-9.]*)\\)"
+  matches <- regexec(regex_pattern, sys_req_raw)
+  min_version <- regmatches(sys_req_raw, matches)[[1]][2]
+  min_semver <- parse_version(min_version)
+  if (retriever_semver < min_semver) {
+    warning("\nNewer version of retriever required.\n\n",
+      "This version of rdataretriever requires a newer version of the retriever package.\n",
+      "Please upgrade the Python retriever package to at least ", min_version, "\n",
+      "You can do this using Python or by using the R command:\n",
+      "> reticulate::py_install('retriever')")
+    return(FALSE)
+  } else {
+    return(TRUE)
+  }
 }
 
 #' Fetch a dataset via the Data Retriever
@@ -726,4 +763,5 @@ retriever <- NULL
 .onLoad <- function(libname, pkgname) {
   ## assignment in parent environment!
   retriever <<- reticulate::import("retriever", delay_load = TRUE)
+  retriever_meets_min_version()
 }

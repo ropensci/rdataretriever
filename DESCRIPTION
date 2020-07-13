@@ -44,8 +44,10 @@ Suggests:
     DBI,
     devtools,
     RSQLite,
-    RPostgreSQL
-SystemRequirements: Python (>= 3.0) and Python headers and libraries
+    RPostgreSQL,
+    RCurl,
+    semver
+SystemRequirements: Python (>= 3.0), retriever (>= 2.4.1) (version must be listed to patch to allow parsing)
 License: MIT + file LICENSE
 LazyData: true
 RoxygenNote: 7.1.1

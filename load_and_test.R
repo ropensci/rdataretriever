@@ -10,7 +10,8 @@ if (Sys.getenv("IN_DOCKER") == "true") {
   suppressMessages(
     pacman::p_load(devtools, RCurl, readr, rmarkdown,
                    testthat, tidyverse, DBI, RPostgreSQL,
-                   RSQLite, reticulate, devtools, RMariaDB)
+                   RSQLite, reticulate, devtools, RMariaDB,
+                   semver, RCurl)
   )
   
   install.packages(".", repos = NULL, type="source")
