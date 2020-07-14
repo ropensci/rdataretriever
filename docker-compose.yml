@@ -26,6 +26,7 @@ services:
       # If IN_DOCKER is set, use service names as hosts(travis)
       # Otherwise use localhost (local tests)
       "IN_DOCKER" : "true"
+      "NOT_CRAN" : "true"
     build: .
     depends_on:
       - mysqldb_rdata
