@@ -1,3 +1,27 @@
+
+rdataretriever 2.0.0
+====================
+
+### New Coauthors
+
+We welcome Apoorva Pandey and Hao Ye as coauthors on the package.
+Thanks for the great contributions!
+
+### New Features
+
+* Add support for new online/offline dataset feature in retriever
+* Automatically update dataset status
+* Check that the retriever Python package is sufficiently up-to-date
+* Update and simplify installation instructions
+* Add get citation function
+* Update and simplify internals to benefit from updates to reticulate
+
+## Minor Improvements
+
+* Improvements to code style and documentation
+* Use Cloud CRAN mirror in Docker-based testing for stability
+* Add get_version function, returns the version of the Data Retriever
+
 rdataretriever 2.0.0
 ====================
 
