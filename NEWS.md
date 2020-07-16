@@ -1,3 +1,18 @@
+
+rdataretriever 2.0.0
+====================
+
+### New Features
+
+* Automatically reload the scripts
+* Check that retriever is sufficiently up-to-date
+* Add get_version function, returns the version of the Data Retriever
+* Update and simplify installation instructions
+* Use Cloud CRAN mirror in Docker-based testing
+* Add get citation function
+* Recommend using devtools to install reticulate
+
+
 rdataretriever 2.0.0
 ====================
 
