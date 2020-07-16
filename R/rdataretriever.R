@@ -153,8 +153,7 @@ get_script_upstream <- function(dataset, repo = "") {
 data_retriever_version <- function(clean = TRUE) {
   raw_version <- retriever$"__version__"
   if (clean) {
-    no_dev_version <- gsub(".dev", "", raw_version)
-    clean_version <- gsub("v", "", no_dev_version)
+    clean_version <- gsub("v", "", raw_version)
     return(clean_version)
   } else {
     return(raw_version)
