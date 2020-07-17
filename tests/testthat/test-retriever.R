@@ -201,7 +201,7 @@ test_that("Data Retriever version info", {
   expect_true(grepl(retriever_version[1], url_content, fixed = TRUE))
 })
 
-test_that("Data Retriever meets minimum version", {
+test_that("Minimum retriever version is installed", {
   skip_if_no_retriever()
-  expect_true(rdataretriever::retriever_meets_min_version())
+  expect_true(rdataretriever::check_retriever_availability())
 })

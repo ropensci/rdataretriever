@@ -160,33 +160,38 @@ data_retriever_version <- function(clean = TRUE) {
   }
 }
 
-#' Check Data Retriever version satisfies requirements
+#' Check to see if minimum version of retriever Python package is installed
 #' @return boolean
 #' @examples
 #' \donttest{
-#' rdataretriever::check_data_retriever_version()
+#' rdataretriever::check_retriever_availability()
 #' }
 #' @importFrom reticulate import r_to_py
 #' @importFrom semver parse_version
 #' @importFrom utils packageDescription
 #' @export
-retriever_meets_min_version <- function() {
-  retriever_version <- data_retriever_version()
-  retriever_semver <- parse_version(retriever_version)
-  sys_req_raw <- packageDescription('rdataretriever', fields = "SystemRequirements")
-  regex_pattern <- "retriever \\([>=< ]*([0-9.]*)\\)"
-  matches <- regexec(regex_pattern, sys_req_raw)
-  min_version <- regmatches(sys_req_raw, matches)[[1]][2]
-  min_semver <- parse_version(min_version)
-  if (retriever_semver < min_semver) {
-    warning("\nNewer version of retriever required.\n\n",
-      "This version of rdataretriever requires a newer version of the retriever package.\n",
-      "Please upgrade the Python retriever package to at least ", min_version, "\n",
-      "You can do this using Python or by using the R command:\n",
-      "> reticulate::py_install('retriever')")
-    return(FALSE)
+check_retriever_availability <- function() {
+  if (requireNamespace("reticulate", quietly = TRUE) && reticulate::py_module_available("retriever")) {
+    retriever_version <- data_retriever_version()
+    retriever_semver <- parse_version(retriever_version)
+    sys_req_raw <- packageDescription('rdataretriever', fields = "SystemRequirements")
+    regex_pattern <- "retriever \\([>=< ]*([0-9.]*)\\)"
+    matches <- regexec(regex_pattern, sys_req_raw)
+    min_version <- regmatches(sys_req_raw, matches)[[1]][2]
+    min_semver <- parse_version(min_version)
+    if (retriever_semver < min_semver) {
+      warning("\nNewer version of retriever required.\n\n",
+        "This version of rdataretriever requires a newer version of the retriever package.\n",
+        "Please upgrade the Python retriever package to at least ", min_version, "\n",
+        "You can do this using Python or by using the R command:\n",
+        "> reticulate::py_install('retriever')")
+      return(FALSE)
+    } else {
+      return(TRUE)
+    }
   } else {
-    return(TRUE)
+    message("The retriever Python package needs to be installed.\nSee: https://docs.ropensci.org/rdataretriever/#installation")
+    return(FALSE)
   }
 }
 
@@ -763,5 +768,5 @@ retriever <- NULL
 .onLoad <- function(libname, pkgname) {
   ## assignment in parent environment!
   retriever <<- reticulate::import("retriever", delay_load = TRUE)
-  retriever_meets_min_version()
+  check_retriever_availability()
 }
