@@ -168,6 +168,7 @@ data_retriever_version <- function(clean = TRUE) {
 #' }
 #' @importFrom reticulate import r_to_py
 #' @importFrom semver parse_version
+#' @importFrom utils packageDescription
 #' @export
 retriever_meets_min_version <- function() {
   retriever_version <- data_retriever_version()

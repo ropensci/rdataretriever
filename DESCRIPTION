@@ -41,13 +41,15 @@ URL: https://docs.ropensci.org/rdataretriever (website),
 Depends:
     R (>= 3.4.0)
 Imports:
-    reticulate (>= 1.16)
+    reticulate (>= 1.16),
+    semver
 Suggests:
     testthat (>= 1.0.0),
     DBI,
     devtools,
     RSQLite,
     RPostgreSQL,
+    RCurl
 SystemRequirements: Python (>= 3.0), retriever (>= 3.0.0) (version must be listed to patch to allow parsing)
 License: MIT + file LICENSE
 LazyData: true
