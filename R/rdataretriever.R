@@ -484,7 +484,7 @@ install_postgres <- function(dataset, user = "postgres", password = "",
 #' @param hash_value the hash value of committed dataset when installing from provenance directory
 #' @examples
 #' \donttest{
-#' rdataretriever::install_sqlite(dataset = "iris", file = "sqlite.db", debug = FALSE, use_cache = TRUE)
+#' rdataretriever::install_sqlite(dataset = "iris", file = "sqlite.db")
 #' }
 #' @importFrom reticulate import r_to_py
 #' @export
@@ -515,7 +515,7 @@ install_sqlite <- function(dataset, file = "sqlite.db", table_name = "{db}_{tabl
 #' @param hash_value the hash value of committed dataset when installing from provenance directory
 #' @examples
 #' \donttest{
-#' rdataretriever::install_msaccess(dataset = "iris", file = "sqlite.db", debug = FALSE, use_cache = TRUE)
+#' rdataretriever::install_msaccess(dataset = "iris", file = "sqlite.db")
 #' }
 #' @importFrom reticulate import r_to_py
 #' @export
