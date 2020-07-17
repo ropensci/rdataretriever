@@ -193,14 +193,6 @@ test_that("Citation of scripts", {
                fixed = TRUE)
 })
 
-test_that("Data Retriever version info", {
-  skip_if_no_retriever()
-  retriever_version <- rdataretriever::data_retriever_version(clean = FALSE)
-  url2fetch <- "https://raw.githubusercontent.com/weecology/retriever/master/retriever/_version.py"
-  url_content <- RCurl::getURL(url2fetch)
-  expect_true(grepl(retriever_version[1], url_content, fixed = TRUE))
-})
-
 test_that("Minimum retriever version is installed", {
   skip_if_no_retriever()
   expect_true(rdataretriever::check_retriever_availability())
