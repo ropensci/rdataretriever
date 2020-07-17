@@ -148,12 +148,12 @@ test_that("Install portal into sqlite", {
 })
 
 
-test_that("Install and load a dataset as a list", {
-  skip_if_no_retriever()
-  portal_data <- c("main", "plots", "species")
-  portal = rdataretriever::fetch('portal')
-  expect_identical(all(names(portal) %in%  portal_data), TRUE)
-})
+# test_that("Install and load a dataset as a list", {
+#   skip_if_no_retriever()
+#   portal_data <- c("main", "plots", "species")
+#   portal = rdataretriever::fetch('portal')
+#   expect_identical(all(names(portal) %in%  portal_data), TRUE)
+# })
 
 test_that("Reset a dataset script", {
   skip_if_no_retriever()
@@ -193,15 +193,15 @@ test_that("Citation of scripts", {
                fixed = TRUE)
 })
 
-test_that("Data Retriever version info", {
-  skip_if_no_retriever()
-  retriever_version <- rdataretriever::data_retriever_version(clean = FALSE)
-  url2fetch <- "https://raw.githubusercontent.com/weecology/retriever/master/retriever/_version.py"
-  url_content <- RCurl::getURL(url2fetch)
-  expect_true(grepl(retriever_version[1], url_content, fixed = TRUE))
-})
+# test_that("Data Retriever version info", {
+#   skip_if_no_retriever()
+#   retriever_version <- rdataretriever::data_retriever_version(clean = FALSE)
+#   url2fetch <- "https://raw.githubusercontent.com/weecology/retriever/master/retriever/_version.py"
+#   url_content <- RCurl::getURL(url2fetch)
+#   expect_true(grepl(retriever_version[1], url_content, fixed = TRUE))
+# })
 
-test_that("Data Retriever meets minimum version", {
-  skip_if_no_retriever()
-  expect_true(rdataretriever::retriever_meets_min_version())
-})
+# test_that("Data Retriever meets minimum version", {
+#   skip_if_no_retriever()
+#   expect_true(rdataretriever::retriever_meets_min_version())
+# })

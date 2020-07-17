@@ -11,7 +11,7 @@ if (Sys.getenv("IN_DOCKER") == "true") {
     pacman::p_load(devtools, RCurl, readr, rmarkdown,
                    testthat, tidyverse, DBI, RPostgreSQL,
                    RSQLite, reticulate, devtools, RMariaDB,
-                   semver, RCurl)
+                   RCurl)
   )
   
   install.packages(".", repos = NULL, type="source")

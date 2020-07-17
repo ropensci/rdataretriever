@@ -167,7 +167,6 @@ data_retriever_version <- function(clean = TRUE) {
 #' rdataretriever::check_data_retriever_version()
 #' }
 #' @importFrom reticulate import r_to_py
-#' @importFrom semver parse_version
 #' @export
 retriever_meets_min_version <- function() {
   retriever_version <- data_retriever_version()
@@ -759,8 +758,19 @@ install_retriever <- function(method = "auto", conda = "auto") {
 # global reference to python modules (will be initialized in .onLoad)
 retriever <- NULL
 
-.onLoad <- function(libname, pkgname) {
-  ## assignment in parent environment!
-  retriever <<- reticulate::import("retriever", delay_load = TRUE)
-  retriever_meets_min_version()
+.onLoad = function(libname, pkgname) {
+    if(reticulate::py_available()){
+        # install_retriever()
+        install_python_modules <- function(method = "auto", conda = "auto") {
+            reticulate::py_install("retriever", method = method, conda = conda)
+        }
+    }
+    if (suppressWarnings(suppressMessages(requireNamespace("reticulate")))) {
+        modules <- reticulate::py_module_available("retriever")
+        if (modules) {
+            ## assignment in parent environment!
+            retriever <<- reticulate::import("retriever", delay_load = TRUE)
+        }
+    }
 }
+
