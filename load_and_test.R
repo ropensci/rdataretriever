@@ -8,10 +8,10 @@ if (Sys.getenv("IN_DOCKER") == "true") {
   if ("pacman" %in% rownames(installed.packages()) == FALSE) install.packages("pacman")
   suppressMessages(install.packages("RMariaDB",  quiet = TRUE))
   suppressMessages(
-    pacman::p_load(devtools, RCurl, readr, rmarkdown,
+    pacman::p_load(devtools, readr, rmarkdown,
                    testthat, tidyverse, DBI, RPostgreSQL,
                    RSQLite, reticulate, devtools, RMariaDB,
-                   semver, RCurl)
+                   semver)
   )
   
   install.packages(".", repos = NULL, type="source")

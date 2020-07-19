@@ -34,6 +34,6 @@ Data is stored in MSAccess database
 }
 \examples{
 \donttest{
-rdataretriever::install_msaccess(dataset = "iris", file = "sqlite.db", debug = FALSE, use_cache = TRUE)
+rdataretriever::install_msaccess(dataset = "iris", file = "sqlite.db")
 }
 }
