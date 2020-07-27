@@ -1,5 +1,5 @@
 
-rdataretriever 2.0.0
+rdataretriever 3.0.0
 ====================
 
 ### New Coauthors
@@ -9,6 +9,7 @@ Thanks for the great contributions!
 
 ### New Features
 
+* Add provenance support
 * Add support for new online/offline dataset feature in retriever
 * Automatically update dataset status
 * Check that the retriever Python package is sufficiently up-to-date
