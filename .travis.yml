@@ -12,3 +12,4 @@ script:
   # Load packages and install the required packages
   # Install retriever from source and run tests
   - docker-compose  run rdata /bin/sh -c 'Rscript load_and_test.R'
+  - docker-compose run rdata /bin/sh -c 'R CMD build . && R CMD check *tar.gz --no-install --no-multiarch --no-examples --no-manual'
