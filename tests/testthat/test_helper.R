@@ -27,8 +27,10 @@ skip_if_no_retriever <- function() {
   if (!requireNamespace("reticulate", quietly = TRUE)) {
     testthat::skip("reticulate not available for testing")
   }
-  
-  retriever_available <- reticulate::py_module_available("retriever")
+  retriever_available <- FALSE
+  try({
+    retriever_available <- reticulate::py_module_available("retriever")
+  }, silent = TRUE)
   if (!retriever_available) {
     testthat::skip("retriever not available for testing")
   }

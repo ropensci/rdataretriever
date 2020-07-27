@@ -767,6 +767,8 @@ retriever <- NULL
 
 .onLoad <- function(libname, pkgname) {
   ## assignment in parent environment!
-  retriever <<- reticulate::import("retriever", delay_load = TRUE)
+  try({
+    retriever <<- reticulate::import("retriever", delay_load = TRUE)
+  }, silent = TRUE)
   check_retriever_availability()
 }
