@@ -770,5 +770,4 @@ retriever <- NULL
   try({
     retriever <<- reticulate::import("retriever", delay_load = TRUE)
   }, silent = TRUE)
-  check_retriever_availability()
 }
