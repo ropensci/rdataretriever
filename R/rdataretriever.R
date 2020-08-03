@@ -769,6 +769,6 @@ retriever <- NULL
   ## assignment in parent environment!
   try({
     retriever <<- reticulate::import("retriever", delay_load = TRUE)
+    check_retriever_availability()
   }, silent = TRUE)
-  check_retriever_availability()
 }
