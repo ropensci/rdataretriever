@@ -7,7 +7,7 @@
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ecoretriever)](https://CRAN.R-project.org/package=ecoretriever)
 (old package name)
 
-R interface to the [Data Retriever](http://data-retriever.org).
+R interface to the [Data Retriever](https://retriever.readthedocs.io/en/latest/).
 
 The Data Retriever automates the tasks of finding, downloading, and cleaning up
 publicly available data, and loads them or stores them in variety of databases
@@ -30,7 +30,7 @@ so that the Retriever's data handling can easily be integrated into R workflows.
 
 ## Installation
 
-The `rdataretriever` is an R wrapper for the Python package, [Data Retriever](http://data-retriever.org). This means
+The `rdataretriever` is an R wrapper for the Python package, [Data Retriever](https://retriever.readthedocs.io/en/latest/). This means
 that *Python* and the `retriever` Python package need to be installed first.
 
 ### Basic Installation
@@ -285,4 +285,4 @@ Development of this software was funded by the [National Science Foundation](htt
 as part of a [CAREER award to Ethan White](https://nsf.gov/awardsearch/showAward.do?AwardNumber=0953694).
 
 ---
-[![ropensci footer](https://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
+[![ropensci footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
