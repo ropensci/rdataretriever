@@ -18,9 +18,11 @@ environment:
   # env vars that may need to be set, at least temporarily, from time to time
   # see https://github.com/krlmlr/r-appveyor#readme for details
   # USE_RTOOLS: true
-  # R_REMOTES_STANDALONE: true
+  R_REMOTES_STANDALONE: true
+  _R_CHECK_FORCE_SUGGESTS_: false
   R_ARCH: x64
-
+  R_CHECK_ARGS: "--install-args=--build --no-multiarch --no-manual --no-examples --as-cran --no-multiarch --no-manual "
+  WARNINGS_ARE_ERRORS: 1
 # Adapt as necessary starting from here
   matrix:
     - R_VERSION: release
@@ -28,6 +30,8 @@ environment:
 
 build_script:
   - travis-tool.sh install_deps
+  # Install retriever python package using reticulate
+  - travis-tool.sh Rscript -e 'library(reticulate); reticulate::py_install('retriever', pip = TRUE)'
 
 test_script:
   - travis-tool.sh run_tests
