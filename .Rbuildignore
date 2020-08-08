@@ -10,3 +10,4 @@ cli_tools
 load_and_test.R
 Dockerfile
 docker-compose.yml
+^appveyor\.yml$

@@ -1,11 +1,14 @@
 # rdataretriever
 
+<!-- badges: start -->
 [![Build Status](https://travis-ci.org/ropensci/rdataretriever.svg?branch=master)](https://travis-ci.org/ropensci/rdataretriever)
+[![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/henrykironde/rdataretriever?branch=master&svg=true)](https://ci.appveyor.com/project/henrykironde/rdataretriever)
 [![cran version](https://www.r-pkg.org/badges/version/rdataretriever)](https://CRAN.R-project.org/package=rdataretriever)
 [![Documentation Status](https://readthedocs.org/projects/retriever/badge/?version=latest)](https://retriever.readthedocs.io/en/latest/rdataretriever.html#)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/rdataretriever)](https://CRAN.R-project.org/package=rdataretriever) +
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ecoretriever)](https://CRAN.R-project.org/package=ecoretriever)
 (old package name)
+<!-- badges: end -->
 
 R interface to the [Data Retriever](https://retriever.readthedocs.io/en/latest/).
 
