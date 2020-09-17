@@ -33,6 +33,10 @@ RUN chmod 0644 ~/.Rprofile
 RUN chmod 0644 ~/.profile
 
 # Install retriever python package
+RUN pip install h5py
+RUN pip install pillow
+Run pip install kaggle
+# h5py, pillow, kaggle fail to install from the requirement file.
 RUN pip install git+https://git@github.com/weecology/retriever.git
 RUN retriever ls > /dev/null
 RUN pip install  psycopg2 pymysql > /dev/null
