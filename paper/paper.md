@@ -76,8 +76,25 @@ date: 16 September 2020
 bibliography: paper.bib
 ---
 
-# Summary
+# rdataretriever: An R package for downloading, cleaning, and installing publicly available datasets
 
-The .....
+## Summary
 
-# References
+The rdataretriever provides an R interface to the Python-based Data Retriever software. The Data Retriever automates the multiple steps data analysis including downloading, cleaning, and standardizing, and importing tabular datasets and importing them into a variety of relational databases and flat files. It also supports provenance tracking for these steps of the analysis workflow by allowing datasets to be committed at the time of installation and allowing them to be reinstalled with the same data and processing steps in the future. Finally it supports the installation of spatial datasets into relational databases with spatial support. The rdataretriever provides an R interface to all of this functionality, and also supports datasets directly into R for immediate analysis. The system also supports the use of custom data processing routines to support complex datasets that require custom data manipulation steps. The Data Retriever and rdataretriever are focused on scientific data applications including a number of widely used but difficult to work with datasets in ecology and the environmental sciences.
+
+## Statement of Need
+
+Finding, cleaning, standardizing and importing data into efficient data structures for modeling and visualization represents a major component of most research workflows. This is a time consuming process for researchers even when working with relatively simple datasets. For more complex datasets these steps can be so complex as to prevent domain experts from engaging with the dataset at all. Systems that operate like package managers for scientific data can overcome these barriers, allowing researchers to move quickly to the final steps in the data analysis workflow (visualization and modeling) and allowing domain experts to leverage the most complex data appropriate to their research questions. The rdataretriever allows R users to automatically conduct these early steps of the analysis workflow for over 200 datasets including a number of the most widely used and difficult to work with datasets in the environmental sciences including the North American Breeding Bird Survey and the Forest Inventory and Analysis datasets. This actively facilitates research on important ecological and environmental questions that would otherwise be limited 
+
+## Implementation
+
+The main Data Retriever software is written in Python (Morris & White 2013, Senyondo et al 2017). The rdataretriever allows R users to access this data processing workflow through a combination of the reticulate R package (CITATION) and custom features developed for working in R. Because many R users, including the domain researchers most strongly supported by this package, are not familiar with Python and its package management systems, a strong emphasis has been placed on simplifying the installation process for this package so that it can be done entirely from R. Installation requires no direct use of Python or the command line. Detailed documentation has been developed to support users in both installation and use of the software. A Docker based testing systems and associated test suite has also been implemented to ensure that the interoperability of the R package and Python package are maintained, which is challenging due to frequent changes in reticulate and complexities in supporting cross-language functionality across multiple operating systems (Windows, mac os, Linux) and R programming environments (terminal-based R and RStudio).
+
+For tabular datasets requiring relatively simple workflows the software uses the JSON based Frictionless Data tabular data metadata package standard (CITATION). For more complex data processing workflows custom Python code is used to process the data into cleaned and standardized formats. Spatial data support is available for PostgreSQL using PostGIS. The information required for handling these datasets is based on a customized version of the Frictionless Data Geo Data schema (CITATION) that also supports raster datasets.
+
+## Acknowledgements
+
+Development of this software was funded by the Gordon and Betty Moore Foundation's Data-Driven Discovery Initiative through Grant GBMF4563 to Ethan White and the National Science Foundation CAREER Award 0953694 to Ethan White.
+
+## References
+
