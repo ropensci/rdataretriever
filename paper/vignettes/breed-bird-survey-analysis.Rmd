@@ -1,0 +1,164 @@
+---
+title: "Using the rdataretriever to quickly analyze Breeding Bird Survey data"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Using the rdataretriever to quickly analyze Breeding Bird Survey data}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+## Introduction
+
+The Breeding Bird Survey of North America (BBS) is a widely used dataset for understanding geospatial variation and dynamic changes in bird communities.
+The dataset is a continental scale community science project where thousands of birders count birds at locations across North America.
+It has been used in hundreds of research projects including research on biodiversity gradients [@hurlbert2003], ecological forecasting [@harris2019], and bird declines [@wilsey2019].
+
+However working with the Breeding Bird Survey data can be challening because it is composed of roughly 100 different files that need to be cleaned and then combined in multiple ways.
+These initial phases of the data analysis pipeline can require hours of work for even experienced users to understand the detailed layout of the data and either manually assemble it or write code to combine the data.
+The data structure and location also changes regularly meaning that code for this work that is not regularly tested quickly stops working.
+
+This vignette demonstrates how using the `rdataretriever` can eliminate hours of work on data cleaning and restructing allowing researchers to quickly begin addressing interesting scientific questions.
+To do this is demonstrates analyzing the BBS data to evaluate correlates of biodiversity (in the form of species richness).
+
+## Install The Package
+
+The `rdataretriever` uses a Python package for much of the processing.
+Fortunately Python, the Python package, and all of it's dependencies can be installed from inside R.
+
+```{r}
+#install.packages('reticulate') # Install R package for interacting with Python
+#reticulate::install_miniconda() # Install Python
+#reticulate::py_install('retriever') # Install the Python retriever package
+#install.packages('rdataretriever') # Install the R package for running the retriever
+```
+
+This creates an isolated Python installation that is just used from within R so that it doesn't conflict with any existing Python work.
+It is also possible to work with an existing Python evironment if you prefer.
+
+## Load R Packages
+
+We start by loading the necessary packages.
+In addition to the `rdataretriever` in this demo we'll also use `DBI`, `RSQLite` and `dplyr` to work with the data, `raster` for working with environmental data, and `ggplot2` for visualization.
+
+```{r}
+library(rdataretriever)
+library(DBI)
+library(dplyr)
+library(raster)
+library(ggplot2)
+```
+
+## Install And Connect To The Breeding Bird Survey Data
+
+First we'll update the `rdataretriever` to make sure we have the newest data processing recipes in case something about the structure or location of the dataset has changed.
+Centrally updated data recipes reproducible research with this dataset because something changes every year when the newest data is released meaning that any custom code for processing the data stops working.
+When this happens the `retriever` recipe is updated and after running `get_updates()` data analysis code continues to run as it always has.
+
+```{r, echo = FALSE, results = "hide"}
+rdataretriever::get_updates()
+```
+
+Next install the BBS data into an SQLite database named `bbs.sqlite`.
+
+```{r, echo = FALSE, results = "hide"}
+rdataretriever::install_sqlite('breed-bird-survey', 'bbs.sqlite')
+```
+
+We could also load the data straight into R (using `rdataretriever::fetch('breed-bird-survey')`), store it as flat files (CSV, JSON, or XML), or load it into other database management systems (PostgreSQL, MariaDB, MySQL).
+The data is moderately large (~1GB) so SQLite represents a nice compromise between efficiently conducting the first steps in the data manipulation pipeline while requiring no additional setup or expertise.
+The large number of storage backends makes the `rdataretriever` easy to integrate into existing data processing workflows and to implement designs appropriate to the scale of the data with no additional work. 
+
+Having installed the data into SQLite we can then connect to the database to start analyzing the data.
+
+```{r}
+bbs_db <- dbConnect(RSQLite::SQLite(), 'bbs.sqlite')
+```
+
+The two key tables for this analysis are the `surveys` and `sites` tables, so let's create connections to those tables.
+
+```{r}
+surveys <- tbl(bbs_db, "breed_bird_survey_counts")
+sites <- tbl(bbs_db, "breed_bird_survey_routes")
+```
+
+The `surveys` table holds the data on how many individuals of each species are sampled at each site.
+The `sites` table holds information on where each site is which we'll use to link the data to environmental variables.
+
+## Analyze The Data
+
+To calculate the measure of biodiversity, which is species richness or the number of species, we'll use `dplyr` to determine the number of species observed at each site in a recent year.
+
+```{r}
+rich_data <- surveys %>%
+  filter(year == 2016) %>%
+  group_by(statenum, route) %>%
+  summarize(richness = n()) %>%
+  collect()
+rich_data
+```
+
+The data is now smaller than the original ~1 GB, so we used `collect` to load the summarized data directly into R.
+
+Next we need to get environmental data for each site, which we'll get from the `worldclim` dataset.
+
+```{r}
+bioclim <- getData('worldclim', var = 'bio', res = 10)
+```
+
+To extract the environmental data we first make our sites data spatial and add them to our map.
+
+```{r}
+sites <- as.data.frame(sites)
+sites_spatial <- SpatialPointsDataFrame(sites[c('longitude', 'latitude')], sites)
+```
+
+We can then extract the environmental data for each site from the bioclim raster and add it to the data on biodiversity.
+
+```{r}
+bioclim_bbs <- extract(bioclim, sites_spatial) %>%
+  cbind(sites)
+richness_w_env <- inner_join(rich_data, bioclim_bbs)
+richness_w_env
+```
+
+Now let's see how richness relates to the precipitation.
+Annual precipition is stored in `bio12`.
+
+```{r}
+ggplot(richness_w_env, aes(x = bio12, y = richness)) +
+  geom_point(alpha = 0.5) +
+  labs(x = "Annual Precipitation", y = "Number of Species")
+```
+
+It looks like there's a pattern here, so let's fit a smoother through it.
+
+```{r}
+ggplot(richness_w_env, aes(x = bio12, y = richness)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth()
+```
+
+This shows that there is low bird biodiversity in really dry areas, biodiversity peaks at intermediate precipitations, and then drops off at the highest precipitation values.
+
+If we wanted to use this kind of information to inform conservation decisions at the state level, could look at the patterns within each state after filtering to ensure enough data points.
+
+```{r, fig.height = 8, fig.width = 8, warning = FALSE}
+richness_w_env_high_n <- richness_w_env %>%
+  group_by(statenum) %>%
+  filter(n() >= 50)
+
+ggplot(richness_w_env_high_n, aes(x = bio12, y = richness)) +
+  geom_point() +
+  geom_smooth() +
+  facet_wrap(~statenum, scales = 'free') +
+  labs(x = "Annual Precipitation", y = "Number of Species")
+```
+
+Looking back at this demo there is only one line of code directly involving the `rdataretriever` (other than installation).
+This demonstrates the strength that the `rdataretriever` brings to the the early phases of the data acquistion and processing pipeline by distilling those steps to a single line that provides the data in a ready-to-analyze form so that researchers can focus on the analysis of the data itself.
+
+## Conclusion
+
+Thanks to the `rdataretriever` we can generate meaningful information about large scale bird biodiversity patterns in about 15 minutes.
+If we'd been working with the raw BBS data we would likely have spent hours manipulating and cleaning data before we could start this analysis.
