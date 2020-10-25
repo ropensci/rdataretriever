@@ -21,21 +21,6 @@ The data structure and location also changes regularly meaning that code for thi
 This vignette demonstrates how using the `rdataretriever` can eliminate hours of work on data cleaning and restructing allowing researchers to quickly begin addressing interesting scientific questions.
 To do this is demonstrates analyzing the BBS data to evaluate correlates of biodiversity (in the form of species richness).
 
-## Install The Package
-
-The `rdataretriever` uses a Python package for much of the processing.
-Fortunately Python, the Python package, and all of it's dependencies can be installed from inside R.
-
-```{r}
-#install.packages('reticulate') # Install R package for interacting with Python
-#reticulate::install_miniconda() # Install Python
-#reticulate::py_install('retriever') # Install the Python retriever package
-#install.packages('rdataretriever') # Install the R package for running the retriever
-```
-
-This creates an isolated Python installation that is just used from within R so that it doesn't conflict with any existing Python work.
-It is also possible to work with an existing Python evironment if you prefer.
-
 ## Load R Packages
 
 We start by loading the necessary packages.
