@@ -802,6 +802,6 @@ retriever <- NULL
   try({
     retriever <<- reticulate::import("retriever", delay_load = TRUE)
     # Disable due to failure to test on win cran dev platform
-    # check_retriever_availability()
+    check_retriever_availability()
   }, silent = TRUE)
 }
