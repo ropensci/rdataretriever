@@ -209,30 +209,45 @@ rdataretriever::install_postgres('usgs-elevation', list(-94.98704597353938, 39.0
 
 ## Provenance
 
-`rdataretriever` allows users to save a dataset in its current state which can be used later.
+To ensure reproducibility the `rdataretriever` supports archiving the data and processing script locally so that the exact data processing steps can be rerun on the exact data used for an analysis even if the main dataset is updated.
 
-Note: You can save your datasets in provenance directory by setting the environment variable `PROVENANCE_DIR`
+To store the data and processing recipe in the current state using the `commit()` function to store both components of the data processing in a zip file for future reuse.
 
 **Commit a dataset**
+
+By default commits will stored in the provenance directory:
+
 ```coffee
-rdataretriever::commit('abalone-age', commit_message='Sample commit', path='/home/user/')
+rdataretriever::commit('abalone-age',
+                       commit_message='Data and recipe archive for Abalone Data on 2020-02-26')
 ```
-To commit directly to provenance directory:
+
+By default this stores archived datasets in `.retriever_provenance`, but this directory can be changed by setting the environment variable `PROVENANCE_DIR`.
+
+You can also set the path for an individual commit:
+
 ```coffee
-rdataretriever::commit('abalone-age', commit_message='Sample commit')
+rdataretriever::commit('abalone-age',
+                       commit_message='Data and recipe archive for Abalone Data on 2020-02-26',
+					   path='.')
 ```
-**Log of committed dataset in provenance directory**
+
+**View a log of committed datasets in the provenance directory**
+
 ```coffee
 rdataretriever::commit_log('abalone-age')
 ```
 
 **Install a committed dataset**
+
+When we want to reanalyze the dataset to reproduce our analysis we can load it back into any of our backends. For example, SQLite:
+
 ```coffee
 rdataretriever::install_sqlite('abalone-age-a76e77.zip') 
 ```
 Datasets stored in provenance directory can be installed directly using hash value
 ```coffee
-rdataretriever::install_sqlite('abalone-age', hash_value='a76e77`)
+rdataretriever::install_sqlite('abalone-age', hash_value='a76e77')
 ``` 
 
 ## Using Docker Containers
