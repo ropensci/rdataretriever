@@ -58,7 +58,10 @@ Suggests:
     DBI,
     devtools,
     RSQLite,
-    RPostgreSQL
+    RPostgreSQL,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
 SystemRequirements: Python (>= 3.0), retriever (>= 3.0.0) (version must be listed to patch to allow parsing)
 License: MIT + file LICENSE
 LazyData: true
