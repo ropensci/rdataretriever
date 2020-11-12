@@ -1,4 +1,12 @@
-## Provenance & Reproducibility Using the rdataretriever
+---
+title: "Provenance & Reproducibility Using the rdataretriever"
+output: rmarkdown::html_vignette
+bibliography: refs.bibtex
+vignette: >
+  %\VignetteIndexEntry{Provenance & Reproducibility Using the rdataretriever}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
 
 Datasets that are regularly updated are increasingly common [@yenni2019].
 This presents two challenges for reprodubility.
@@ -25,3 +33,5 @@ When we want to reanalyze this exact state of the dataset we can load it back in
 ```{r}
 rdataretriever::install_sqlite("portal-dev-326d87.zip")
 ```
+
+## References

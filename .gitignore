@@ -3,3 +3,5 @@
 .RData
 *.conn
 rdataretriever.R*
+doc
+Meta

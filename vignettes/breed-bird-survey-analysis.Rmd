@@ -1,20 +1,20 @@
 ---
 title: "Using the rdataretriever to quickly analyze Breeding Bird Survey data"
-date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
+bibliography: refs.bibtex
 vignette: >
   %\VignetteIndexEntry{Using the rdataretriever to quickly analyze Breeding Bird Survey data}
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
+  \usepackage[utf8]{inputenc}
 ---
 
 ## Introduction
 
 The Breeding Bird Survey of North America (BBS) is a widely used dataset for understanding geospatial variation and dynamic changes in bird communities.
 The dataset is a continental scale community science project where thousands of birders count birds at locations across North America.
-It has been used in hundreds of research projects including research on biodiversity gradients [@hurlbert2003], ecological forecasting [@harris2019], and bird declines [@wilsey2019].
+It has been used in hundreds of research projects including research on biodiversity gradients [@hurlbert2003], ecological forecasting [@harris2018], and bird declines [@rosenberg2019].
 
-However working with the Breeding Bird Survey data can be challening because it is composed of roughly 100 different files that need to be cleaned and then combined in multiple ways.
+However working with the Breeding Bird Survey data can be challenging because it is composed of roughly 100 different files that need to be cleaned and then combined in multiple ways.
 These initial phases of the data analysis pipeline can require hours of work for even experienced users to understand the detailed layout of the data and either manually assemble it or write code to combine the data.
 The data structure and location also changes regularly meaning that code for this work that is not regularly tested quickly stops working.
 
@@ -30,6 +30,7 @@ In addition to the `rdataretriever` in this demo we'll also use `DBI`, `RSQLite`
 library(rdataretriever)
 library(DBI)
 library(dplyr)
+library(dbplyr)
 library(raster)
 library(ggplot2)
 ```
@@ -147,3 +148,5 @@ This demonstrates the strength that the `rdataretriever` brings to the the early
 
 Thanks to the `rdataretriever` we can generate meaningful information about large scale bird biodiversity patterns in about 15 minutes.
 If we'd been working with the raw BBS data we would likely have spent hours manipulating and cleaning data before we could start this analysis.
+
+## References
