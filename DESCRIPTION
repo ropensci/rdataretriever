@@ -66,3 +66,4 @@ SystemRequirements: Python (>= 3.0), retriever (>= 3.0.0) (version must be liste
 License: MIT + file LICENSE
 LazyData: true
 RoxygenNote: 7.1.1
+Encoding: UTF-8
