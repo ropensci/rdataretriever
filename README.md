@@ -11,13 +11,13 @@
 
 R interface to the [Data Retriever](https://retriever.readthedocs.io/en/latest/).
 
-The Data Retriever automates the tasks of finding, downloading, and cleaning up
-publicly available data, and loads them or stores them in variety of databases
-or flat file formats. This lets data analysts spend less time cleaning up and
-managing data, and more time analyzing it.
 
-This package lets you work with the Data Retriever (written in Python) using R,
-so that the Retriever's data handling can easily be integrated into R workflows.
+The `rdataretriever` gives you access to cleaned versions of commonly used datasets with over 200 default public data sets. 
+
+Every dataset lives in different locations on the web and each dataset has specific sets of cleaning rules that you have to execute in a specific order. These datasets are really hard to clean without domain knowledge. The `rdataretriever` package has all this functionality build in. All datasets are precisely described in an international standard and the data preparation logic handled using Python. 
+
+The `rdataretriever` provides same functionality in R providing users with clean data that is then automatically stored in a data storage of choice i.e. a flat file like CSV or database. The `rdataretriever` package allows you to focus on analysis, inference and visualization.
+
 
 ## Table of Contents
 
