@@ -1,0 +1,37 @@
+---
+title: "Provenance & Reproducibility Using the rdataretriever"
+output: rmarkdown::html_vignette
+bibliography: refs.bibtex
+vignette: >
+  %\VignetteIndexEntry{Provenance & Reproducibility Using the rdataretriever}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+Datasets that are regularly updated are increasingly common [@yenni2019].
+This presents two challenges for reprodubility.
+First, if the underlying structure of the dataset changes then previously written code for processing the data will often cease to run properly.
+Second, if the version of the data used in a particularly analysis isn't archived then if the data changes it will be difficult to reproduce the original analysis. 
+
+The `retriever` and `rdataretriever` address both of these limitations.
+The centrally maintained scripts for processing datasets are updated when datasets change structure and so as long as `rdataretriever::get_updates()` is run before installing the dataset all data code for downloading, cleaning, and installing the data will continue to work.
+While the regularly updated data processing recipes ensure that code analyzing the datasets will always continue to run, it is important for reproducibility that we be able to rerun the exact data processing steps on the exact data that was used for the original analysis.
+The `rdataretriever` has built in provenance functionality to support this.
+
+To store the data and processing script in their current state we use the `commit()` function to store both components of the data processing in a zip file for future reuse.
+This is logically similar to a git commit in that we store the state of the data and the process at a moment in time using a hash.
+
+For example, the `portal-dev` dataset is updated weekly.
+If we want to be able rerun our original analysis after the reviews for a paper come back we'll need to store that version of the data.
+
+```{r}
+rdataretriever::commit('portal-dev', commit_message='Archive Portal data processing for initial submission on 2020-02-26', path = '.')
+```
+
+When we want to reanalyze this exact state of the dataset we can load it back into SQLite (or any of the other backends).
+
+```{r}
+rdataretriever::install_sqlite("portal-dev-326d87.zip")
+```
+
+## References
