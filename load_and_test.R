@@ -13,8 +13,8 @@ if (Sys.getenv("IN_DOCKER") == "true") {
                    RSQLite, reticulate, devtools, RMariaDB,
                    semver)
   )
-  
-  install.packages(".", repos = NULL, type="source")
+
+  devtools::install_local(".", force = TRUE)
   # Test package
   test_dir("tests/testthat", reporter = c("check", "progress"))  
 }
