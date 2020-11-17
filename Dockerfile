@@ -33,6 +33,7 @@ RUN chmod 0644 ~/.Rprofile
 RUN chmod 0644 ~/.profile
 
 # Install retriever python package
+RUN pip install tables
 RUN pip install h5py
 RUN pip install pillow
 Run pip install kaggle
