@@ -211,20 +211,20 @@ rdataretriever::install_postgres('usgs-elevation', list(-94.98704597353938, 39.0
 
 ## Provenance
 
-To ensure reproducibility the `rdataretriever` supports archiving the data and processing script locally so that the exact data processing steps can be rerun on the exact data used for an analysis even if the main dataset is updated.
+To ensure reproducibility the `rdataretriever` supports creating snapshots of the data and the script in time.
 
-To store the data and processing recipe in the current state using the `commit()` function to store both components of the data processing in a zip file for future reuse.
+Use the commit function to create and store the snapshot image of the data in time. Provide a descriptive message for the created commit. This is comparable to a git commit, however the function bundles the data and scripts used as a backup.
+
+With provenace, you will be able to reproduce the same analysis in the future.
 
 **Commit a dataset**
 
-By default commits will stored in the provenance directory:
+By default commits will be stored in the provenance directory `.retriever_provenance`, but this directory can be changed by setting the environment variable `PROVENANCE_DIR`.
 
 ```coffee
 rdataretriever::commit('abalone-age',
-                       commit_message='Data and recipe archive for Abalone Data on 2020-02-26')
+                       commit_message='A snapshot of Abalone Dataset as of 2020-02-26')
 ```
-
-By default this stores archived datasets in `.retriever_provenance`, but this directory can be changed by setting the environment variable `PROVENANCE_DIR`.
 
 You can also set the path for an individual commit:
 
@@ -242,7 +242,7 @@ rdataretriever::commit_log('abalone-age')
 
 **Install a committed dataset**
 
-When we want to reanalyze the dataset to reproduce our analysis we can load it back into any of our backends. For example, SQLite:
+To reanalyze a committed dataset, rdataretriever will obtain the data and script from the history and rdataretriever will install this particular data into the given back-end. For example, SQLite:
 
 ```coffee
 rdataretriever::install_sqlite('abalone-age-a76e77.zip') 
