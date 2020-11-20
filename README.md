@@ -11,13 +11,17 @@
 
 R interface to the [Data Retriever](https://retriever.readthedocs.io/en/latest/).
 
-The Data Retriever automates the tasks of finding, downloading, and cleaning up
-publicly available data, and loads them or stores them in variety of databases
-or flat file formats. This lets data analysts spend less time cleaning up and
-managing data, and more time analyzing it.
+The `rdataretriever` provides access to cleaned versions of hundreds of commonly used public datasets with a single line of code. 
 
-This package lets you work with the Data Retriever (written in Python) using R,
-so that the Retriever's data handling can easily be integrated into R workflows.
+These datasets come from many different sources and most of them require some cleaning and restructuring prior to analysis.
+The `rdataretriever` uses a set of actively maintained recipes for downloading, cleaning, and restructing these datasets using a combination of the [Frictionless Data Specification](https://specs.frictionlessdata.io/) and custom data cleaning scripts. 
+
+The `rdataretriever` also facilitates the automatic storage of these datasets in a choice of database management systems (PostgreSQL, SQLite, MySQL, MariaDB) or flat file formats (CSV, XML, JSON) for later use and integration with large data analysis pipelines.
+
+The `rdatretriever` also facilitates reproducibile science by providing tools to archive and rerun the precise version of a dataset and associated cleaning steps that was used for a specific analysis.
+
+The `rdataretriever` handles the work of cleaning, storing, and archiving data so that you can focus on analysis, inference and visualization.
+
 
 ## Table of Contents
 
@@ -211,20 +215,20 @@ rdataretriever::install_postgres('usgs-elevation', list(-94.98704597353938, 39.0
 
 ## Provenance
 
-To ensure reproducibility the `rdataretriever` supports archiving the data and processing script locally so that the exact data processing steps can be rerun on the exact data used for an analysis even if the main dataset is updated.
+To ensure reproducibility the `rdataretriever` supports creating snapshots of the data and the script in time.
 
-To store the data and processing recipe in the current state using the `commit()` function to store both components of the data processing in a zip file for future reuse.
+Use the commit function to create and store the snapshot image of the data in time. Provide a descriptive message for the created commit. This is comparable to a git commit, however the function bundles the data and scripts used as a backup.
+
+With provenace, you will be able to reproduce the same analysis in the future.
 
 **Commit a dataset**
 
-By default commits will stored in the provenance directory:
+By default commits will be stored in the provenance directory `.retriever_provenance`, but this directory can be changed by setting the environment variable `PROVENANCE_DIR`.
 
 ```coffee
 rdataretriever::commit('abalone-age',
-                       commit_message='Data and recipe archive for Abalone Data on 2020-02-26')
+                       commit_message='A snapshot of Abalone Dataset as of 2020-02-26')
 ```
-
-By default this stores archived datasets in `.retriever_provenance`, but this directory can be changed by setting the environment variable `PROVENANCE_DIR`.
 
 You can also set the path for an individual commit:
 
@@ -242,7 +246,7 @@ rdataretriever::commit_log('abalone-age')
 
 **Install a committed dataset**
 
-When we want to reanalyze the dataset to reproduce our analysis we can load it back into any of our backends. For example, SQLite:
+To reanalyze a committed dataset, rdataretriever will obtain the data and script from the history and rdataretriever will install this particular data into the given back-end. For example, SQLite:
 
 ```coffee
 rdataretriever::install_sqlite('abalone-age-a76e77.zip') 
