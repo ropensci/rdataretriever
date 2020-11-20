@@ -125,7 +125,7 @@ install.packages("rdataretriever") # latest release from CRAN
 ```
 
 ```coffee
-devtools::install_github("ropensci/rdataretriever") # development version from GitHub
+remotes::install_github("ropensci/rdataretriever") # development version from GitHub
 ```
 
 ## Installing Tabular Datasets
