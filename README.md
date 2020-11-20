@@ -11,12 +11,16 @@
 
 R interface to the [Data Retriever](https://retriever.readthedocs.io/en/latest/).
 
+The `rdataretriever` provides access to cleaned versions of hundreds of commonly used public datasets with a single line of code. 
 
-The `rdataretriever` gives you access to cleaned versions of commonly used datasets with over 200 default public data sets. 
+These datasets come from many different sources and most of them require some cleaning and restructuring prior to analysis.
+The `rdataretriever` uses a set of actively maintained recipes for downloading, cleaning, and restructing these datasets using a combination of the [Frictionless Data Specification](https://specs.frictionlessdata.io/) and custom data cleaning scripts. 
 
-Every dataset lives in different locations on the web and each dataset has specific sets of cleaning rules that you have to execute in a specific order. These datasets are really hard to clean without domain knowledge. The `rdataretriever` package has all this functionality build in. All datasets are precisely described in an international standard and the data preparation logic handled using Python. 
+The `rdataretriever` also facilitates the automatic storage of these datasets in a choice of database management systems (PostgreSQL, SQLite, MySQL, MariaDB) or flat file formats (CSV, XML, JSON) for later use and integration with large data analysis pipelines.
 
-The `rdataretriever` provides same functionality in R providing users with clean data that is then automatically stored in a data storage of choice i.e. a flat file like CSV or database. The `rdataretriever` package allows you to focus on analysis, inference and visualization.
+The `rdatretriever` also facilitates reproducibile science by providing tools to archive and rerun the precise version of a dataset and associated cleaning steps that was used for a specific analysis.
+
+The `rdataretriever` handles the work of cleaning, storing, and archiving data so that you can focus on analysis, inference and visualization.
 
 
 ## Table of Contents
