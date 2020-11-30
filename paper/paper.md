@@ -6,7 +6,7 @@ authors:
  - name: Henry Senyondo
    orcid: 0000-0001-7105-5808
    affiliation: 1, 4
- - name: Daniel McGlinn
+ - name: Daniel J. McGlinn
    orcid: 0000-0003-2359-3526
    affiliation: 6
  - name: Pranita Sharma
@@ -18,7 +18,7 @@ authors:
  - name: Hao Ye
    affiliation: 9
    orcid: 0000-0002-8630-1458
- - name: Shawn Taylor
+ - name: Shawn D. Taylor
    affiliation: 1, 13
    orcid: 0000-0002-6178-6903
  - name: Jeroen Ooms
@@ -38,7 +38,7 @@ authors:
    orcid: 0000-0002-3285-812X
  - name: Max Pohlman
    affiliation: 7
- - name: Ethan White
+ - name: Ethan P. White
    affiliation: 1, 2, 4
    orcid: 0000-0001-6728-7745
 
