@@ -5,7 +5,7 @@ Description: Provides an R interface to the Data Retriever
     command line interface. The Data Retriever automates the
     tasks of finding, downloading, and cleaning public datasets,
     and then stores them in a local database.
-Version: 3.0.0
+Version: 3.0.1
 Authors@R: c(person("Daniel", "McGlinn", role = "aut",
     email = "danmcglinn@gmail.com",
     comment = c(ORCID = "0000-0003-2359-3526")),
