@@ -50,7 +50,7 @@ affiliations:
    index: 2
  - name: North Carolina State University, Department of Computer Science
    index: 3
-- name: Health Science Center Libraries, University of Florida
+ - name: Health Science Center Libraries, University of Florida
    index: 4
  - name: USDA-ARS Jornada Experimental Range
    index: 5
