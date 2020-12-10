@@ -7,6 +7,7 @@
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/rdataretriever)](https://CRAN.R-project.org/package=rdataretriever) +
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ecoretriever)](https://CRAN.R-project.org/package=ecoretriever)
 (old package name)
+[![DOI](https://zenodo.org/badge/18155090.svg)](https://zenodo.org/badge/latestdoi/18155090)
 <!-- badges: end -->
 
 R interface to the [Data Retriever](https://retriever.readthedocs.io/en/latest/).
