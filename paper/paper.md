@@ -19,7 +19,7 @@ authors:
    affiliation: 4
    orcid: 0000-0002-8630-1458
  - name: Shawn D. Taylor
-   affiliation: 1, 5
+   affiliation: "1, 5"
    orcid: 0000-0002-6178-6903
  - name: Jeroen Ooms
    affiliation: 6
@@ -39,7 +39,7 @@ authors:
  - name: Max Pohlman
    affiliation: 10
  - name: Ethan P. White
-   affiliation: 1, 11, 12
+   affiliation: "1, 11, 12"
    orcid: 0000-0001-6728-7745
 
 
