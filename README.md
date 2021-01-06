@@ -8,6 +8,8 @@
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/ecoretriever)](https://CRAN.R-project.org/package=ecoretriever)
 (old package name)
 [![DOI](https://zenodo.org/badge/18155090.svg)](https://zenodo.org/badge/latestdoi/18155090)
+[![DOI](https://joss.theoj.org/papers/10.21105/joss.02800/status.svg)](https://doi.org/10.21105/joss.02800)
+
 <!-- badges: end -->
 
 R interface to the [Data Retriever](https://retriever.readthedocs.io/en/latest/).
