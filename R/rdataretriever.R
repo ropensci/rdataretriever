@@ -509,6 +509,37 @@ install_sqlite <- function(dataset, file = "sqlite.db", table_name = "{db}_{tabl
 
 #' Install datasets via the Data Retriever.
 #'
+#' Data is stored in hdf5 database
+#'
+#' @param dataset the name of the dataset that you wish to install or path to a committed dataset zip file
+#' @param file hdf5 database file name or path
+#' @param table_name table name for installing of dataset
+#' @param data_dir the dir path to store the db, defaults to working dir
+#' @param debug Setting TRUE helps in debugging in case of errors
+#' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
+#' @param hash_value the hash value of committed dataset when installing from provenance directory
+#' @examples
+#' \donttest{
+#' rdataretriever::install_hdf5(dataset = "iris", file = "hdf5.h5")
+#' }
+#' @importFrom reticulate import r_to_py
+#' @export
+install_hdf5 <- function(dataset, file = "hdf5.h5", table_name = "{db}_{table}",
+                           data_dir = getwd(), debug = FALSE, use_cache = TRUE,  hash_value = NULL) {
+  tryCatch(withCallingHandlers(
+    {
+      retriever$install_hdf5(dataset, file, table_name, data_dir, debug, use_cache, hash_value)
+    },
+    error = function(error_message) {
+      message("Full error trace:")
+      message(error_message)
+      return(NA)
+    }
+  ))
+}
+
+#' Install datasets via the Data Retriever.
+#'
 #' Data is stored in MSAccess database
 #'
 #' @param dataset the name of the dataset that you wish to install or path to a committed dataset zip file
