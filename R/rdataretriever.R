@@ -666,7 +666,7 @@ reset <- function(scope = "all") {
 #' This function will check if the version of the retriever's scripts in your local
 #' directory \file{~/.retriever/scripts/} is up-to-date with the most recent official
 #' retriever release. Note it is possible that even more updated scripts exist
-#' at the retriever repository \url{https://github.com/weecology/retriever/tree/master/scripts}
+#' at the retriever repository \url{https://github.com/weecology/retriever/tree/main/scripts}
 #' that have not yet been incorperated into an official release, and you should
 #' consider checking that page if you have any concerns.
 #' @keywords utilities

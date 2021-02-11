@@ -1,7 +1,7 @@
 # rdataretriever
 
 <!-- badges: start -->
-[![Build Status](https://travis-ci.org/ropensci/rdataretriever.svg?branch=master)](https://travis-ci.org/ropensci/rdataretriever)
+[![Build Status](https://travis-ci.org/ropensci/rdataretriever.svg?branch=main)](https://travis-ci.org/ropensci/rdataretriever)
 [![Build status](https://ci.appveyor.com/api/projects/status/de1badmnrt6goamh?svg=true)](https://ci.appveyor.com/project/ethanwhite/rdataretriever)[![cran version](https://www.r-pkg.org/badges/version/rdataretriever)](https://CRAN.R-project.org/package=rdataretriever)
 [![Documentation Status](https://readthedocs.org/projects/retriever/badge/?version=latest)](https://retriever.readthedocs.io/en/latest/rdataretriever.html#)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/rdataretriever)](https://CRAN.R-project.org/package=rdataretriever) +
