@@ -706,6 +706,194 @@ use_RetrieverPath <- function(path) {
   Sys.setenv(PATH = paste(path, ":", Sys.getenv("PATH"), sep = ""))
 }
 
+#' install the python module `retriever`
+#' 
+#' @inheritParams reticulate::py_install
+#' 
+#' @export
+install_retriever <- function(method = "auto", conda = "auto") {
+  reticulate::py_install("retriever", method = method, conda = conda)
+}
+
+#' Updates the datasets_url.json from the github repo
+#'
+#' @param test 
+#' @examples
+#' \donttest{
+#' rdataretriever::update_rdataset_catalog()
+#' }
+#' @importFrom reticulate import r_to_py
+#' @export
+update_rdataset_catalog <-function(test=FALSE){
+  retriever$update_rdataset_catalog(test)
+}
+
+#' Download files for RDatasets to the raw data directory
+#'
+#' @param engine 
+#' @param package 
+#' @param dataset_name 
+#' @param script_path 
+#' @examples
+#' \donttest{
+#' rdataretriever::create_rdataset(engine, package, dataset_name)
+#' }
+#' @importFrom reticulate import r_to_py
+#' @export
+create_rdataset <- function(engine, package, dataset_name, script_path=NULL){
+  # retriever.engines import choose_engine
+  # engine = choose_engine({'command': engine})
+  retriever$create_rdataset(engine, package, dataset_name, script_path)
+}
+
+
+#' Update the contents of json script
+#'
+#' @param data_obj 
+#' @param package 
+#' @param dataset_name 
+#' @param json_file 
+#' @examples
+#' \donttest{
+#' rdataretriever::update_rdataset_contents(data_obj, package, dataset_name, json_file)
+#' }
+#' @importFrom reticulate import r_to_py
+#' @export
+update_rdataset_contents <- function(data_obj, package, dataset_name, json_file){
+  retriever$update_rdataset_contents(data_obj, package, dataset_name, json_file)
+}
+
+#' Renames and updates the RDataset script
+#'
+#' @param data_obj 
+#' @param dataset_name 
+#' @param package 
+#' @param script_path 
+#' @examples
+#' \donttest{
+#' rdataretriever::update_rdataset_script(data_obj, dataset_name, package, script_path)
+#' }
+#' @importFrom reticulate import r_to_py
+#' @export
+update_rdataset_script <- function(data_obj, dataset_name, package, script_path){
+  retriever$update_rdataset_script(data_obj, dataset_name, package, script_path)
+}
+
+#' Displays the list of rdataset names present in the packages provided
+#'
+#' @param package_name 
+#' @examples
+#' \donttest{
+#' rdataretriever::display_all_rdataset_names()
+#' }
+#' @importFrom reticulate import r_to_py
+#' @export
+display_all_rdataset_names <- function(package_name=NULL){
+  retriever$display_all_rdataset_names(package_name)
+}
+
+
+#' Returns a list of all the available RDataset names present
+#'
+#' @examples
+#' \donttest{
+#' rdataretriever::get_rdataset_names()
+#' }
+#' @importFrom reticulate import r_to_py
+#' @export
+get_rdataset_names <- function(){
+  retriever$get_rdataset_names()
+}
+
+#' Returns the list of dataset names after autocompletion
+#'
+#' @param dataset 
+#' @examples
+#' \donttest{
+#' rdataretriever::socrata_autocomplete_search()
+#' }
+#' @importFrom reticulate import r_to_py
+#' @export
+socrata_autocomplete_search <- function(dataset){
+  retriever$socrata_autocomplete_search(dataset)
+}
+
+#' Title
+#'
+#' @param dataset_name 
+#' @examples
+#' \donttest{
+#' rdataretriever::socrata_dataset_info()
+#' }
+#' @importFrom reticulate import r_to_py
+#' @export
+socrata_dataset_info <- function(dataset_name){
+  retriever$socrata_dataset_info(dataset_name)
+}
+
+#' Returns metadata for the following dataset id
+#'
+#' @param dataset_id 
+#' @examples
+#' \donttest{
+#' rdataretriever::socrata_dataset_info()
+#' }
+#' @importFrom reticulate import r_to_py
+#' @export
+find_socrata_dataset_by_id <- function(dataset_id){
+  retriever$find_socrata_dataset_by_id(dataset_id)
+}
+
+#' Downloads raw data and creates a script for the socrata dataset
+#'
+#' @param engine 
+#' @param name 
+#' @param resource 
+#' @param script_path 
+#' @examples
+#' \donttest{
+#' rdataretriever::create_socrata_dataset(engine, name, resource)
+#' }
+#' @importFrom reticulate import r_to_py
+#' @export
+create_socrata_dataset <- function(engine, name, resource, script_path=NULL){
+  retriever$create_socrata_dataset(engine, name, resource, script_path)
+}
+
+#' Update the contents of the json script
+#'
+#' @param json_file 
+#' @param script_name 
+#' @param url 
+#' @param resource 
+#' @examples
+#' \donttest{
+#' rdataretriever::update_socrata_contents(json_file, script_name, url, resource)
+#' }
+#' @importFrom reticulate import r_to_py
+#' @export
+update_socrata_contents <- function(json_file, script_name, url, resource){
+  retriever$update_socrata_contents(json_file, script_name, url, resource)
+}
+
+#' Renames the script name and the contents of the script
+#'
+#' @param script_name 
+#' @param filename 
+#' @param url 
+#' @param resource 
+#' @param script_path 
+#' @examples
+#' \donttest{
+#' rdataretriever::update_socrata_script(script_name, filename, url, resource, script_path)
+#' }
+#' @importFrom reticulate import r_to_py
+#' @export
+update_socrata_script <- function(script_name, filename, url, resource, script_path){
+  retriever$update_socrata_script(script_name, filename, url, resource, script_path)
+}
+
+
 print.update_log <- function(x, ...) {
   if (length(x) == 0) {
     cat("No scripts downloaded")
@@ -753,16 +941,6 @@ get_os <- function() {
   tolower(os)
 }
 
-#' install the python module `retriever`
-#' 
-#' @inheritParams reticulate::py_install
-#' 
-#' @export
-install_retriever <- function(method = "auto", conda = "auto") {
-  reticulate::py_install("retriever", method = method, conda = conda)
-}
-
-# global reference to python modules (will be initialized in .onLoad)
 retriever <- NULL
 
 .onLoad <- function(libname, pkgname) {
