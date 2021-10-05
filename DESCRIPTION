@@ -65,4 +65,5 @@ VignetteBuilder: knitr
 SystemRequirements: Python (>= 3.0), retriever (>= 3.0.0) (version must be listed to patch to allow parsing)
 License: MIT + file LICENSE
 LazyData: true
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
+Encoding: UTF-8
