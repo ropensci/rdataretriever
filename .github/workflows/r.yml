@@ -107,6 +107,7 @@ jobs:
           export PGPASSFILE="~/.pgpass"
           chmod 600 ~/.pgpass
           chmod 600 ~/.my.cnf
+          retriever ls
 
       - uses: actions/checkout@v2
       - name: Set up R ${{ matrix.r-version }}
