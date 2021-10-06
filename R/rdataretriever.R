@@ -85,6 +85,16 @@ dataset_names <- function() {
   return(datasets_list)
 }
 
+#' Get retriever citation
+#'
+#' @examples
+#' \donttest{
+#' rdataretriever::get_retriever_citation()
+#' }
+#' @export
+get_retriever_citation <- function() {
+  retriever$get_retriever_citation()
+}
 
 #' Get citation
 #'
@@ -95,7 +105,7 @@ dataset_names <- function() {
 #' rdataretriever::get_script_citation(dataset = "")
 #' }
 #' @export
-get_script_citation <- function(dataset = "") {
+get_script_citation <- function(dataset = NULL) {
   retriever$get_script_citation(dataset)
 }
 
@@ -635,19 +645,6 @@ install <- function(dataset, connection, db_file = NULL, conn_file = NULL,
   }
 }
 
-#' Get dataset citation information and a description
-#' @param dataset name of the dataset
-#' @return returns a string with the citation information
-#' @examples
-#' \donttest{
-#' rdataretriever::get_citation("plant-comp-us")
-#' }
-#' @importFrom reticulate import r_to_py
-#' @export
-get_citation <- function(dataset) {
-  run_cli(paste("retriever citation", dataset), intern = TRUE)
-}
-
 #' Reset the scripts or data(raw_data) directory or both
 #' @param scope All resets both  scripst and data directory
 #' @examples
@@ -912,14 +909,6 @@ print.update_log <- function(x, ...) {
   }
 }
 
-run_cli <- function(...) {
-  os <- Sys.info()[["sysname"]]
-  if (os == "Windows") {
-    shell(...)
-  } else {
-    system(...)
-  }
-}
 
 get_os <- function() {
   sysinf <- Sys.info()
