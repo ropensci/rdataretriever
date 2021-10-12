@@ -297,6 +297,7 @@ roxygen2::roxygenise()
 devtools::test()
 ```
 
+
 To get citation information for the `rdataretriever` in R use `citation(package = 'rdataretriever')`
 
 Acknowledgements
@@ -310,3 +311,4 @@ as part of a [CAREER award to Ethan White](https://nsf.gov/awardsearch/showAward
 
 ---
 [![ropensci footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
+
