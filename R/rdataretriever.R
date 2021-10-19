@@ -17,7 +17,6 @@ check_for_updates <- function(repo = "") {
   }
 }
 
-
 #' Commit a dataset
 #'
 #' @param dataset name of the dataset
@@ -35,7 +34,6 @@ commit <- function(dataset, commit_message = "", path = NULL, quiet = FALSE) {
   retriever$commit(dataset, commit_message, path, quiet)
   cat("Successfully committed.")
 }
-
 
 #' See the log of committed dataset stored in provenance directory
 #'
@@ -55,7 +53,6 @@ commit_log <- function(dataset) {
   message(paste0("Hash: ", res$hash_value))
   message(paste0("Date: ", res$date))
 }
-
 
 #' Name all available dataset scripts.
 #'
@@ -109,7 +106,6 @@ get_script_citation <- function(dataset = NULL) {
   retriever$get_script_citation(dataset)
 }
 
-
 #' Get dataset names from upstream
 #'
 #' @param keywords filter datasets based on keywords
@@ -128,7 +124,6 @@ get_dataset_names_upstream <- function(keywords = "", licenses = "", repo = "") 
     retriever$get_dataset_names_upstream(keywords = keywords, licenses = licenses, repo)
   }
 }
-
 
 #' Get script upstream
 #'
@@ -297,7 +292,6 @@ fetch <- function(dataset, quiet = TRUE, data_names = NULL) {
   return(datasets)
 }
 
-
 #' Download datasets via the Data Retriever.
 #'
 #' Directly downloads data files with no processing, allowing downloading of
@@ -307,7 +301,7 @@ fetch <- function(dataset, quiet = TRUE, data_names = NULL) {
 #' @param path the path where the data should be downloaded to
 #' @param quiet logical, if true retriever runs in quiet mode
 #' @param sub_dir downloaded dataset is stored into a custom subdirectory.
-#' @param debug Setting TRUE helps in debugging in case of errors
+#' @param debug setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
 #' @examples
 #' \donttest{
@@ -327,8 +321,8 @@ download <- function(dataset, path = "./", quiet = FALSE, sub_dir = "", debug = 
 #' Additional information on the available datasets can be found at url https://retriever.readthedocs.io/en/latest/datasets.html
 #'
 #' @return returns a character vector with the available datasets for download
-#' @param keywords Search all datasets by keywords
-#' @param licenses Search all datasets by licenses
+#' @param keywords search all datasets by keywords
+#' @param licenses search all datasets by licenses
 #' @examples
 #' \donttest{
 #' rdataretriever::datasets()
@@ -359,9 +353,9 @@ datasets <- function(keywords = "", licenses = "") {
 #' @param dataset the name of the dataset that you wish to install or path to a committed dataset zip file
 #' @param table_name the name of the database file to store data
 #' @param data_dir the dir path to store data, defaults to working dir
-#' @param debug Setting TRUE helps in debugging in case of errors
+#' @param debug setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
-#' @param force Setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
+#' @param force setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
 #' @param hash_value the hash value of committed dataset when installing from provenance directory
 #' @examples
 #' \donttest{
@@ -380,9 +374,9 @@ install_csv <- function(dataset, table_name = "{db}_{table}.csv", data_dir = get
 #' @param dataset the name of the dataset that you wish to install or path to a committed dataset zip file
 #' @param table_name the name of the database file to store data
 #' @param data_dir the dir path to store data, defaults to working dir
-#' @param debug Setting TRUE helps in debugging in case of errors
-#' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
-#' @param force Setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
+#' @param debug setting TRUE helps in debugging in case of errors
+#' @param use_cache setting FALSE reinstalls scripts even if they are already installed
+#' @param force setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
 #' @param hash_value the hash value of committed dataset when installing from provenance directory
 #' @examples
 #' \donttest{
@@ -394,7 +388,6 @@ install_json <- function(dataset, table_name = "{db}_{table}.json", data_dir = g
   retriever$install_json(dataset, table_name, data_dir, debug, use_cache, force, hash_value)
 }
 
-
 #' Install datasets via the Data Retriever.
 #'
 #' Data is stored in XML files
@@ -402,9 +395,9 @@ install_json <- function(dataset, table_name = "{db}_{table}.json", data_dir = g
 #' @param dataset the name of the dataset that you wish to install or path to a committed dataset zip file
 #' @param table_name the name of the database file to store data
 #' @param data_dir the dir path to store data, defaults to working dir
-#' @param debug Setting TRUE helps in debugging in case of errors
+#' @param debug setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
-#' @param force Setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
+#' @param force setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
 #' @param hash_value the hash value of committed dataset when installing from provenance directory
 #' @examples
 #' \donttest{
@@ -428,9 +421,9 @@ install_xml <- function(dataset, table_name = "{db}_{table}.xml", data_dir = get
 #' @param database_name database name in which dataset will be installed
 #' @param table_name table name specified especially for datasets
 #' containing one file
-#' @param debug Setting TRUE helps in debugging in case of errors
-#' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
-#' @param force Setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
+#' @param debug setting TRUE helps in debugging in case of errors
+#' @param use_cache setting FALSE reinstalls scripts even if they are already installed
+#' @param force setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
 #' @param hash_value the hash value of committed dataset when installing from provenance directory
 #' @examples
 #' \donttest{
@@ -461,10 +454,10 @@ install_mysql <- function(dataset, user = "root", password = "", host = "localho
 #' @param database_name database schema name in which dataset will be installed
 #' @param table_name table name specified especially for datasets
 #' containing one file
-#' @param bbox Optional extent values used to fetch data from the spatial dataset
-#' @param debug Setting TRUE helps in debugging in case of errors
-#' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
-#' @param force Setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
+#' @param bbox optional extent values used to fetch data from the spatial dataset
+#' @param debug setting TRUE helps in debugging in case of errors
+#' @param use_cache setting FALSE reinstalls scripts even if they are already installed
+#' @param force setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
 #' @param hash_value the hash value of committed dataset when installing from provenance directory
 #' @examples
 #' \donttest{
@@ -493,9 +486,9 @@ install_postgres <- function(dataset, user = "postgres", password = "",
 #' @param file Sqlite database file name or path
 #' @param table_name table name for installing of dataset
 #' @param data_dir the dir path to store the db, defaults to working dir
-#' @param debug Setting TRUE helps in debugging in case of errors
-#' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
-#' @param force Setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
+#' @param debug setting TRUE helps in debugging in case of errors
+#' @param use_cache setting FALSE reinstalls scripts even if they are already installed
+#' @param force setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
 #' @param hash_value the hash value of committed dataset when installing from provenance directory
 #' @examples
 #' \donttest{
@@ -524,9 +517,9 @@ install_sqlite <- function(dataset, file = "sqlite.db", table_name = "{db}_{tabl
 #' @param dataset the name of the dataset that you wish to install or path to a committed dataset zip file
 #' @param file file name for database
 #' @param table_name table name for installing of dataset
-#' @param debug Setting TRUE helps in debugging in case of errors
+#' @param debug setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
-#' @param force Setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
+#' @param force setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
 #' @param hash_value the hash value of committed dataset when installing from provenance directory
 #' @examples
 #' \donttest{
@@ -646,7 +639,7 @@ install <- function(dataset, connection, db_file = NULL, conn_file = NULL,
 }
 
 #' Reset the scripts or data(raw_data) directory or both
-#' @param scope All resets both  scripst and data directory
+#' @param scope All resets both scripst and data directory
 #' @examples
 #' \donttest{
 #' rdataretriever::reset("iris")
@@ -714,7 +707,7 @@ install_retriever <- function(method = "auto", conda = "auto") {
 
 #' Updates the datasets_url.json from the github repo
 #'
-#' @param test 
+#' @param test flag set when testing
 #' @examples
 #' \donttest{
 #' rdataretriever::update_rdataset_catalog()
@@ -727,10 +720,10 @@ update_rdataset_catalog <-function(test=FALSE){
 
 #' Download files for RDatasets to the raw data directory
 #'
-#' @param engine 
-#' @param package 
-#' @param dataset_name 
-#' @param script_path 
+#' @param engine ......
+#' @param package ......
+#' @param dataset_name ......
+#' @param script_path ......
 #' @examples
 #' \donttest{
 #' rdataretriever::create_rdataset(engine, package, dataset_name)
@@ -743,13 +736,12 @@ create_rdataset <- function(engine, package, dataset_name, script_path=NULL){
   retriever$create_rdataset(engine, package, dataset_name, script_path)
 }
 
-
 #' Update the contents of json script
 #'
-#' @param data_obj 
-#' @param package 
-#' @param dataset_name 
-#' @param json_file 
+#' @param data_obj ......
+#' @param package ......
+#' @param dataset_name ......
+#' @param json_file ......
 #' @examples
 #' \donttest{
 #' rdataretriever::update_rdataset_contents(data_obj, package, dataset_name, json_file)
@@ -762,10 +754,10 @@ update_rdataset_contents <- function(data_obj, package, dataset_name, json_file)
 
 #' Renames and updates the RDataset script
 #'
-#' @param data_obj 
-#' @param dataset_name 
-#' @param package 
-#' @param script_path 
+#' @param data_obj ......
+#' @param dataset_name ......
+#' @param package ......
+#' @param script_path ......
 #' @examples
 #' \donttest{
 #' rdataretriever::update_rdataset_script(data_obj, dataset_name, package, script_path)
@@ -776,9 +768,10 @@ update_rdataset_script <- function(data_obj, dataset_name, package, script_path)
   retriever$update_rdataset_script(data_obj, dataset_name, package, script_path)
 }
 
-#' Displays the list of rdataset names present in the packages provided
+#' Displays the list of rdataset names present in the list of packages provided
 #'
-#' @param package_name 
+#' Can take a list of packages, or NULL or a string 'all' for all rdataset packages and datasets
+#' @param package_name print datasets in the package, default to print rdataset and all to print all   
 #' @examples
 #' \donttest{
 #' rdataretriever::display_all_rdataset_names()
@@ -788,7 +781,6 @@ update_rdataset_script <- function(data_obj, dataset_name, package, script_path)
 display_all_rdataset_names <- function(package_name=NULL){
   retriever$display_all_rdataset_names(package_name)
 }
-
 
 #' Returns a list of all the available RDataset names present
 #'
@@ -804,7 +796,7 @@ get_rdataset_names <- function(){
 
 #' Returns the list of dataset names after autocompletion
 #'
-#' @param dataset 
+#' @param dataset the name of the dataset
 #' @examples
 #' \donttest{
 #' rdataretriever::socrata_autocomplete_search()
@@ -817,7 +809,7 @@ socrata_autocomplete_search <- function(dataset){
 
 #' Title
 #'
-#' @param dataset_name 
+#' @param dataset_name dataset name to obtain info
 #' @examples
 #' \donttest{
 #' rdataretriever::socrata_dataset_info()
@@ -830,7 +822,7 @@ socrata_dataset_info <- function(dataset_name){
 
 #' Returns metadata for the following dataset id
 #'
-#' @param dataset_id 
+#' @param dataset_id id of the dataset
 #' @examples
 #' \donttest{
 #' rdataretriever::socrata_dataset_info()
@@ -843,10 +835,10 @@ find_socrata_dataset_by_id <- function(dataset_id){
 
 #' Downloads raw data and creates a script for the socrata dataset
 #'
-#' @param engine 
-#' @param name 
-#' @param resource 
-#' @param script_path 
+#' @param engine name of the engine to 
+#' @param name script name
+#' @param resource the link to the data source 
+#' @param script_path socrata script write path
 #' @examples
 #' \donttest{
 #' rdataretriever::create_socrata_dataset(engine, name, resource)
@@ -859,10 +851,10 @@ create_socrata_dataset <- function(engine, name, resource, script_path=NULL){
 
 #' Update the contents of the json script
 #'
-#' @param json_file 
-#' @param script_name 
-#' @param url 
-#' @param resource 
+#' @param json_file loaded old Json specifications
+#' @param script_name new script name for update
+#' @param url url pointing to the data source
+#' @param resource dictionary of updated resource specifications
 #' @examples
 #' \donttest{
 #' rdataretriever::update_socrata_contents(json_file, script_name, url, resource)
@@ -875,11 +867,11 @@ update_socrata_contents <- function(json_file, script_name, url, resource){
 
 #' Renames the script name and the contents of the script
 #'
-#' @param script_name 
-#' @param filename 
-#' @param url 
-#' @param resource 
-#' @param script_path 
+#' @param script_name name for the script to update 
+#' @param filename file path for the script to update
+#' @param url new url for the update
+#' @param resource resource object to use for the update
+#' @param script_path path to the script if diffferent from scocrate default script path
 #' @examples
 #' \donttest{
 #' rdataretriever::update_socrata_script(script_name, filename, url, resource, script_path)
@@ -890,6 +882,7 @@ update_socrata_script <- function(script_name, filename, url, resource, script_p
   retriever$update_socrata_script(script_name, filename, url, resource, script_path)
 }
 
+# Package helper functions
 
 print.update_log <- function(x, ...) {
   if (length(x) == 0) {
@@ -908,7 +901,6 @@ print.update_log <- function(x, ...) {
     cat(object, fill = TRUE, sep = ", ")
   }
 }
-
 
 get_os <- function() {
   sysinf <- Sys.info()
