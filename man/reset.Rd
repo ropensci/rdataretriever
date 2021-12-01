@@ -7,7 +7,7 @@
 reset(scope = "all")
 }
 \arguments{
-\item{scope}{All resets both  scripst and data directory}
+\item{scope}{All resets both scripst and data directory}
 }
 \description{
 Reset the scripts or data(raw_data) directory or both

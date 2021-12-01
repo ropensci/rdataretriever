@@ -7,7 +7,7 @@
 update_rdataset_catalog(test = FALSE)
 }
 \arguments{
-\item{test}{}
+\item{test}{flag set when testing}
 }
 \description{
 Updates the datasets_url.json from the github repo

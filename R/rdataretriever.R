@@ -718,56 +718,6 @@ update_rdataset_catalog <-function(test=FALSE){
   retriever$update_rdataset_catalog(test)
 }
 
-#' Download files for RDatasets to the raw data directory
-#'
-#' @param engine ......
-#' @param package ......
-#' @param dataset_name ......
-#' @param script_path ......
-#' @examples
-#' \donttest{
-#' rdataretriever::create_rdataset(engine, package, dataset_name)
-#' }
-#' @importFrom reticulate import r_to_py
-#' @export
-create_rdataset <- function(engine, package, dataset_name, script_path=NULL){
-  # retriever.engines import choose_engine
-  # engine = choose_engine({'command': engine})
-  retriever$create_rdataset(engine, package, dataset_name, script_path)
-}
-
-#' Update the contents of json script
-#'
-#' @param data_obj ......
-#' @param package ......
-#' @param dataset_name ......
-#' @param json_file ......
-#' @examples
-#' \donttest{
-#' rdataretriever::update_rdataset_contents(data_obj, package, dataset_name, json_file)
-#' }
-#' @importFrom reticulate import r_to_py
-#' @export
-update_rdataset_contents <- function(data_obj, package, dataset_name, json_file){
-  retriever$update_rdataset_contents(data_obj, package, dataset_name, json_file)
-}
-
-#' Renames and updates the RDataset script
-#'
-#' @param data_obj ......
-#' @param dataset_name ......
-#' @param package ......
-#' @param script_path ......
-#' @examples
-#' \donttest{
-#' rdataretriever::update_rdataset_script(data_obj, dataset_name, package, script_path)
-#' }
-#' @importFrom reticulate import r_to_py
-#' @export
-update_rdataset_script <- function(data_obj, dataset_name, package, script_path){
-  retriever$update_rdataset_script(data_obj, dataset_name, package, script_path)
-}
-
 #' Displays the list of rdataset names present in the list of packages provided
 #'
 #' Can take a list of packages, or NULL or a string 'all' for all rdataset packages and datasets
@@ -807,7 +757,7 @@ socrata_autocomplete_search <- function(dataset){
   retriever$socrata_autocomplete_search(dataset)
 }
 
-#' Title
+#' Get socrata dataset info
 #'
 #' @param dataset_name dataset name to obtain info
 #' @examples
@@ -831,55 +781,6 @@ socrata_dataset_info <- function(dataset_name){
 #' @export
 find_socrata_dataset_by_id <- function(dataset_id){
   retriever$find_socrata_dataset_by_id(dataset_id)
-}
-
-# #' Downloads raw data and creates a script for the socrata dataset
-# #'
-# #' @param engine name of the engine to 
-# #' @param name script name
-# #' @param resource the link to the data source 
-# #' @param script_path socrata script write path
-# #' @examples
-# #' \donttest{
-# #' rdataretriever::create_socrata_dataset(engine, name, resource)
-# #' }
-# #' @importFrom reticulate import r_to_py
-# #' @export
-# create_socrata_dataset <- function(engine, name, resource, script_path=NULL){
-#   retriever$create_socrata_dataset(engine, name, resource, script_path)
-# }
-
-# #' Update the contents of the json script
-# #'
-# #' @param json_file loaded old Json specifications
-# #' @param script_name new script name for update
-# #' @param url url pointing to the data source
-# #' @param resource dictionary of updated resource specifications
-# #' @examples
-# #' \donttest{
-# #' rdataretriever::update_socrata_contents(json_file, script_name, url, resource)
-# #' }
-# #' @importFrom reticulate import r_to_py
-# #' @export
-# update_socrata_contents <- function(json_file, script_name, url, resource){
-#   retriever$update_socrata_contents(json_file, script_name, url, resource)
-# }
-
-#' Renames the script name and the contents of the script
-#'
-#' @param script_name name for the script to update 
-#' @param filename file path for the script to update
-#' @param url new url for the update
-#' @param resource resource object to use for the update
-#' @param script_path path to the script if diffferent from scocrate default script path
-#' @examples
-#' \donttest{
-#' rdataretriever::update_socrata_script(script_name, filename, url, resource, script_path)
-#' }
-#' @importFrom reticulate import r_to_py
-#' @export
-update_socrata_script <- function(script_name, filename, url, resource, script_path){
-  retriever$update_socrata_script(script_name, filename, url, resource, script_path)
 }
 
 # Package helper functions

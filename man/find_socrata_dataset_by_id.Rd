@@ -7,7 +7,7 @@
 find_socrata_dataset_by_id(dataset_id)
 }
 \arguments{
-\item{dataset_id}{}
+\item{dataset_id}{id of the dataset}
 }
 \description{
 Returns metadata for the following dataset id

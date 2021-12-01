@@ -7,7 +7,7 @@
 socrata_autocomplete_search(dataset)
 }
 \arguments{
-\item{dataset}{}
+\item{dataset}{the name of the dataset}
 }
 \description{
 Returns the list of dataset names after autocompletion

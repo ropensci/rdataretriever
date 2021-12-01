@@ -22,7 +22,7 @@ download(
 
 \item{sub_dir}{downloaded dataset is stored into a custom subdirectory.}
 
-\item{debug}{Setting TRUE helps in debugging in case of errors}
+\item{debug}{setting TRUE helps in debugging in case of errors}
 
 \item{use_cache}{Setting FALSE reinstalls scripts even if they are already installed}
 }

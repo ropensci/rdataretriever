@@ -2,15 +2,15 @@
 % Please edit documentation in R/rdataretriever.R
 \name{display_all_rdataset_names}
 \alias{display_all_rdataset_names}
-\title{Displays the list of rdataset names present in the packages provided}
+\title{Displays the list of rdataset names present in the list of packages provided}
 \usage{
 display_all_rdataset_names(package_name = NULL)
 }
 \arguments{
-\item{package_name}{}
+\item{package_name}{print datasets in the package, default to print rdataset and all to print all}
 }
 \description{
-Displays the list of rdataset names present in the packages provided
+Can take a list of packages, or NULL or a string 'all' for all rdataset packages and datasets
 }
 \examples{
 \donttest{

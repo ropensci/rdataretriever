@@ -2,15 +2,15 @@
 % Please edit documentation in R/rdataretriever.R
 \name{socrata_dataset_info}
 \alias{socrata_dataset_info}
-\title{Title}
+\title{Get socrata dataset info}
 \usage{
 socrata_dataset_info(dataset_name)
 }
 \arguments{
-\item{dataset_name}{}
+\item{dataset_name}{dataset name to obtain info}
 }
 \description{
-Title
+Get socrata dataset info
 }
 \examples{
 \donttest{
