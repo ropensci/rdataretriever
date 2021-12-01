@@ -4,7 +4,7 @@
 \alias{get_script_citation}
 \title{Get citation}
 \usage{
-get_script_citation(dataset = "")
+get_script_citation(dataset = NULL)
 }
 \arguments{
 \item{dataset}{dataset to obtain citation}

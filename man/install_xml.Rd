@@ -21,11 +21,11 @@ install_xml(
 
 \item{data_dir}{the dir path to store data, defaults to working dir}
 
-\item{debug}{Setting TRUE helps in debugging in case of errors}
+\item{debug}{setting TRUE helps in debugging in case of errors}
 
 \item{use_cache}{Setting FALSE reinstalls scripts even if they are already installed}
 
-\item{force}{Setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment}
+\item{force}{setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment}
 
 \item{hash_value}{the hash value of committed dataset when installing from provenance directory}
 }
