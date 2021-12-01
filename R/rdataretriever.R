@@ -833,37 +833,37 @@ find_socrata_dataset_by_id <- function(dataset_id){
   retriever$find_socrata_dataset_by_id(dataset_id)
 }
 
-#' Downloads raw data and creates a script for the socrata dataset
-#'
-#' @param engine name of the engine to 
-#' @param name script name
-#' @param resource the link to the data source 
-#' @param script_path socrata script write path
-#' @examples
-#' \donttest{
-#' rdataretriever::create_socrata_dataset(engine, name, resource)
-#' }
-#' @importFrom reticulate import r_to_py
-#' @export
-create_socrata_dataset <- function(engine, name, resource, script_path=NULL){
-  retriever$create_socrata_dataset(engine, name, resource, script_path)
-}
+# #' Downloads raw data and creates a script for the socrata dataset
+# #'
+# #' @param engine name of the engine to 
+# #' @param name script name
+# #' @param resource the link to the data source 
+# #' @param script_path socrata script write path
+# #' @examples
+# #' \donttest{
+# #' rdataretriever::create_socrata_dataset(engine, name, resource)
+# #' }
+# #' @importFrom reticulate import r_to_py
+# #' @export
+# create_socrata_dataset <- function(engine, name, resource, script_path=NULL){
+#   retriever$create_socrata_dataset(engine, name, resource, script_path)
+# }
 
-#' Update the contents of the json script
-#'
-#' @param json_file loaded old Json specifications
-#' @param script_name new script name for update
-#' @param url url pointing to the data source
-#' @param resource dictionary of updated resource specifications
-#' @examples
-#' \donttest{
-#' rdataretriever::update_socrata_contents(json_file, script_name, url, resource)
-#' }
-#' @importFrom reticulate import r_to_py
-#' @export
-update_socrata_contents <- function(json_file, script_name, url, resource){
-  retriever$update_socrata_contents(json_file, script_name, url, resource)
-}
+# #' Update the contents of the json script
+# #'
+# #' @param json_file loaded old Json specifications
+# #' @param script_name new script name for update
+# #' @param url url pointing to the data source
+# #' @param resource dictionary of updated resource specifications
+# #' @examples
+# #' \donttest{
+# #' rdataretriever::update_socrata_contents(json_file, script_name, url, resource)
+# #' }
+# #' @importFrom reticulate import r_to_py
+# #' @export
+# update_socrata_contents <- function(json_file, script_name, url, resource){
+#   retriever$update_socrata_contents(json_file, script_name, url, resource)
+# }
 
 #' Renames the script name and the contents of the script
 #'
