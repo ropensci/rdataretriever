@@ -61,7 +61,9 @@ Suggests:
     RPostgreSQL,
     knitr,
     rmarkdown,
-    dplyr
+    dbplyr,
+    raster,
+    ggplot2
 VignetteBuilder: knitr
 SystemRequirements: Python (>= 3.0), retriever (>= 3.0.0) (version must be listed to patch to allow parsing)
 License: MIT + file LICENSE
