@@ -28,9 +28,9 @@ If we want to be able rerun our original analysis after the reviews for a paper 
 rdataretriever::commit('portal-dev', commit_message='Archive Portal data processing for initial submission on 2020-02-26', path = '.')
 ```
 
-When we want to reanalyze this exact state of the dataset we can load it back into SQLite (or any of the other backends).
+When we want to reanalyze this exact state of the dataset we can load it back into SQLite (or any of the other backends). Use the hash number related to the commit.
 
-```{r}
+```{r eval = FALSE}
 rdataretriever::install_sqlite("portal-dev-326d87.zip")
 ```
 
