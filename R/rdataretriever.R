@@ -195,7 +195,7 @@ check_retriever_availability <- function() {
       return(TRUE)
     }
   } else if(nchar(Sys.getenv('IN_PKGDOWN')) || nchar(Sys.getenv('CI'))){
-    return(system("pip install retriever") == 0)
+    return(system("pip install git+https://git@github.com/weecology/retriever.git") == 0)
   } else {
     message("The retriever Python package needs to be installed.\nSee: https://docs.ropensci.org/rdataretriever/#installation")
     return(FALSE)
