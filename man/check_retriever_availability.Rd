@@ -13,7 +13,7 @@ boolean
 Check to see if minimum version of retriever Python package is installed
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::check_retriever_availability()
 }
 }

@@ -12,7 +12,7 @@ Update the retriever's global_script_list with the scripts present
 in the ~/.retriever directory.
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::reload_scripts()
 }
 }

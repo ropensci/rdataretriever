@@ -52,7 +52,7 @@ containing one file}
 Data is stored in PostgreSQL database
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::install_postgres(dataset = "portal", user = "postgres", password = "abcdef")
 }
 }

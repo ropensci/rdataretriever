@@ -19,7 +19,7 @@ commit(dataset, commit_message = "", path = NULL, quiet = FALSE)
 Commit a dataset
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::commit("iris")
 }
 }

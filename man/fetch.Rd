@@ -20,7 +20,7 @@ Each datafile in a given dataset is downloaded to a temporary directory and
 then imported as a data.frame as a member of a named list.
 }
 \examples{
-\donttest{
+\dontrun{
 ## fetch the portal Database
 portal <- rdataretriever::fetch("portal")
 class(portal)

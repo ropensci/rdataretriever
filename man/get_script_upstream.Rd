@@ -15,7 +15,7 @@ get_script_upstream(dataset, repo = "")
 Get script upstream
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::get_script_upstream("iris")
 }
 }

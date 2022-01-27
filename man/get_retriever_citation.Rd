@@ -10,7 +10,7 @@ get_retriever_citation()
 Get retriever citation
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::get_retriever_citation()
 }
 }

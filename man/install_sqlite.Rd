@@ -36,7 +36,7 @@ install_sqlite(
 Data is stored in SQLite database
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::install_sqlite(dataset = "iris", file = "sqlite.db")
 }
 }

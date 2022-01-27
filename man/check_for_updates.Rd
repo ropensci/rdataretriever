@@ -13,7 +13,7 @@ check_for_updates(repo = "")
 Check for updates
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::check_for_updates()
 }
 }

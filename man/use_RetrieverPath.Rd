@@ -13,7 +13,7 @@ use_RetrieverPath(path)
 Setting path of retriever
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::use_RetrieverPath("/home/<system_name>/anaconda2/envs/py27/bin/")
 }
 }

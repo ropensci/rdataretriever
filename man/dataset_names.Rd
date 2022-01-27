@@ -13,7 +13,7 @@ returns a character vector with the available datasets for download
 Additional information on the available datasets can be found at url https://retriever.readthedocs.io/en/latest/datasets.html
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::dataset_names()
 }
 }

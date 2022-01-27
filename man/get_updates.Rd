@@ -15,7 +15,7 @@ that have not yet been incorperated into an official release, and you should
 consider checking that page if you have any concerns.
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::get_updates()
 }
 }

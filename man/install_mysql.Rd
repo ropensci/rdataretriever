@@ -46,7 +46,7 @@ containing one file}
 Data is stored in MySQL database
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::install_mysql(dataset = "portal", user = "postgres", password = "abcdef")
 }
 }

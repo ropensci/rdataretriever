@@ -33,7 +33,7 @@ install_xml(
 Data is stored in XML files
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::install_xml("iris")
 }
 }

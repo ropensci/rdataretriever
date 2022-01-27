@@ -44,7 +44,7 @@ Data is stored in either CSV files or one of the following database management
 systems: MySQL, PostgreSQL, SQLite, or Microsoft Access.
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::install("iris", "csv")
 }
 }
