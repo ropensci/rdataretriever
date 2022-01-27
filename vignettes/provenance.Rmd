@@ -24,7 +24,7 @@ This is logically similar to a git commit in that we store the state of the data
 For example, the `portal-dev` dataset is updated weekly.
 If we want to be able rerun our original analysis after the reviews for a paper come back we'll need to store that version of the data.
 
-```{r}
+```{r, eval=FALSE}
 rdataretriever::commit('portal-dev', commit_message='Archive Portal data processing for initial submission on 2020-02-26', path = '.')
 ```
 

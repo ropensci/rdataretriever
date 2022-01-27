@@ -26,7 +26,7 @@ To do this is demonstrates analyzing the BBS data to evaluate correlates of biod
 We start by loading the necessary packages.
 In addition to the `rdataretriever` in this demo we'll also use `DBI`, `RSQLite` and `dplyr` to work with the data, `raster` for working with environmental data, and `ggplot2` for visualization.
 
-```{r}
+```{r, eval=FALSE}
 library(rdataretriever)
 library(DBI)
 library(dplyr)
@@ -41,13 +41,13 @@ First we'll update the `rdataretriever` to make sure we have the newest data pro
 Centrally updated data recipes reproducible research with this dataset because something changes every year when the newest data is released meaning that any custom code for processing the data stops working.
 When this happens the `retriever` recipe is updated and after running `get_updates()` data analysis code continues to run as it always has.
 
-```{r, echo = FALSE, results = "hide"}
+```{r, echo = FALSE, results = "hide", eval=FALSE}
 rdataretriever::get_updates()
 ```
 
 Next install the BBS data into an SQLite database named `bbs.sqlite`.
 
-```{r, echo = FALSE, results = "hide"}
+```{r, echo = FALSE, results = "hide", eval=FALSE}
 rdataretriever::install_sqlite('breed-bird-survey', 'bbs.sqlite')
 ```
 
@@ -57,13 +57,13 @@ The large number of storage backends makes the `rdataretriever` easy to integrat
 
 Having installed the data into SQLite we can then connect to the database to start analyzing the data.
 
-```{r}
+```{r, eval=FALSE}
 bbs_db <- dbConnect(RSQLite::SQLite(), 'bbs.sqlite')
 ```
 
 The two key tables for this analysis are the `surveys` and `sites` tables, so let's create connections to those tables.
 
-```{r}
+```{r, eval=FALSE}
 surveys <- tbl(bbs_db, "breed_bird_survey_counts")
 sites <- tbl(bbs_db, "breed_bird_survey_routes")
 ```
@@ -75,7 +75,7 @@ The `sites` table holds information on where each site is which we'll use to lin
 
 To calculate the measure of biodiversity, which is species richness or the number of species, we'll use `dplyr` to determine the number of species observed at each site in a recent year.
 
-```{r}
+```{r, eval=FALSE}
 rich_data <- surveys %>%
   filter(year == 2016) %>%
   group_by(statenum, route) %>%
@@ -88,20 +88,20 @@ The data is now smaller than the original ~1 GB, so we used `collect` to load th
 
 Next we need to get environmental data for each site, which we'll get from the `worldclim` dataset.
 
-```{r}
+```{r, eval=FALSE}
 bioclim <- getData('worldclim', var = 'bio', res = 10)
 ```
 
 To extract the environmental data we first make our sites data spatial and add them to our map.
 
-```{r}
+```{r, eval=FALSE}
 sites <- as.data.frame(sites)
 sites_spatial <- SpatialPointsDataFrame(sites[c('longitude', 'latitude')], sites)
 ```
 
 We can then extract the environmental data for each site from the bioclim raster and add it to the data on biodiversity.
 
-```{r}
+```{r, eval=FALSE}
 bioclim_bbs <- extract(bioclim, sites_spatial) %>%
   cbind(sites)
 richness_w_env <- inner_join(rich_data, bioclim_bbs)
@@ -111,7 +111,7 @@ richness_w_env
 Now let's see how richness relates to the precipitation.
 Annual precipition is stored in `bio12`.
 
-```{r}
+```{r, eval=FALSE}
 ggplot(richness_w_env, aes(x = bio12, y = richness)) +
   geom_point(alpha = 0.5) +
   labs(x = "Annual Precipitation", y = "Number of Species")
@@ -119,7 +119,7 @@ ggplot(richness_w_env, aes(x = bio12, y = richness)) +
 
 It looks like there's a pattern here, so let's fit a smoother through it.
 
-```{r}
+```{r, eval=FALSE}
 ggplot(richness_w_env, aes(x = bio12, y = richness)) +
   geom_point(alpha = 0.5) +
   geom_smooth()
@@ -129,7 +129,7 @@ This shows that there is low bird biodiversity in really dry areas, biodiversity
 
 If we wanted to use this kind of information to inform conservation decisions at the state level, could look at the patterns within each state after filtering to ensure enough data points.
 
-```{r, fig.height = 8, fig.width = 8, warning = FALSE}
+```{r, fig.height = 8, fig.width = 8, warning = FALSE, eval=FALSE}
 richness_w_env_high_n <- richness_w_env %>%
   group_by(statenum) %>%
   filter(n() >= 50)
