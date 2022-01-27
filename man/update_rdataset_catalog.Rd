@@ -13,7 +13,7 @@ update_rdataset_catalog(test = FALSE)
 Updates the datasets_url.json from the github repo
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::update_rdataset_catalog()
 }
 }

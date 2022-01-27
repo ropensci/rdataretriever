@@ -13,7 +13,7 @@ socrata_dataset_info(dataset_name)
 Get socrata dataset info
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::socrata_dataset_info()
 }
 }

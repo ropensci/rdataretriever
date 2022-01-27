@@ -13,7 +13,7 @@ get_script_citation(dataset = NULL)
 Get citation
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::get_script_citation(dataset = "")
 }
 }

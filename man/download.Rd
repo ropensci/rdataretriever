@@ -31,7 +31,7 @@ Directly downloads data files with no processing, allowing downloading of
 non-tabular data.
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::download("plant-comp-ok")
 # downloaded files will be copied to your working directory
 # when no path is specified

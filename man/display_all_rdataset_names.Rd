@@ -13,7 +13,7 @@ display_all_rdataset_names(package_name = NULL)
 Can take a list of packages, or NULL or a string 'all' for all rdataset packages and datasets
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::display_all_rdataset_names()
 }
 }

@@ -33,7 +33,7 @@ install_csv(
 Data is stored in CSV files
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::install_csv("iris")
 }
 }

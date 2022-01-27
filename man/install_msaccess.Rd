@@ -33,7 +33,7 @@ install_msaccess(
 Data is stored in MSAccess database
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::install_msaccess(dataset = "iris", file = "sqlite.db")
 }
 }

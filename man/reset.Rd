@@ -13,7 +13,7 @@ reset(scope = "all")
 Reset the scripts or data(raw_data) directory or both
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::reset("iris")
 }
 }

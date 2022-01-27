@@ -33,7 +33,7 @@ install_json(
 Data is stored in JSON files
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::install_json("iris")
 }
 }

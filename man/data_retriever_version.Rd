@@ -16,7 +16,7 @@ returns a string with the version information
 Get Data Retriever version
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::data_retriever_version()
 }
 }

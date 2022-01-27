@@ -13,7 +13,7 @@ socrata_autocomplete_search(dataset)
 Returns the list of dataset names after autocompletion
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::socrata_autocomplete_search()
 }
 }

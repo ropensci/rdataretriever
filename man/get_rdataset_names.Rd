@@ -10,7 +10,7 @@ get_rdataset_names()
 Returns a list of all the available RDataset names present
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::get_rdataset_names()
 }
 }

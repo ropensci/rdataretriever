@@ -13,7 +13,7 @@ find_socrata_dataset_by_id(dataset_id)
 Returns metadata for the following dataset id
 }
 \examples{
-\donttest{
+\dontrun{
 rdataretriever::socrata_dataset_info()
 }
 }
