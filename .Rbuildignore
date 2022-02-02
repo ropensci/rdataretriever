@@ -15,5 +15,4 @@ docker-compose.yml
 ^Meta$
 paper
 .git
-.git
 .github
