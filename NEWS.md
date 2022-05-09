@@ -1,3 +1,50 @@
+rdataretriever 3.1.0
+====================
+
+### New Features
+
+* Add rdatasets and Socrata API
+* Remove Travis and use GitHub actions
+* Change default branch from master to main
+* Add Joss Paper and DOI badge
+* Update and simplify installation instructions
+* Remove windows specific install instructions
+* Update the vignettes
+
+## Minor Improvements
+
+* Rename the function to data_retriever_version
+* Add get_version function
+* Automatically reload the scripts
+* Reactivate MariaDB tests
+* Use Cloud CRAN mirror in Docker-based testing
+* Simplify the interface to retriever module add function to install retriever
+* Add tests for get-script-citation
+* Add get citation function
+
+rdataretriever 3.0.1
+====================
+
+### New Coauthors
+
+We welcome Apoorva Pandey and Hao Ye as coauthors on the package.
+Thanks for the great contributions!
+
+### New Features
+
+* Add provenance support
+* Add support for new online/offline dataset feature in retriever
+* Automatically update dataset status
+* Check that the retriever Python package is sufficiently up-to-date
+* Update and simplify installation instructions
+* Add get citation function
+* Update and simplify internals to benefit from updates to reticulate
+* Add vignettes
+## Minor Improvements
+
+* Improvements to code style and documentation
+* Use Cloud CRAN mirror in Docker-based testing for stability
+* Add get_version function, returns the version of the Data Retriever
 
 rdataretriever 3.0.0
 ====================
