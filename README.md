@@ -297,6 +297,7 @@ roxygen2::roxygenise()
 devtools::test()
 ```
 
+
 To get citation information for the `rdataretriever` in R use `citation(package = 'rdataretriever')`
 
 Acknowledgements
