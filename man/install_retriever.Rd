@@ -16,6 +16,9 @@ available on Windows.}
 \code{reticulate} to automatically find an appropriate \code{conda} binary. See
 \strong{Finding Conda} for more details.}
 }
+\value{
+No return value, install the python module `retriever`
+}
 \description{
 install the python module `retriever`
 }

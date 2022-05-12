@@ -9,6 +9,9 @@ display_all_rdataset_names(package_name = NULL)
 \arguments{
 \item{package_name}{print datasets in the package, default to print rdataset and all to print all}
 }
+\value{
+No return value, displays the list of rdataset names present
+}
 \description{
 Can take a list of packages, or NULL or a string 'all' for all rdataset packages and datasets
 }

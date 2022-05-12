@@ -6,6 +6,9 @@
 \usage{
 get_retriever_citation()
 }
+\value{
+No return value, outputs citation of the Data Retriever Python package
+}
 \description{
 Get retriever citation
 }

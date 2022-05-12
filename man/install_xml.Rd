@@ -29,6 +29,9 @@ install_xml(
 
 \item{hash_value}{the hash value of committed dataset when installing from provenance directory}
 }
+\value{
+No return value, installs datasets into XML
+}
 \description{
 Data is stored in XML files
 }

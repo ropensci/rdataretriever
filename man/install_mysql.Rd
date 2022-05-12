@@ -42,6 +42,9 @@ containing one file}
 
 \item{hash_value}{the hash value of committed dataset when installing from provenance directory}
 }
+\value{
+No return value, installs datasets into MySQL database
+}
 \description{
 Data is stored in MySQL database
 }

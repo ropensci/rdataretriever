@@ -9,6 +9,9 @@ use_RetrieverPath(path)
 \arguments{
 \item{path}{location of retriever in the system}
 }
+\value{
+No return value, setting path of retriever
+}
 \description{
 Setting path of retriever
 }

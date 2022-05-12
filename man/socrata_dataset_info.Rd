@@ -9,6 +9,9 @@ socrata_dataset_info(dataset_name)
 \arguments{
 \item{dataset_name}{dataset name to obtain info}
 }
+\value{
+No return value, shows socrata dataset info
+}
 \description{
 Get socrata dataset info
 }

@@ -9,6 +9,9 @@ socrata_autocomplete_search(dataset)
 \arguments{
 \item{dataset}{the name of the dataset}
 }
+\value{
+No return value, show dataset names after autocompletion
+}
 \description{
 Returns the list of dataset names after autocompletion
 }

@@ -9,6 +9,9 @@ check_for_updates(repo = "")
 \arguments{
 \item{repo}{path to the repository}
 }
+\value{
+No return value, checks for updates \code{repo}
+}
 \description{
 Check for updates
 }

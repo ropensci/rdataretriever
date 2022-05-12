@@ -2,6 +2,7 @@
 #'
 #' @param repo path to the repository
 #'
+#' @return No return value, checks for updates \code{repo}
 #' @examples
 #' \dontrun{
 #' rdataretriever::check_for_updates()
@@ -24,6 +25,7 @@ check_for_updates <- function(repo = "") {
 #' @param path path to save the committed dataset, if no path given save in provenance directory
 #' @param quiet logical, if true retriever runs in quiet mode
 #'
+#' @return No return value, provides confirmation for commit
 #' @examples
 #' \dontrun{
 #' rdataretriever::commit("iris")
@@ -39,6 +41,7 @@ commit <- function(dataset, commit_message = "", path = NULL, quiet = FALSE) {
 #'
 #' @param dataset name of the dataset stored in provenance directory
 #'
+#' @return No return value, prints message after commit
 #' @examples
 #' \dontrun{
 #' rdataretriever::commit_log("iris")
@@ -84,6 +87,7 @@ dataset_names <- function() {
 
 #' Get retriever citation
 #'
+#' @return No return value, outputs citation of the Data Retriever Python package
 #' @examples
 #' \dontrun{
 #' rdataretriever::get_retriever_citation()
@@ -93,10 +97,11 @@ get_retriever_citation <- function() {
   retriever$get_retriever_citation()
 }
 
-#' Get citation
+#' Get citation of a script
 #'
 #' @param dataset dataset to obtain citation
 #'
+#' @return No return value, gets citation of a script
 #' @examples
 #' \dontrun{
 #' rdataretriever::get_script_citation(dataset = "")
@@ -112,6 +117,7 @@ get_script_citation <- function(dataset = NULL) {
 #' @param licenses filter datasets based on license
 #' @param repo path to the repository
 #'
+#' @return No return value, gets dataset names from upstream
 #' @examples
 #' \dontrun{
 #' rdataretriever::get_dataset_names_upstream(keywords = "", licenses = "", repo = "")
@@ -125,13 +131,12 @@ get_dataset_names_upstream <- function(keywords = "", licenses = "", repo = "") 
   }
 }
 
-#' Get script upstream
+#' Get scripts upstream
 #'
 #' @param dataset name of the dataset
 #' @param repo path to the repository
 #'
-#' @export
-#'
+#' @return No return value, gets upstream scripts
 #' @examples
 #' \dontrun{
 #' rdataretriever::get_script_upstream("iris")
@@ -148,6 +153,7 @@ get_script_upstream <- function(dataset, repo = "") {
 
 #' Get Data Retriever version
 #' @param clean boolean return cleaned version appropriate for semver
+#'
 #' @return returns a string with the version information
 #' @examples
 #' \dontrun{
@@ -212,6 +218,8 @@ check_retriever_availability <- function() {
 #' @param data_names the names you wish to assign to cells of the list which
 #' stores the fetched dataframes. This is only relevant if you are
 #' downloading more than one dataset.
+#'
+#' @return Returns a dataframe of \code{dataset}
 #' @examples
 #' \dontrun{
 #' ## fetch the portal Database
@@ -305,6 +313,8 @@ fetch <- function(dataset, quiet = TRUE, data_names = NULL) {
 #' @param sub_dir downloaded dataset is stored into a custom subdirectory.
 #' @param debug setting TRUE helps in debugging in case of errors
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
+#'
+#' @return No return value, downloads the raw dataset
 #' @examples
 #' \dontrun{
 #' rdataretriever::download("plant-comp-ok")
@@ -325,6 +335,8 @@ download <- function(dataset, path = "./", quiet = FALSE, sub_dir = "", debug = 
 #' @return returns a character vector with the available datasets for download
 #' @param keywords search all datasets by keywords
 #' @param licenses search all datasets by licenses
+#'
+#' @return Returns the names of all available dataset scripts
 #' @examples
 #' \dontrun{
 #' rdataretriever::datasets()
@@ -359,6 +371,8 @@ datasets <- function(keywords = "", licenses = "") {
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
 #' @param force setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
 #' @param hash_value the hash value of committed dataset when installing from provenance directory
+#'
+#' @return No return value, installs datasets into CSV
 #' @examples
 #' \dontrun{
 #' rdataretriever::install_csv("iris")
@@ -380,6 +394,7 @@ install_csv <- function(dataset, table_name = "{db}_{table}.csv", data_dir = get
 #' @param use_cache setting FALSE reinstalls scripts even if they are already installed
 #' @param force setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
 #' @param hash_value the hash value of committed dataset when installing from provenance directory
+#' @return No return value, installs datasets in to JSON
 #' @examples
 #' \dontrun{
 #' rdataretriever::install_json("iris")
@@ -401,6 +416,8 @@ install_json <- function(dataset, table_name = "{db}_{table}.json", data_dir = g
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
 #' @param force setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
 #' @param hash_value the hash value of committed dataset when installing from provenance directory
+#'
+#' @return No return value, installs datasets into XML
 #' @examples
 #' \dontrun{
 #' rdataretriever::install_xml("iris")
@@ -427,6 +444,8 @@ install_xml <- function(dataset, table_name = "{db}_{table}.xml", data_dir = get
 #' @param use_cache setting FALSE reinstalls scripts even if they are already installed
 #' @param force setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
 #' @param hash_value the hash value of committed dataset when installing from provenance directory
+#'
+#' @return No return value, installs datasets into MySQL database
 #' @examples
 #' \dontrun{
 #' rdataretriever::install_mysql(dataset = "portal", user = "postgres", password = "abcdef")
@@ -461,6 +480,8 @@ install_mysql <- function(dataset, user = "root", password = "", host = "localho
 #' @param use_cache setting FALSE reinstalls scripts even if they are already installed
 #' @param force setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
 #' @param hash_value the hash value of committed dataset when installing from provenance directory
+#'
+#' @return No return value, installs datasets into PostgreSQL database
 #' @examples
 #' \dontrun{
 #' rdataretriever::install_postgres(dataset = "portal", user = "postgres", password = "abcdef")
@@ -492,6 +513,8 @@ install_postgres <- function(dataset, user = "postgres", password = "",
 #' @param use_cache setting FALSE reinstalls scripts even if they are already installed
 #' @param force setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
 #' @param hash_value the hash value of committed dataset when installing from provenance directory
+#'
+#' @return No return value, installs datasets into SQLite database
 #' @examples
 #' \dontrun{
 #' rdataretriever::install_sqlite(dataset = "iris", file = "sqlite.db")
@@ -523,6 +546,8 @@ install_sqlite <- function(dataset, file = "sqlite.db", table_name = "{db}_{tabl
 #' @param use_cache Setting FALSE reinstalls scripts even if they are already installed
 #' @param force setting TRUE doesn't prompt for confirmation while installing committed datasets when changes are discovered in environment
 #' @param hash_value the hash value of committed dataset when installing from provenance directory
+#'
+#' @return No return value, installs datasets into MSAccess database
 #' @examples
 #' \dontrun{
 #' rdataretriever::install_msaccess(dataset = "iris", file = "sqlite.db")
@@ -558,6 +583,8 @@ install_msaccess <- function(dataset, file = "access.mdb", table_name = "[{db} {
 #' Only relevant for csv connection types. Defaults to current working directory
 #' @param log_dir the location where the retriever log should be stored if
 #' the progress is not printed to the console
+#'
+#' @return No return value, main install function
 #' @examples
 #' \dontrun{
 #' rdataretriever::install("iris", "csv")
@@ -642,6 +669,8 @@ install <- function(dataset, connection, db_file = NULL, conn_file = NULL,
 
 #' Reset the scripts or data(raw_data) directory or both
 #' @param scope All resets both scripst and data directory
+#'
+#' @return No return value, resets the scripts and the data directory
 #' @examples
 #' \dontrun{
 #' rdataretriever::reset("iris")
@@ -662,6 +691,8 @@ reset <- function(scope = "all") {
 #' that have not yet been incorperated into an official release, and you should
 #' consider checking that page if you have any concerns.
 #' @keywords utilities
+#'
+#' @return No return value, updatea the retriever's dataset scripts to the most recent versions
 #' @examples
 #' \dontrun{
 #' rdataretriever::get_updates()
@@ -676,6 +707,8 @@ get_updates <- function() {
 
 #' Update the retriever's global_script_list with the scripts present
 #' in the ~/.retriever directory.
+#'
+#' @return No return value, fetches most resent scripts
 #' @examples
 #' \dontrun{
 #' rdataretriever::reload_scripts()
@@ -689,6 +722,8 @@ reload_scripts <- function() {
 #' Setting path of retriever
 #'
 #' @param path location of retriever in the system
+#'
+#' @return No return value, setting path of retriever
 #' @examples
 #' \dontrun{
 #' rdataretriever::use_RetrieverPath("/home/<system_name>/anaconda2/envs/py27/bin/")
@@ -702,6 +737,7 @@ use_RetrieverPath <- function(path) {
 #' 
 #' @inheritParams reticulate::py_install
 #' 
+#' @return No return value, install the python module `retriever`
 #' @export
 install_retriever <- function(method = "auto", conda = "auto") {
   reticulate::py_install("retriever", method = method, conda = conda)
@@ -710,6 +746,8 @@ install_retriever <- function(method = "auto", conda = "auto") {
 #' Updates the datasets_url.json from the github repo
 #'
 #' @param test flag set when testing
+#'
+#' @return No return value, updates the datasets_url.json
 #' @examples
 #' \dontrun{
 #' rdataretriever::update_rdataset_catalog()
@@ -723,7 +761,9 @@ update_rdataset_catalog <-function(test=FALSE){
 #' Displays the list of rdataset names present in the list of packages provided
 #'
 #' Can take a list of packages, or NULL or a string 'all' for all rdataset packages and datasets
-#' @param package_name print datasets in the package, default to print rdataset and all to print all   
+#' @param package_name print datasets in the package, default to print rdataset and all to print all
+#'
+#' @return No return value, displays the list of rdataset names present
 #' @examples
 #' \dontrun{
 #' rdataretriever::display_all_rdataset_names()
@@ -736,6 +776,7 @@ display_all_rdataset_names <- function(package_name=NULL){
 
 #' Returns a list of all the available RDataset names present
 #'
+#' @return No return value, list of all the available RDataset
 #' @examples
 #' \dontrun{
 #' rdataretriever::get_rdataset_names()
@@ -749,6 +790,8 @@ get_rdataset_names <- function(){
 #' Returns the list of dataset names after autocompletion
 #'
 #' @param dataset the name of the dataset
+#'
+#' @return No return value, show dataset names after autocompletion
 #' @examples
 #' \dontrun{
 #' rdataretriever::socrata_autocomplete_search()
@@ -762,6 +805,8 @@ socrata_autocomplete_search <- function(dataset){
 #' Get socrata dataset info
 #'
 #' @param dataset_name dataset name to obtain info
+#'
+#' @return No return value, shows socrata dataset info
 #' @examples
 #' \dontrun{
 #' rdataretriever::socrata_dataset_info()
@@ -775,6 +820,8 @@ socrata_dataset_info <- function(dataset_name){
 #' Returns metadata for the following dataset id
 #'
 #' @param dataset_id id of the dataset
+#'
+#' @return No return value, shows metadata for the following \code{dataset id}
 #' @examples
 #' \dontrun{
 #' rdataretriever::socrata_dataset_info()

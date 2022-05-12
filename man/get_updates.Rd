@@ -6,6 +6,9 @@
 \usage{
 get_updates()
 }
+\value{
+No return value, updatea the retriever's dataset scripts to the most recent versions
+}
 \description{
 This function will check if the version of the retriever's scripts in your local
 directory \file{~/.retriever/scripts/} is up-to-date with the most recent official

@@ -6,6 +6,9 @@
 \usage{
 get_rdataset_names()
 }
+\value{
+No return value, list of all the available RDataset
+}
 \description{
 Returns a list of all the available RDataset names present
 }

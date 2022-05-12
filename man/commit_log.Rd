@@ -9,6 +9,9 @@ commit_log(dataset)
 \arguments{
 \item{dataset}{name of the dataset stored in provenance directory}
 }
+\value{
+No return value, prints message after commit
+}
 \description{
 See the log of committed dataset stored in provenance directory
 }

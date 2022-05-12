@@ -32,6 +32,9 @@ install_sqlite(
 
 \item{hash_value}{the hash value of committed dataset when installing from provenance directory}
 }
+\value{
+No return value, installs datasets into SQLite database
+}
 \description{
 Data is stored in SQLite database
 }

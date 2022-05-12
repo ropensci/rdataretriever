@@ -15,6 +15,9 @@ commit(dataset, commit_message = "", path = NULL, quiet = FALSE)
 
 \item{quiet}{logical, if true retriever runs in quiet mode}
 }
+\value{
+No return value, provides confirmation for commit
+}
 \description{
 Commit a dataset
 }

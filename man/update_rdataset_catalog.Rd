@@ -9,6 +9,9 @@ update_rdataset_catalog(test = FALSE)
 \arguments{
 \item{test}{flag set when testing}
 }
+\value{
+No return value, updates the datasets_url.json
+}
 \description{
 Updates the datasets_url.json from the github repo
 }
