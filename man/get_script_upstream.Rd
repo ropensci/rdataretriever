@@ -2,7 +2,7 @@
 % Please edit documentation in R/rdataretriever.R
 \name{get_script_upstream}
 \alias{get_script_upstream}
-\title{Get script upstream}
+\title{Get scripts upstream}
 \usage{
 get_script_upstream(dataset, repo = "")
 }
@@ -11,8 +11,11 @@ get_script_upstream(dataset, repo = "")
 
 \item{repo}{path to the repository}
 }
+\value{
+No return value, gets upstream scripts
+}
 \description{
-Get script upstream
+Get scripts upstream
 }
 \examples{
 \dontrun{

@@ -29,6 +29,9 @@ install_msaccess(
 
 \item{hash_value}{the hash value of committed dataset when installing from provenance directory}
 }
+\value{
+No return value, installs datasets into MSAccess database
+}
 \description{
 Data is stored in MSAccess database
 }

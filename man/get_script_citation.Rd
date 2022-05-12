@@ -2,15 +2,18 @@
 % Please edit documentation in R/rdataretriever.R
 \name{get_script_citation}
 \alias{get_script_citation}
-\title{Get citation}
+\title{Get citation of a script}
 \usage{
 get_script_citation(dataset = NULL)
 }
 \arguments{
 \item{dataset}{dataset to obtain citation}
 }
+\value{
+No return value, gets citation of a script
+}
 \description{
-Get citation
+Get citation of a script
 }
 \examples{
 \dontrun{

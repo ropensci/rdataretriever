@@ -13,6 +13,8 @@ datasets(keywords = "", licenses = "")
 }
 \value{
 returns a character vector with the available datasets for download
+
+Returns the names of all available dataset scripts
 }
 \description{
 Additional information on the available datasets can be found at url https://retriever.readthedocs.io/en/latest/datasets.html

@@ -29,6 +29,9 @@ install_json(
 
 \item{hash_value}{the hash value of committed dataset when installing from provenance directory}
 }
+\value{
+No return value, installs datasets in to JSON
+}
 \description{
 Data is stored in JSON files
 }

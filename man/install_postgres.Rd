@@ -48,6 +48,9 @@ containing one file}
 
 \item{hash_value}{the hash value of committed dataset when installing from provenance directory}
 }
+\value{
+No return value, installs datasets into PostgreSQL database
+}
 \description{
 Data is stored in PostgreSQL database
 }

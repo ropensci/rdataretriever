@@ -26,6 +26,9 @@ download(
 
 \item{use_cache}{Setting FALSE reinstalls scripts even if they are already installed}
 }
+\value{
+No return value, downloads the raw dataset
+}
 \description{
 Directly downloads data files with no processing, allowing downloading of
 non-tabular data.
