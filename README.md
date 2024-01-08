@@ -301,6 +301,7 @@ To get citation information for the `rdataretriever` in R use `citation(package 
 
 Acknowledgements
 ----------------
+
 A big thanks to Ben Morris for helping to develop the Data Retriever.
 Thanks to the rOpenSci team with special thanks to Gavin Simpson,
 Scott Chamberlain, and Karthik Ram who gave helpful advice and fostered
