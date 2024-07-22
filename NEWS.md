@@ -1,3 +1,10 @@
+rdataretriever 3.1.1
+====================
+
+## Minor Improvements
+
+* Update Authors' list
+
 rdataretriever 3.1.0
 ====================
 
