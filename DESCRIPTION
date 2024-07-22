@@ -5,7 +5,7 @@ Description: Provides an R interface to the Data Retriever
     command line interface. The Data Retriever automates the
     tasks of finding, downloading, and cleaning public datasets,
     and then stores them in a local database.
-Version: 3.1.0
+Version: 3.1.1
 Authors@R: c(person("Henry", "Senyondo", role = c("aut", "cre"),
     email = "henrykironde@gmail.com",
     comment = c(ORCID = "0000-0001-7105-5808")),
@@ -67,5 +67,5 @@ Suggests:
 VignetteBuilder: knitr
 SystemRequirements: Python (>= 3.7), retriever (>= 3.0.0) (version must be listed to patch to allow parsing)
 License: MIT + file LICENSE
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Encoding: UTF-8
