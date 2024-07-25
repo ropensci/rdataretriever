@@ -1,7 +1,7 @@
 # rdataretriever
 
 <!-- badges: start -->
-[![Build Status](https://travis-ci.org/ropensci/rdataretriever.svg?branch=main)](https://travis-ci.org/ropensci/rdataretriever)
+[![Build Status](https://travis-ci.org/ropensci/rdataretriever.svg?branch=main)](https://app.travis-ci.com/ropensci/rdataretriever)
 [![Build status](https://ci.appveyor.com/api/projects/status/de1badmnrt6goamh?svg=true)](https://ci.appveyor.com/project/ethanwhite/rdataretriever)[![cran version](https://www.r-pkg.org/badges/version/rdataretriever)](https://CRAN.R-project.org/package=rdataretriever)
 [![Documentation Status](https://readthedocs.org/projects/retriever/badge/?version=latest)](https://retriever.readthedocs.io/en/latest/rdataretriever.html#)
 [![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/rdataretriever)](https://CRAN.R-project.org/package=rdataretriever) +
@@ -305,8 +305,8 @@ A big thanks to Ben Morris for helping to develop the Data Retriever.
 Thanks to the rOpenSci team with special thanks to Gavin Simpson,
 Scott Chamberlain, and Karthik Ram who gave helpful advice and fostered
 the development of this R package.
-Development of this software was funded by the [National Science Foundation](https://nsf.gov/)
-as part of a [CAREER award to Ethan White](https://nsf.gov/awardsearch/showAward.do?AwardNumber=0953694).
+Development of this software was funded by the [National Science Foundation](https://www.nsf.gov/)
+as part of a [CAREER award to Ethan White](https://www.nsf.gov/awardsearch/showAward.do?AwardNumber=0953694).
 
 ---
 [![ropensci footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
