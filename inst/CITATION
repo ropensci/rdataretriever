@@ -1,14 +1,28 @@
 citHeader("To cite rdataretriever in publications use:")
 
-citEntry(
-  entry    = "Article",
-  title    = "Rdataretriever: R Interface to the Data Retriever",
-  author   = "Henry Senyondo and Daniel J. McGlinn and Pranita Sharma and David J. Harris and Hao Ye and Shawn D. Taylor and Jeroen Ooms and Francisco Rodríguez-Sánchez and Karthik Ram and Apoorva Pandey and Harshit Bansal and Max Pohlman and Ethan P. White",
-  journal  = "Journal of Open Source Software",
-  year     = 2021,
-  volume   = 6,
-  number   = 57,
-  pages    = 2800,
-  url      = "https://doi.org/10.21105/joss.02800",
-  textVersion = paste("Senyondo et al., (2021). Rdataretriever: R Interface to the Data Retriever. Journal of Open Source Software, 6(57), 2800, https://doi.org/10.21105/joss.02800")
+bibentry(
+  bibtype = "Article",
+  title = "Rdataretriever: R Interface to the Data Retriever",
+  author = c(
+    person("Henry", "Senyondo"),
+    person("Daniel J.", "McGlinn"),
+    person("Pranita", "Sharma"),
+    person("David J.", "Harris"),
+    person("Hao", "Ye"),
+    person("Shawn D.", "Taylor"),
+    person("Jeroen", "Ooms"),
+    person("Francisco", "Rodríguez-Sánchez"),
+    person("Karthik", "Ram"),
+    person("Apoorva", "Pandey"),
+    person("Harshit", "Bansal"),
+    person("Max", "Pohlman"),
+    person("Ethan P.", "White")
+  ),
+  journal = "Journal of Open Source Software",
+  year = 2021,
+  volume = 6,
+  number = 57,
+  pages = "2800",
+  url = "https://doi.org/10.21105/joss.02800",
+  textVersion = "Senyondo et al., (2021). Rdataretriever: R Interface to the Data Retriever. Journal of Open Source Software, 6(57), 2800, https://doi.org/10.21105/joss.02800"
 )
